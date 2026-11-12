@@ -1,0 +1,26 @@
+---
+import Base from "../../layouts/Base.astro";
+import ToolBar from "../../components/ToolBar.astro";
+import { THINKERS, entryBySlug } from "../../data/library.js";
+import { u } from "../../lib/url.js";
+
+export function getStaticPaths() {
+  return THINKERS.map(t => ({ params: { slug: t.slug }, props: { thinker: t } }));
+}
+const FACE: Record<string, string> = { sartre: "", rawls: "f-white", nagel: "f-purple", camus: "f-cream", kant: "f-white", nietzsche: "f-purple" };
+const { thinker: t } = Astro.props;
+const entries = t.entries.map((s: string) => entryBySlug[s]).filter(Boolean);
+---
+<Base title={`${t.name} — Askēsis`} description={t.line} view="doc">
+  <article class="view is-active" id="view-doc" aria-live="off">
+    <ToolBar backTo={u("")} backLabel="EXPLORE" nowTitle={t.name} />
+    <nav class="crumbs"><span class="crumb p">THINKER</span><span class="crumb">{t.school.toUpperCase()}</span></nav>
+    <div class="person rv"><div class={`face ${FACE[t.slug] || ""}`} aria-hidden="true">{t.name[0]}</div>
+      <div><h3>{t.name.toUpperCase()}</h3><p>{t.years} · {t.school} — {t.line}</p></div></div>
+    <div class="doc-sec rv"><h2>Start with</h2>
+      <div class="rel-grid">{entries.map((e: any) => (
+        <a href={u(`entry/${e.slug}/`)}><b>{e.title.toUpperCase()}</b><small>{e.read} MIN READ →</small></a>
+      ))}</div></div>
+    <div class="prevnext rv"><a href={u("")}><small>←</small><b>BACK TO EXPLORE</b></a><a href={u("start-here/")}><small>NEXT →</small><b>THE START-HERE PATH</b></a></div>
+  </article>
+</Base>

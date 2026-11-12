@@ -1,0 +1,31 @@
+---
+import Base from "../../layouts/Base.astro";
+import ToolBar from "../../components/ToolBar.astro";
+import { EXPERIMENTS, entryBySlug } from "../../data/library.js";
+import { expArt } from "../../lib/svg.js";
+import { u } from "../../lib/url.js";
+
+export function getStaticPaths() {
+  return EXPERIMENTS.map(x => ({ params: { slug: x.slug }, props: { experiment: x } }));
+}
+const { experiment: x } = Astro.props;
+const linked = entryBySlug[x.link];
+---
+<Base title={`${x.title} — Askēsis`} description={x.setup} view="doc">
+  <article class="view is-active" id="view-doc" aria-live="off">
+    <ToolBar backTo={u("")} backLabel="EXPLORE" nowTitle={x.title} />
+    <nav class="crumbs"><span class="crumb u">PUZZLE</span><span class="crumb">{x.by.toUpperCase()}</span><span class="readtime">{x.read} MIN</span></nav>
+    <h1 class="doc-title">{x.title}</h1>
+    <p class="doc-hook">{x.setup}</p>
+    <div class="hero rv"><div class="hero-art cream" set:html={expArt(x)}></div>
+      <span class="stamp">{x.read} MIN · PUZZLE</span>
+      <div class="hero-cap"><span class="k">HOW TO RUN IT</span><span class="big">Three steps, in your head.</span><span class="s">No equipment. No wrong answers — only sharper questions.</span></div></div>
+    <div class="howto rv"><ol>{x.steps.map((s: string) => <li>{s}</li>)}</ol></div>
+    <div class="readnext rv"><h2>Go deeper</h2>
+      <div class="rel-grid">
+        {linked && <a href={u(`entry/${linked.slug}/`)}><b>{linked.title.toUpperCase()}</b><small>FULL ENTRY →</small></a>}
+        <a href={u("series/bad-faith-60/")}><b>60-SECOND SERIES</b><small>SWIPE IT →</small></a>
+        <a href={u("")}><b>BACK TO EXPLORE</b><small>ALL PUZZLES →</small></a>
+      </div></div>
+  </article>
+</Base>

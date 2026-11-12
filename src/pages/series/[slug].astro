@@ -1,0 +1,30 @@
+---
+import Base from "../../layouts/Base.astro";
+import ToolBar from "../../components/ToolBar.astro";
+import { SERIES } from "../../data/library.js";
+import { u } from "../../lib/url.js";
+
+export function getStaticPaths() {
+  return SERIES.map(s => ({ params: { slug: s.slug }, props: { series: s } }));
+}
+const { series: s } = Astro.props;
+---
+<Base title={`${s.title} — Askēsis`} description="One idea in 5 cards." view="doc">
+  <article class="view is-active" id="view-doc" aria-live="off">
+    <ToolBar backTo={u("")} backLabel="EXPLORE" nowTitle={s.title} />
+    <nav class="crumbs"><span class="crumb u">MINI SCROLL SERIES</span><span class="crumb">{s.meta}</span></nav>
+    <h1 class="doc-title">{s.title}</h1>
+    <p class="doc-stand rv">Swipe or use ← →. Five cards, about a minute. No account, no autoplay, no noise.</p>
+    <div class="series-view rv">
+      <div class="sv-track" id="svTrack" tabindex="0" aria-label={`${s.title} cards`}>
+        {s.cards.map((c: any, i: number) => (
+          <div class="sv-card" data-n={i + 1}><span class="n">CARD {i + 1} / 5</span><span class="t">{c.t.toUpperCase()}</span><p>{c.p}</p></div>
+        ))}
+      </div>
+      <div class="sv-bar"><button type="button" id="svPrev" aria-label="Previous card">←</button>
+        <div class="sv-dots" id="svDots" aria-hidden="true">{s.cards.map((_: any, i: number) => <i class={i === 0 ? "on" : ""}></i>)}</div>
+        <button type="button" id="svNext" aria-label="Next card">→</button></div>
+    </div>
+    <div class="prevnext"><a href={u("")}><small>←</small><b>BACK TO EXPLORE</b></a><a href={u("entry/sartre-bad-faith/")}><small>NEXT →</small><b>READ THE FULL ENTRY</b></a></div>
+  </article>
+</Base>

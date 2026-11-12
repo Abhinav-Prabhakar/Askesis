@@ -1,0 +1,93 @@
+---
+import Base from "../../layouts/Base.astro";
+import ToolBar from "../../components/ToolBar.astro";
+import { ENTRIES, ORDER, entryBySlug, tradSlug, FIGCAP } from "../../data/library.js";
+import { heroSVG, figureSVG } from "../../lib/svg.js";
+import { glossify } from "../../lib/glossify.js";
+import { u } from "../../lib/url.js";
+
+export function getStaticPaths() {
+  return ENTRIES.map(e => ({ params: { slug: e.slug }, props: { entry: e } }));
+}
+const { entry: e } = Astro.props;
+const idx = ORDER.indexOf(e.slug);
+const prev = idx > 0 ? entryBySlug[ORDER[idx - 1]] : null;
+const next = idx < ORDER.length - 1 ? entryBySlug[ORDER[idx + 1]] : null;
+const rel = e.related.map((s: string) => entryBySlug[s]).filter(Boolean).slice(0, 3);
+const tslug = tradSlug(e.tradition);
+const entryData = JSON.stringify({ slug: e.slug, cite: e.cite });
+---
+<Base title={`${e.title} — Askēsis`} description={e.hook} view="doc" slug={e.slug}>
+  <article class="view is-active" id="view-doc" aria-live="off">
+    <ToolBar backTo={u("")} backLabel="EXPLORE" nowTitle={e.title} />
+    <nav class="crumbs" aria-label="Breadcrumb">
+      {tslug
+        ? <a class="crumb p" href={u(`tradition/${tslug}/`)}>{e.tradition.toUpperCase()}</a>
+        : <span class="crumb p">{e.tradition.toUpperCase()}</span>}
+      <span class="crumb">{e.era.toUpperCase()}</span>
+      <span class="readtime">{e.read} MIN READ</span>
+    </nav>
+    <h1 class="doc-title">{e.title}</h1>
+    <p class="doc-hook">{e.hook}</p>
+    <div class="hero rv">
+      <div class={`hero-art ${e.hero.bg}`} set:html={heroSVG(e.slug)}></div>
+      <span class="stamp">{e.read} MIN · EDITED</span>
+      <div class="hero-cap"><span class="k">{e.hero.k}</span><span class="big">{e.hero.big}</span><span class="s">{e.hero.sub}</span></div>
+    </div>
+    <div class="breath rv"><div class="k">IN ONE BREATH</div><p set:html={glossify(e.breath)}></p></div>
+    <div class="doc-sec rv"><h2>The tension</h2>{e.tension.map((p: string) => <p set:html={glossify(p)}></p>)}</div>
+    <div class="doc-sec rv"><h2>Three positions</h2>
+      <div class="positions">{e.positions.map((p: any, i: number) => (
+        <div class="position"><div class="avatar" aria-hidden="true">{p.who}</div><div class="p-n">0{i + 1}</div><div class="p-t">{p.name.toUpperCase()}</div><p set:html={glossify(p.text)}></p></div>
+      ))}</div>
+    </div>
+    <figure class="fig rv">
+      <div class={`fig-art ${e.hero.bg === "cream" ? "" : e.hero.bg}`} set:html={figureSVG(e.slug)}></div>
+      <figcaption><b>FIG. {e.num} — </b>{FIGCAP[e.slug] || ""}</figcaption>
+    </figure>
+    <div class="arg rv" id="argCard">
+      <div class="arg-h"><b>THE ARGUMENT, IN THREE LINES</b><button type="button" id="copyArg">COPY</button></div>
+      <div class="arg-r"><span class="tag">P1</span><span set:html={glossify(e.argument.p1)}></span></div>
+      <div class="arg-r"><span class="tag">P2</span><span set:html={glossify(e.argument.p2)}></span></div>
+      <div class="arg-r qed"><span class="tag">∴</span><span set:html={glossify(e.argument.c)}></span></div>
+    </div>
+    <div class="doc-sec rv"><h2>The strongest objection</h2><p set:html={glossify(e.objection)}></p></div>
+    <div class="quote rv">
+      <blockquote>“{e.quote.text.replace(/^“?|”$/g, "")}”</blockquote>
+      <cite>{e.quote.by}</cite>
+      <div class="q-actions">
+        <button class="mini-btn" type="button" id="copyQ">COPY QUOTE</button>
+        <button class="mini-btn dark" type="button" id="shareQ">SHARE →</button>
+      </div>
+    </div>
+    <div class="readnext rv"><h2>Read next</h2>
+      <div class="rel-grid">{rel.map((r: any) => (
+        <a href={u(`entry/${r.slug}/`)}><b>{r.title.toUpperCase()}</b><small>{r.read} MIN · {r.tradition.toUpperCase()}</small></a>
+      ))}</div>
+    </div>
+    <div class="prevnext rv">
+      {prev
+        ? <a href={u(`entry/${prev.slug}/`)}><small>← PREV</small><b>{prev.title.toUpperCase()}</b></a>
+        : <a href={u("")}><small>←</small><b>BACK TO EXPLORE</b></a>}
+      {next
+        ? <a href={u(`entry/${next.slug}/`)}><small>NEXT →</small><b>{next.title.toUpperCase()}</b></a>
+        : <a href={u("start-here/")}><small>NEXT →</small><b>START HERE PATH</b></a>}
+    </div>
+    <div class="extras rv">
+      <div class="cite">
+        <h3>Cite this entry</h3>
+        <div class="cite-tabs" role="group" aria-label="Citation style">
+          <button type="button" data-c="apa" class="on">APA</button><button type="button" data-c="mla">MLA</button><button type="button" data-c="bib">BibTeX</button>
+        </div>
+        <pre id="citeOut">{e.cite.apa}</pre>
+        <button class="mini-btn" type="button" id="copyCite">COPY CITATION</button>
+      </div>
+      <div class="notes">
+        <h3>Your note <small style="font-family:var(--ui);font-size:12px;color:var(--mut)">· SAVED ON THIS DEVICE</small></h3>
+        <textarea id="noteBox" aria-label="Your private note" placeholder="One line you'll actually remember…"></textarea>
+        <small id="noteMsg">Private. Never leaves this browser.</small>
+      </div>
+    </div>
+  </article>
+  <script type="application/json" id="entryData" is:inline set:html={entryData}></script>
+</Base>

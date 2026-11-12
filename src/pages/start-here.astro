@@ -1,0 +1,26 @@
+---
+import Base from "../layouts/Base.astro";
+import ToolBar from "../components/ToolBar.astro";
+import { entryBySlug } from "../data/library.js";
+import { u } from "../lib/url.js";
+
+const steps = [
+  { s: "sartre-bad-faith", why: "Freedom you already feel." },
+  { s: "free-will", why: "Whether 'you' are in charge." },
+  { s: "qualia", why: "What science leaves out." },
+  { s: "veil-of-ignorance", why: "What fairness demands." },
+  { s: "a-theory-of-time", why: "Whether the future exists." }
+].map(st => ({ ...st, entry: entryBySlug[st.s] }));
+---
+<Base title="Start here — Askēsis" description="Five entries for first-time readers." view="doc">
+  <article class="view is-active" id="view-doc" aria-live="off">
+    <ToolBar backTo={u("")} backLabel="EXPLORE" nowTitle="Start here" />
+    <nav class="crumbs"><span class="crumb p">A PATH</span><span class="readtime">10 MINUTES · 5 STEPS</span></nav>
+    <h1 class="doc-title">Start here</h1>
+    <p class="doc-hook">Never read philosophy? Read these five in order. Each hands you the question the next one answers.</p>
+    <div class="path rv">{steps.map((st, i) => (
+      <a href={u(`entry/${st.entry.slug}/`)}><span class="step-n">{i + 1}</span><span><b>{st.entry.title.toUpperCase()}</b><small>{st.why}</small></span><span class="mins">{st.entry.read} MIN</span></a>
+    ))}</div>
+    <div class="prevnext rv"><a href={u("")}><small>←</small><b>BACK TO EXPLORE</b></a><a href={u("entry/sartre-bad-faith/")}><small>BEGIN →</small><b>STEP 1 · BAD FAITH</b></a></div>
+  </article>
+</Base>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0a0505"/>
+  <rect x="12" y="14" width="40" height="36" rx="2" fill="#fadede" stroke="#fadede" stroke-width="2"/>
+  <text x="32" y="40" font-family="Arial Narrow, Impact, sans-serif" font-size="30" text-anchor="middle" fill="#0a0505">Æ</text>
+  <rect x="12" y="14" width="40" height="10" fill="#feabe3"/>
+  <rect x="12" y="40" width="40" height="10" fill="#d8aafe"/>
+</svg>

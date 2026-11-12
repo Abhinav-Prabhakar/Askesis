@@ -1,0 +1,18 @@
+---
+import Base from "../layouts/Base.astro";
+import { NOT_FOUND_SVG } from "../lib/svg.js";
+import { u } from "../lib/url.js";
+---
+<Base title="Lost page — Askēsis" description="Nothing here." view="doc">
+  <article class="view is-active" id="view-doc" aria-live="off">
+    <div class="doc-top"><a class="back" href={u("")}>← EXPLORE</a><span class="doc-now">LOST PAGE</span></div>
+    <div class="nf"><div class="nf-art" aria-hidden="true" set:html={NOT_FOUND_SVG}></div>
+      <p class="big">LOST PAGE</p>
+      <p class="doc-hook">Nothing at this address — even the skeptics agree on that much.</p>
+      <div class="rel-grid" style="margin-top:18px">
+        <a href={u("entry/sartre-bad-faith/")}><b>READ BAD FAITH</b><small>2 MIN →</small></a>
+        <a href={u("start-here/")}><b>START HERE</b><small>THE PATH →</small></a>
+        <a href={u("")}><b>BACK TO EXPLORE</b><small>ALL ENTRIES →</small></a>
+      </div></div>
+  </article>
+</Base>

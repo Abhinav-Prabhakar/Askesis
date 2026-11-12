@@ -1,0 +1,30 @@
+---
+import Base from "../../layouts/Base.astro";
+import ToolBar from "../../components/ToolBar.astro";
+import { TRADITIONS, entryBySlug } from "../../data/library.js";
+import { u } from "../../lib/url.js";
+
+export function getStaticPaths() {
+  return TRADITIONS.map(t => ({ params: { slug: t.slug }, props: { tradition: t } }));
+}
+const { tradition: t } = Astro.props;
+const entries = t.entries.map((s: string) => entryBySlug[s]).filter(Boolean);
+const mark = t.color === "u" ? "u" : t.color === "p" ? "" : "c";
+---
+<Base title={`${t.name} — Askēsis`} description={t.line} view="doc">
+  <article class="view is-active" id="view-doc" aria-live="off">
+    <ToolBar backTo={u("")} backLabel="EXPLORE" nowTitle={t.name} />
+    <nav class="crumbs"><span class={`crumb ${t.color || ""}`}>SCHOOL</span><span class="readtime">{t.entries.length} ENTRIES</span></nav>
+    <h1 class="doc-title">{t.name}</h1>
+    <p class="doc-hook">{t.line}</p>
+    <div class="school rv"><div class={`mark ${mark}`} aria-hidden="true">{t.name[0]}</div>
+      <div><h3>THE SHORT VERSION</h3><p>Every school answers one question first: what should a mind do? Endure, doubt, choose, or revolt? Carry that question into the entries below — notice where you resist. That friction is the lesson.</p></div></div>
+    <div class="doc-sec rv"><h2>Read the orientation in 30 seconds</h2>
+      <div class="howto"><ol><li>Ask what the school thinks a good mind does — endure, doubt, choose, or revolt?</li><li>Read one entry below with that question in hand.</li><li>Notice where you resist. That friction is the lesson.</li></ol></div></div>
+    <div class="readnext rv"><h2>Entries in {t.name.toLowerCase()}</h2>
+      <div class="rel-grid">{entries.map((e: any) => (
+        <a href={u(`entry/${e.slug}/`)}><b>{e.title.toUpperCase()}</b><small>{e.read} MIN READ →</small></a>
+      ))}</div></div>
+    <div class="prevnext rv"><a href={u("")}><small>←</small><b>BACK TO EXPLORE</b></a><a href={u("experiment/ship-of-theseus/")}><small>NEXT →</small><b>TRY A THOUGHT EXPERIMENT</b></a></div>
+  </article>
+</Base>

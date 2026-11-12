@@ -1,0 +1,17 @@
+---
+interface Props {
+  backTo: string;
+  backLabel: string;
+  nowTitle?: string;
+}
+const { backTo, backLabel, nowTitle } = Astro.props;
+---
+<div class="doc-top">
+  <a class="back" href={backTo} data-back>← {backLabel}</a>
+  {nowTitle && <span class="doc-now">{nowTitle.toUpperCase()}</span>}
+  <div class="doc-tools" role="group" aria-label="Reading tools">
+    <button class="tool" id="tSize" type="button" title="Text size" aria-label="Change text size">Aa</button>
+    <button class="tool" id="tListen" type="button" title="Listen" aria-label="Listen to this entry" aria-pressed="false">▶</button>
+    <button class="tool" id="tShare" type="button" title="Share" aria-label="Share this page">⤴</button>
+  </div>
+</div>

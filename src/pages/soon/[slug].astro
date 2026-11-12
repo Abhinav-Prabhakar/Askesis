@@ -1,0 +1,30 @@
+---
+import Base from "../../layouts/Base.astro";
+import ToolBar from "../../components/ToolBar.astro";
+import { SOON, entryBySlug } from "../../data/library.js";
+import { soonArt } from "../../lib/svg.js";
+import { u } from "../../lib/url.js";
+
+export function getStaticPaths() {
+  return SOON.map(s => ({ params: { slug: s.slug }, props: { soon: s } }));
+}
+const { soon: s } = Astro.props;
+const related = s.related.map((r: string) => entryBySlug[r]).filter(Boolean);
+---
+<Base title={`${s.title} (coming soon) — Askēsis`} description={s.hook} view="doc">
+  <article class="view is-active" id="view-doc" aria-live="off">
+    <ToolBar backTo={u("")} backLabel="EXPLORE" nowTitle={s.title} />
+    <nav class="crumbs"><span class="crumb">SHELF</span><span class="crumb">{s.era.toUpperCase()}</span><span class="readtime">BEING WRITTEN</span></nav>
+    <h1 class="doc-title">{s.title}</h1>
+    <p class="doc-hook">{s.hook}</p>
+    <div class="hero rv"><div class="hero-art cream" set:html={soonArt()}></div>
+      <span class="stamp">BEING WRITTEN</span>
+      <div class="hero-cap"><span class="k">WHAT THIS SHELF WILL HOLD</span><span class="big">Three questions, one shelf.</span><span class="s">The entry is being edited. The shape below is already fixed.</span></div></div>
+    <div class="howto rv"><ol>{s.points.map((p: string) => <li>{p}</li>)}</ol></div>
+    <div class="readnext rv"><h2>Read while you wait</h2>
+      <div class="rel-grid">
+        {related.map((e: any) => <a href={u(`entry/${e.slug}/`)}><b>{e.title.toUpperCase()}</b><small>{e.read} MIN READ →</small></a>)}
+        <a href={u("")}><b>BACK TO EXPLORE</b><small>ALL SHELVES →</small></a>
+      </div></div>
+  </article>
+</Base>

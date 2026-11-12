@@ -1,0 +1,165 @@
+---
+import Base from "../layouts/Base.astro";
+import { ENTRIES, THINKERS, TRADITIONS, EXPERIMENTS, SERIES, SOON, ERAS, DAILY, FEATURED, ORDER, azMap } from "../data/library.js";
+import { heroSVG, expArt, seriesArt } from "../lib/svg.js";
+import { u } from "../lib/url.js";
+
+const base = import.meta.env.BASE_URL;
+const az = azMap();
+const AZ_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const strip = (s: string) => s.replace(/^#\/+/, "");
+
+const homeData = {
+  daily: DAILY.map(d => ({ q: d.q, to: strip(d.to) })),
+  featured: FEATURED.map(f => ({ text: f.text, sub: f.sub, to: strip(f.to) })),
+  az,
+  recentMap: Object.fromEntries(ENTRIES.map(e => [e.slug, { slug: e.slug, title: e.title, read: e.read, tradition: e.tradition }]))
+};
+const stats = `<b>${ENTRIES.length + SOON.length} SHELVES</b> · ${ENTRIES.length} OPEN · ${THINKERS.length} THINKERS · ${TRADITIONS.length} SCHOOLS · ${EXPERIMENTS.length} PUZZLES · ${SERIES.length} SERIES`;
+---
+<Base title="Askēsis — Philosophy, Reframed" description="A pocket library of philosophy. Short entries, argument cards, thought experiments and 60-second series — edited, not encyclopedic." view="explore">
+  <div class="view is-active" id="view-explore">
+    <div class="panel-top">
+      <h2 class="explore-title" id="exploreTitle">EXPLORE</h2>
+      <button class="surprise" id="surpriseBtn" type="button">
+        <svg class="dice" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="1.4" y="1.4" width="21.2" height="21.2" rx="5.2" stroke="currentColor" stroke-width="2.1"/>
+          <circle cx="7.2" cy="7.2" r="1.85" fill="currentColor"/>
+          <circle cx="16.8" cy="7.2" r="1.85" fill="currentColor"/>
+          <circle cx="12" cy="12" r="1.85" fill="currentColor"/>
+          <circle cx="7.2" cy="16.8" r="1.85" fill="currentColor"/>
+          <circle cx="16.8" cy="16.8" r="1.85" fill="currentColor"/>
+        </svg>
+        <span>Surprise me</span>
+      </button>
+    </div>
+
+    <button class="daily rv" id="dailyBtn" type="button">
+      <span class="daily-kicker" id="dailyKicker">TODAY'S QUESTION</span>
+      <span class="daily-q" id="dailyQ">Are you lying to yourself right now?</span>
+      <span class="daily-go" aria-hidden="true">→</span>
+    </button>
+
+    <div class="stats rv" id="statsRow" set:html={stats}></div>
+
+    <nav class="topics" aria-label="Entries" id="topicGrid">
+      {ENTRIES.map(e => (
+        <a class="topic rv" href={u(`entry/${e.slug}/`)}>
+          <span class="t-art" aria-hidden="true" set:html={heroSVG(e.slug).replace("<svg ", '<svg preserveAspectRatio="xMidYMid slice" ')}></span>
+          <span class="num">{e.num}</span>
+          <span class="t"><span class="name">{e.title.toUpperCase()}</span><span class="meta">{e.read} MIN · {e.tradition.toUpperCase()}</span></span>
+        </a>
+      ))}
+    </nav>
+
+    <div class="duo rv">
+      <a class="start-card" href={u("start-here/")}>
+        <span class="card-kicker">NEW · 5 STEPS</span>
+        <span class="card-title">START HERE</span>
+        <span class="card-sub">Never read philosophy? Take the 10-minute path.</span>
+        <span class="steps" aria-hidden="true"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i></span>
+      </a>
+      <button class="featured-mini" id="featuredCard" type="button">
+        <span class="card-kicker">WISDOM OF THE WEEK</span>
+        <span class="card-quote" id="featuredQuote">“Man is condemned to be free.”</span>
+        <span class="card-sub" id="featuredSub">Sartre · Bad Faith — read in 2 min →</span>
+      </button>
+    </div>
+
+    <h2 class="series-title rv">MINI SCROLL SERIES</h2>
+    <p class="section-sub rv">One idea · 5 cards · 60 seconds.</p>
+    <div class="series-row" id="seriesRow">
+      {SERIES.map((s, i) => (
+        <a class="series-card rv" href={u(`series/${s.slug}/`)}>
+          <span class="series-art" set:html={seriesArt(i)}></span>
+          <span><span class="s-t">{s.title.toUpperCase()}</span><span class="s-m">{s.meta}</span><span class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span></span>
+        </a>
+      ))}
+    </div>
+
+    <h2 class="series-title rv">THOUGHT EXPERIMENTS</h2>
+    <p class="section-sub rv">Short standalone puzzles. Run one in your head.</p>
+    <div class="exp-row" id="expRow">
+      {EXPERIMENTS.map(e => (
+        <a class="exp-card rv" href={u(`experiment/${e.slug}/`)}>
+          <span class="exp-art" style={`background:${e.color}`} set:html={expArt(e)}></span>
+          <span class="e-t">{e.title.toUpperCase()}</span>
+          <span class="e-m">{e.by.toUpperCase()} · {e.read} MIN</span>
+        </a>
+      ))}
+    </div>
+
+    <h2 class="series-title rv">THE ATLAS</h2>
+    <p class="section-sub rv">Four eras. Dots are doors — pick one.</p>
+    <div class="atlas rv" id="atlasRow">
+      {ERAS.map(er => {
+        const items = [
+          ...ENTRIES.filter(e => e.era.toUpperCase() === er.name).map(e => ({ num: e.num as number | undefined, slug: e.slug, title: e.title, soon: false })),
+          ...SOON.filter(s => s.era.toUpperCase() === er.name).map(s => ({ num: undefined as number | undefined, slug: s.slug, title: s.title, soon: true }))
+        ];
+        return (
+          <div class="era">
+            <span class="e-name">{er.name}</span>
+            <span class="e-span">{er.span}</span>
+            <div class="e-dots">
+              {items.length === 0 && <span class="e-span">EMPTY SHELF</span>}
+              {items.map(it => it.soon
+                ? <a class="dot soon" href={u(`soon/${it.slug}/`)} title={`${it.title} — being written`}>✎</a>
+                : <a class="dot" href={u(`entry/${it.slug}/`)} title={it.title}>{it.num}</a>)}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <h2 class="series-title rv">COMING SOON</h2>
+    <p class="section-sub rv">Shelves being written. Dashed means dusty.</p>
+    <div class="soon-grid" id="soonGrid">
+      {SOON.map(s => (
+        <a class="ghost rv" href={u(`soon/${s.slug}/`)}><span class="tag">BEING WRITTEN</span><b>{s.title.toUpperCase()}</b><small>{s.hook}</small></a>
+      ))}
+    </div>
+
+    <div class="duo2 rv">
+      <div class="index-block">
+        <h3>THINKERS</h3>
+        <div class="chips" id="thinkerChips">
+          {THINKERS.map(t => <a href={u(`thinker/${t.slug}/`)}>{t.name.toUpperCase()}</a>)}
+        </div>
+      </div>
+      <div class="index-block">
+        <h3>TRADITIONS</h3>
+        <div class="chips" id="tradChips">
+          {TRADITIONS.map(t => <a class="alt" href={u(`tradition/${t.slug}/`)}>{t.name.toUpperCase()}</a>)}
+        </div>
+      </div>
+    </div>
+
+    <h2 class="series-title rv">THE INDEX</h2>
+    <p class="section-sub rv">Every shelf, A to Z. Pick a lit letter.</p>
+    <div class="az rv" id="azRow">
+      {AZ_LETTERS.map(L => {
+        const n = (az[L] || []).length;
+        return n
+          ? <button type="button" class="lit" data-az={L} aria-expanded="false" aria-label={`${L}: ${n} shelf${n > 1 ? "s" : ""}`}>{L}</button>
+          : <button type="button" disabled aria-label={`${L}: no shelves`}>{L}</button>;
+      })}
+      <div class="az-panel" id="azPanel" hidden></div>
+    </div>
+
+    <div class="recent rv" id="recentWrap" hidden>
+      <h3>RECENTLY VIEWED</h3>
+      <div class="recent-row" id="recentRow"></div>
+    </div>
+
+    <div class="ticker rv" aria-hidden="true"><div class="ticker-in"><span>STOICISM · EXISTENTIALISM · SKEPTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span><span>STOICISM · EXISTENTIALISM · SKEPTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span></div></div>
+
+    <footer class="sheet-foot rv">
+      <span>ASKĒSIS · EDITED, NOT ENCYCLOPEDIC</span>
+      <span class="foot-links"><a href={u("start-here/")}>Start here</a> · <a href={u("feed.xml")}>RSS</a> · <a href={u("entry/sartre-bad-faith/")}>Sample entry</a></span>
+      <span class="seal" aria-hidden="true">Æ</span>
+    </footer>
+  </div>
+
+  <script type="application/json" id="homeData" is:inline set:html={JSON.stringify(homeData)}></script>
+</Base>
