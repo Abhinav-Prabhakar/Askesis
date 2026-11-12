@@ -278,6 +278,37 @@ function syncScroll() {
 if (sheet) sheet.addEventListener("scroll", syncScroll, { passive: true });
 window.addEventListener("resize", function () { measure(); syncScroll(); });
 
+/* ── scroll memory: coming back to a page lands where you left it ── */
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+var SCROLL_KEY = "askesis-scroll:" + location.pathname + location.search;
+var saveT = null;
+function scrollPos() {
+  if (window.innerWidth < 900) return window.scrollY || document.documentElement.scrollTop || 0;
+  return sheet ? sheet.scrollTop : 0;
+}
+function saveScroll() {
+  try { sessionStorage.setItem(SCROLL_KEY, String(Math.round(scrollPos()))); } catch (e) {}
+}
+function queueSave() { window.clearTimeout(saveT); saveT = window.setTimeout(saveScroll, 120); }
+function restoreScroll() {
+  var raw;
+  try { raw = sessionStorage.getItem(SCROLL_KEY); } catch (e) { return; }
+  if (raw === null) return;
+  var y = parseInt(raw, 10) || 0;
+  if (y < 1 || scrollPos() >= y - 2) return;
+  if (window.innerWidth < 900) {
+    window.scrollTo(0, y);
+  } else if (sheet) {
+    if (y > GROW_PX) applyGrow(1);
+    sheet.scrollTop = y;
+    measure(); syncScroll();
+  }
+}
+window.addEventListener("scroll", queueSave, { passive: true });
+if (sheet) sheet.addEventListener("scroll", queueSave, { passive: true });
+window.addEventListener("pagehide", saveScroll);
+window.addEventListener("beforeunload", saveScroll);
+
 /* ── scroll reveal ── */
 var io = new IntersectionObserver(function (entries) {
   entries.forEach(function (en) {
@@ -454,7 +485,6 @@ document.addEventListener("keydown", function (ev) {
       ev.preventDefault(); var r = lastResults[focused]; closeSearch(); location.href = r.to; return;
     }
   }
-  if (ev.key.toLowerCase() === "r" && !typing && searchPop && searchPop.hidden) { ev.preventDefault(); surprise(); }
 });
 
 /* ── glossary popover ── */
@@ -484,9 +514,10 @@ wireDoc();
 wireSeries();
 fitStage();
 syncScroll();
+restoreScroll();
 watchRv(document);
-window.addEventListener("load", function () { measure(); syncScroll(); });
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); syncScroll(); });
+window.addEventListener("load", function () { measure(); restoreScroll(); syncScroll(); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); restoreScroll(); syncScroll(); });
 
 /* privacy-light: no cookies, no trackers. Local notes + recents only. */
 })();

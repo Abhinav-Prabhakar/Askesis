@@ -89,6 +89,7 @@ entrances 240–300ms · ticker 32s linear.
 | **Sheet-grow (scrubbed)** | any scroll; doc view opens | `--gp` (0→1) is written from `scrollTop/240` on the sheet's scroll event (forced 1 in doc view) — no lerp, no transition lag. Sheet geometry, scene parallax, and masthead fade are pure `calc()` off `--gp`. `.is-grown` (>0.5) is a chrome-only hook. Disabled <900px. |
 | **Scroll reveal** | element enters viewport | `.rv` → `.in` via one `IntersectionObserver` (`watchRv()`); stagger `--d` = sibling index × 35ms, capped 5. Uses the `translate` property so hover transforms keep working. |
 | **Whole-page scroll frame** | wheel or paging keys anywhere on stage | Wheel over red scenery forwards to the sheet (`ctrl` = pinch-zoom untouched). `Arrows/Space/PgUp/PgDn/Home/End` page the sheet when focus is on no control. No CSS smooth-scroll: the sheet tracks the gesture exactly. `scroll-padding-top: 110px` keeps anchors clear of the sticky bar. |
+| **Scroll memory** | leaving / returning to any page | The sheet's `scrollTop` (window scroll <900px) is written to `sessionStorage` under the page path, debounced on scroll and flushed on `pagehide` / `beforeunload`. `history.scrollRestoration = "manual"`; boot and `load` / `fonts.ready` restore the saved position, re-applying the grown sheet first when needed. New tabs still start at the top. |
 | **Search entrance** | popover opens | `pop` keyframe on popover; `rise` stagger on results (`nth-child` delays). |
 | **Dice** | hover/active on Surprise | `dice-roll` (180°). |
 | **Hero micro-motion** | always, per-motif | Each hero motif lives a little: masks drift, fork endpoints pulse, the eye looks around, the veil sways, scales tip, NOW bobs, the cogito heartbeat. Translate/opacity keyframes only, scoped to `.hero-art` (still in `.t-art` cells), silenced under reduced motion. |
@@ -217,7 +218,8 @@ wire `related` both ways, extend `INDEX` (automatic), add atlas dot
   (`freedom→free will`, `mary→qualia`…); empty query returns 8; cap 9.
 - Filter axis: All / Entries (+soon) / Thinkers / Puzzles / Schools.
 - Keys: `/` or `⌘K` open · `Esc` close · `J/K` or arrows move ·
-  `Enter` open · `R` surprise (when not typing).
+  `Enter` open. Surprise is button-only — no bare-letter shortcut, so
+  browser keys (`⌘/Ctrl+R`, `R` while reading) never navigate at random.
 - Skip link to sheet · `aria-live` results + toast · `role=dialog` search ·
   focus moved to sheet on route change · 44px minimum targets ·
   dotted-underline affordance for glossary · reduced-motion respected ·
