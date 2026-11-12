@@ -91,6 +91,7 @@ ticker 32s linear.
 | **Whole-page scroll frame** | wheel or paging keys anywhere on stage | Wheel over red scenery forwards to the sheet (`ctrl` = pinch-zoom untouched). `Arrows/Space/PgUp/PgDn/Home/End` page the sheet when focus is on no control. `scroll-behavior: smooth` + `scroll-padding-top: 110px`; sticky bar never covers anchors. |
 | **Search entrance** | popover opens | `pop` keyframe on popover; `rise` stagger on results (`nth-child` delays). |
 | **Dice** | hover/active on Surprise | `dice-roll` (180°). |
+| **Hero micro-motion** | always, per-motif | Each hero motif lives a little: masks drift, fork endpoints pulse, the eye looks around, the veil sways, scales tip, NOW bobs, the cogito heartbeat. Translate/opacity keyframes only, scoped to `.hero-art` (still in `.t-art` cells), silenced under reduced motion. |
 | **Arrows** | hover on daily / featured | `nudge-x` loop. |
 | **Ticker** | always (pauses on hover) | `tick` marquee, duplicated content. |
 | **Grip hint** | 1.8s after load, 3 pulses | `grip-pulse`; removed on first grow. |
@@ -120,7 +121,7 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Start / Featured | `.duo` `.start-card` `.featured-mini` | Ink vs purple pair, kicker + display title + sub. Steps dots on Start. |
 | Section titles | `.series-title` `.section-sub` | Bebas 54px + 14px muted sub. Every section gets both; no orphan headings. Auto-numbered `SHELF 01…` via CSS counter on `#view-explore` (encyclopedia rhythm, zero markup). |
 | Stats line | `.stats` `#statsRow` | One auto-counted line (`N SHELVES · N OPEN · …`) rendered by `renderExplore()`. Muted 11px kicks; counts update themselves when data grows. |
-| Topic cards | `.topics` `.topic` | Pink, Bebas 30px, number + `read · tradition` meta. 3-col grid → 2-col mobile. The newest shelf spans full width (`:last-child:nth-child(3n+1)` / mobile `2n+1`). |
+| Topic cards | `.topics` `.topic` `.t-art` | Pink, Bebas 30px, number + `read · tradition` meta. 3-col grid → 2-col mobile. The newest shelf spans full width (`:last-child:nth-child(3n+1)` / mobile `2n+1`). Each card carries a 56px art cell with its hero motif cropped (`slice`) — the grid reads as a gallery wall, not a list. Art is still in heroes; motion is disabled in cells. |
 | Series cards | `.series-row` `.series-card` `.series-art` `.dots` | Purple, 92px art cell, 5-segment dot meter (first filled). |
 | Experiment cards | `.exp-row` `.exp-card` `.exp-art` | White, 74px art band tinted per puzzle, byline meta. 4-col → 2-col mobile. |
 | Atlas | `.atlas` `.era` `.dot` | 4 era cards (name + span + dots). Filled dots = published (numbered), hollow dashed = soon (✎). Dots are the links. |
@@ -129,10 +130,11 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Recent | `.recent` `.recent-row` | Rendered only when non-empty; max 3. |
 | Ticker | `.ticker` `.ticker-in` | Ink strip, Bebas 26px, aria-hidden, pause on hover. |
 | Footer | `.sheet-foot` `.seal` | Meta line + links + giant faint `Æ` watermark (`rgba ink .08`, 168px). |
-| Reader bar | `.doc-top` `.back` `.doc-tools` `.tool` | Back link + Aa / Listen / Share. Sticks to sheet top when grown (desktop) or always (mobile). |
+| Reader bar | `.doc-top` `.back` `.doc-tools` `.tool` `.doc-now` | Back link + entry title + Aa / Listen / Share. Title centers itself, ellipsizes, and only appears when the sheet is grown (desktop) — context without chrome. Sticks to sheet top when grown (desktop) or always (mobile). |
 | Crumbs | `.crumbs` `.crumb` `.readtime` | `.p` pink = tradition, `.u` purple = format; read-time is an ink pill. |
-| Entry head | `.doc-title` `.doc-hook` `.doc-stand` | 84px title (56 mobile), 21px semibold hook, muted standfirst. |
-| Hero | `.hero` `.hero-art` `.hero-cap` | 220px art cell (pink/purple/cream-2) + kicker/big/sub. Grid → stacked mobile. |
+| Entry head | `.doc-title` `.doc-hook` `.doc-stand` | 84px title (56 mobile), 21px semibold hook, muted standfirst. Hook opens with an ink drop-cap (`::first-letter`, Bebas, cream on ink) — the entry starts like print. |
+| Hero | `.hero` `.hero-art` `.hero-cap` `.stamp` | 220px art cell (pink/purple/cream-2) + kicker/big/sub. Grid → stacked mobile. A rotated ink press stamp (`2 MIN · EDITED` / `1 MIN · PUZZLE` / `BEING WRITTEN`) pins the corner like a library due-date slip. Hero motifs carry micro-motion (drift, pulse, look, sway, pans, bob, beat — translate/opacity only, still in topic cells, off under reduced motion). |
+| Sections | `.doc-sec` | `h2` gets a 14px red chip marker; sections auto-number as `CHAPTER 01…` kickers via CSS counter on `#view-doc` — every entry reads like a booklet, zero markup. |
 | Breath | `.breath` | White card, red-chip kicker `IN ONE BREATH`, 17px summary. |
 | Sections | `.doc-sec` | `h2` gets a 14px red chip marker (`::before`); paragraphs `--paper-ink`, 16.5px/1.65. |
 | Positions | `.positions` `.position` `.avatar` | 3 cards (cream/white/pink), 44px ink medallion initial, `01–03` numerals. |
@@ -149,6 +151,7 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | 404 | `.nf` `.nf-art` | Broken-column SVG + `LOST PAGE` + 3 doors. Same voice as everything else. |
 | Search | `.search-pop` `.search-field` `.filters` `.sr` | Cream popover; type badges (pink entry, purple series, dashed soon, white rest); empty state suggests 3 entries; `aria-live` results. |
 | Glossary | `button.g` `.g-tip` | Dotted-red-underline terms open an ink popover near the term. 8 terms in `GLOSS`. |
+| The Index | `.az` `#azRow` `#azPanel` | A–Z shelf browser: 26 letter tiles (13-col → 7-col mobile), lit pink when shelves exist, dashed hollow when not. Tapping a lit letter expands an ink-bordered panel of that letter's shelves. Pure encyclopedia furniture — no new surface, no search round-trip. |
 | Toast | `.toast` | Ink pill, bottom-center, 2.2s. One message at a time. |
 
 ---
