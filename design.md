@@ -86,8 +86,9 @@ ticker 32s linear.
 
 | Behavior | Trigger | Implementation |
 |---|---|---|
-| **Sheet-grow** | doc view opens, or sheet scrolled >24px, or grip tap | `.explore-panel.is-grown` (`top 276→36px`, radius `6→10px`) + `.stage.grown` (scene parallax `-30px`, masthead fades). Reversed when back at top of Explore. Disabled <900px (sticky bar instead). |
+| **Sheet-grow (scrubbed)** | any scroll; doc view opens; grip tap | `--gp` (0→1) is written every frame by `growLoop()` from `scrollTop/240` (forced 1 in doc view / by grip). Sheet geometry, scene parallax, and masthead fade are pure `calc()` off `--gp` — no transition lag. Lerp `0.16` keeps it buttery; reduced motion snaps. `.is-grown` (>0.5) is a chrome-only hook. Disabled <900px. |
 | **Scroll reveal** | element enters viewport | `.rv` → `.in` via one `IntersectionObserver` (`watchRv()`); stagger `--d` = sibling index × 55ms, capped 8. Uses the `translate` property so hover transforms keep working. |
+| **Whole-page scroll frame** | wheel or paging keys anywhere on stage | Wheel over red scenery forwards to the sheet (`ctrl` = pinch-zoom untouched). `Arrows/Space/PgUp/PgDn/Home/End` page the sheet when focus is on no control. `scroll-behavior: smooth` + `scroll-padding-top: 110px`; sticky bar never covers anchors. |
 | **Search entrance** | popover opens | `pop` keyframe on popover; `rise` stagger on results (`nth-child` delays). |
 | **Dice** | hover/active on Surprise | `dice-roll` (180°). |
 | **Arrows** | hover on daily / featured | `nudge-x` loop. |
@@ -117,7 +118,9 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Daily question | `.daily` | White card, ink kicker pill, 17px semibold question, nudging arrow. One line, links to an entry. |
 | Topic cards | `.topics` `.topic` | Pink, Bebas 30px, number + `read · tradition` meta. 3-col grid → 2-col mobile. |
 | Start / Featured | `.duo` `.start-card` `.featured-mini` | Ink vs purple pair, kicker + display title + sub. Steps dots on Start. |
-| Section titles | `.series-title` `.section-sub` | Bebas 54px + 14px muted sub. Every section gets both; no orphan headings. |
+| Section titles | `.series-title` `.section-sub` | Bebas 54px + 14px muted sub. Every section gets both; no orphan headings. Auto-numbered `SHELF 01…` via CSS counter on `#view-explore` (encyclopedia rhythm, zero markup). |
+| Stats line | `.stats` `#statsRow` | One auto-counted line (`N SHELVES · N OPEN · …`) rendered by `renderExplore()`. Muted 11px kicks; counts update themselves when data grows. |
+| Topic cards | `.topics` `.topic` | Pink, Bebas 30px, number + `read · tradition` meta. 3-col grid → 2-col mobile. The newest shelf spans full width (`:last-child:nth-child(3n+1)` / mobile `2n+1`). |
 | Series cards | `.series-row` `.series-card` `.series-art` `.dots` | Purple, 92px art cell, 5-segment dot meter (first filled). |
 | Experiment cards | `.exp-row` `.exp-card` `.exp-art` | White, 74px art band tinted per puzzle, byline meta. 4-col → 2-col mobile. |
 | Atlas | `.atlas` `.era` `.dot` | 4 era cards (name + span + dots). Filled dots = published (numbered), hollow dashed = soon (✎). Dots are the links. |
