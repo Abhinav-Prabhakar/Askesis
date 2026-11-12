@@ -44,9 +44,13 @@ function fitStage() {
     stage.style.height = "";
     return;
   }
-  var s = window.innerWidth / 1600;
-  stage.style.transform = "scale(" + s + ")";
-  stage.style.height = Math.max(959, window.innerHeight / s) + "px";
+  var w = window.innerWidth, h = window.innerHeight;
+  // Fit the whole art-board: never let the sheet run past the bottom of
+  // the window, and centre the board when the window is very wide.
+  var s = Math.min(w / 1600, h / 959);
+  var x = (w - 1600 * s) / 2;
+  stage.style.transform = "translateX(" + x + "px) scale(" + s + ")";
+  stage.style.height = Math.max(959, h / s) + "px";
 }
 window.addEventListener("resize", fitStage);
 
@@ -105,8 +109,12 @@ function wireAZ(home) {
     if (isOpen) { panelEl.hidden = true; return; }
     var items = (home.az[L] || []).slice().sort(function (a, c) { return a.title.localeCompare(c.title); });
     panelEl.setAttribute("data-letter", L);
+    panelEl.setAttribute("data-count", items.length);
     panelEl.innerHTML = items.map(function (r) {
-      return '<a href="' + BASE + r.to.replace(/^\/+/, "") + '"><span>' + r.title.toUpperCase() + "</span><small>" + r.sub + "</small></a>";
+      return '<a href="' + BASE + r.to.replace(/^\/+/, "") + '">' +
+        '<span class="az-call">' + L + '</span>' +
+        '<span class="az-t">' + r.title.toUpperCase() + '</span>' +
+        '<small><b>' + String(r.type || "").toUpperCase() + '</b> · ' + r.sub + '</small></a>';
     }).join("");
     panelEl.hidden = false;
     b.classList.add("on"); b.setAttribute("aria-expanded", "true");
@@ -200,26 +208,42 @@ function wireDoc() {
 /* ── series pages ── */
 function wireSeries() {
   var track = $("#svTrack"); if (!track) return;
-  var dots = $$("#svDots i");
+  var dots = $$("#svDots .sv-seg");
+  var cards = $$(".sv-card", track);
+  var count = $("#svCount");
+  var prev = $("#svPrev"), next = $("#svNext");
+  var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var go = function (i) {
     var w = track.clientWidth;
-    track.scrollTo({ left: i * w, behavior: "smooth" });
+    track.scrollTo({ left: i * w, behavior: calm ? "auto" : "smooth" });
   };
   var cur = function () { return Math.round(track.scrollLeft / track.clientWidth); };
-  var prev = $("#svPrev"), next = $("#svNext");
+  var state = function () {
+    var c = Math.min(dots.length - 1, Math.max(0, cur()));
+    dots.forEach(function (d, i) {
+      d.classList.toggle("on", i <= c);
+      d.classList.toggle("cur", i === c);
+      if (i === c) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current");
+    });
+    if (count) {
+      var title = cards[c] ? cards[c].getAttribute("data-title") : "";
+      count.textContent = "CARD " + (c + 1 < 10 ? "0" : "") + (c + 1) + " / " + (dots.length < 10 ? "0" : "") + dots.length + (title ? " · " + title.toUpperCase() : "");
+    }
+    if (prev) prev.disabled = c === 0;
+    if (next) next.setAttribute("aria-label", c === dots.length - 1 ? "Read the full entry" : "Next card");
+  };
   if (prev) prev.onclick = function () { go(Math.max(0, cur() - 1)); };
   if (next) next.onclick = function () {
-    if (cur() >= dots.length - 1) { location.href = BASE + "entry/sartre-bad-faith/"; return; }
+    if (cur() >= dots.length - 1) { location.href = next.getAttribute("data-next") || BASE + "entry/sartre-bad-faith/"; return; }
     go(cur() + 1);
   };
-  track.onscroll = function () {
-    var c = Math.min(dots.length - 1, Math.max(0, cur()));
-    dots.forEach(function (d, i) { d.classList.toggle("on", i <= c); });
-  };
+  dots.forEach(function (d, i) { d.onclick = function () { go(i); }; });
+  track.onscroll = state;
   track.onkeydown = function (ev) {
     if (ev.key === "ArrowRight") { ev.preventDefault(); if (next) next.click(); }
     if (ev.key === "ArrowLeft") { ev.preventDefault(); if (prev) prev.click(); }
   };
+  state();
 }
 
 /* ── progress hairline + growing sheet (scrubbed to scroll) ── */

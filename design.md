@@ -118,13 +118,14 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Topic cards | `.topics` `.topic` | Pink, Bebas 30px, number + `read · tradition` meta. 3-col grid → 2-col mobile. |
 | Start / Featured | `.duo` `.start-card` `.featured-mini` | Ink vs purple pair, kicker + display title + sub. Steps dots on Start. |
 | Section titles | `.series-title` `.section-sub` | Bebas 54px + 14px muted sub. Every section gets both; no orphan headings. Auto-numbered `SHELF 01…` via CSS counter on `#view-explore` (encyclopedia rhythm, zero markup). |
-| Stats line | `.stats` `#statsRow` | One auto-counted line (`N SHELVES · N OPEN · …`) rendered by `renderExplore()`. Muted 11px kicks; counts update themselves when data grows. |
+| Stats line | `.stats` `#statsRow` | One auto-counted line (`N SHELVES · N THINKERS · …`) rendered at build time from data. Muted 11px kicks; counts update themselves when data grows. |
 | Topic cards | `.topics` `.topic` `.t-art` | Pink, Bebas 30px, number + `read · tradition` meta. 3-col grid → 2-col mobile. The newest shelf spans full width (`:last-child:nth-child(3n+1)` / mobile `2n+1`). Each card carries a 56px art cell with its hero motif cropped (`slice`) — the grid reads as a gallery wall, not a list. Art is still in heroes; motion is disabled in cells. |
-| Series cards | `.series-row` `.series-card` `.series-art` `.dots` | Purple, 92px art cell, 5-segment dot meter (first filled). |
+| Mini scrolls | `.series-row` `.series-card` `.series-art` `.scroll-rod` `.seals` | Rolled-papyrus cards: white field, ink roller rods on both edges (finial caps past the card boundary), 108px woodblock art cell (`seriesArt(i)` 118×118), kicker `SCROLL Nº 01 · 60″`, Bebas title, five wax-seal dots — first broken (red). Hover nudges `UNROLL →`. |
 | Experiment cards | `.exp-row` `.exp-card` `.exp-art` | White, 74px art band tinted per puzzle, byline meta. 4-col → 2-col mobile. |
-| Atlas | `.atlas` `.era` `.dot` | 4 era cards (name + span + dots). Filled dots = published (numbered), hollow dashed = soon (✎). Dots are the links. |
-| Coming soon | `.soon-grid` `.ghost` | Dashed-border cards; solid + lift on hover. Tag pill `BEING WRITTEN`. |
-| Chips | `.chips` (+ `.filters`) | Cream pills, pink `.alt` for traditions, ink `.on` for active filter. |
+| Atlas | `.atlas` `.atlas-era` `.e-map` `.e-lines` `.dot` | An ink star-chart plate, not four cards: `THE ATLAS · FOUR FIELDS` plate bar, four era fields divided by dashed rules, roman numeral + name + span from `ERAS`, and a constellation map per era (cream dashed `e-lines` + star dots). Published entries are numbered 44px pink/lilac stars with ring + crosshair; soon entries are hollow dashed stars (✎). Each field carries a faint `eraArt(name)` sigil (column, arch, telescope, orbit), a `N SHELVES · Nº 0X/04` footer, and the dot is still the link. Ink plate footer holds the published/being-written legend and `OLDEST FIRST`. Mobile: 2×2 fields, dots flow inline, constellations drop away. |
+| Atlas era field | `.atlas-era` `.e-rom` `.e-name` `.e-map` `.e-sigil` | `atlas-era` (not `.era`) keeps the star-chart field independent of the entry `.era-ribbon`; never reuse `.era` for new Atlas work. |
+| The Schools | `.schools` `.crest` `.crest-art` | Traditions as heraldic crests: heater-shield SVG (`crestArt()` 96×108; pink/purple/cream-2 field by school; Sisyphus boulder / column / question / arch-star / door-ajar / gavel sigils), name + entry count below. 6-col → 3-col mobile → 2-col small phones. Replaces the old chip wall. |
+| Chips | `.chips` (+ `.filters`) | Cream pills, ink `.on` for the active filter. Used by the search popover's type filters. |
 | Recent | `.recent` `.recent-row` | Rendered only when non-empty; max 3. |
 | Ticker | `.ticker` `.ticker-in` | Ink strip, Bebas 26px, aria-hidden, pause on hover. |
 | Footer | `.sheet-foot` `.seal` | Meta line + links + giant faint `Æ` watermark (`rgba ink .08`, 168px). |
@@ -141,11 +142,10 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Era ribbon | `.era-ribbon` `.era.now` | `WHERE THIS SITS`: all four eras with date spans from `ERAS`; the entry's era is an ink cell with a pink `◉ THIS ENTRY` marker. 4-col → 2×2 mobile. |
 | Chapter index | `.toc` | `IN THIS ENTRY · FIVE STOPS`: anchor links (01–05) to tension/positions/argument/duel/quote with dot leaders + ink number chips. Hidden in print; `scroll-margin-top` keeps targets clear of the sticky bar. |
 | Read next | `.readnext` `.rel-grid` `.call` | Max 3 cards (pink/purple/white rotation). Catalogue `CALL Nº 07` ink chips — the shelf mark, not just a link. |
-| The Cast | `.cast` `.cast-card` `.cast-face` | Thinker face gallery on Explore: 4-col medallion cards (initial, name, years · school; pink/cream rotation), 2-col mobile. Picks a face instead of a chip. |
+| The Cast | `.cast-stage` `.cast` `.cast-card` `.cast-face` | An ink stage (red scalloped pelmet above, cream footlight dots below): nine playbill cards — `Nº` chip, flat two-tone SVG portrait (`thinkerPortrait()` 96×96; glasses, wig, mustache, beard, tonsure, bat, …), name, years · school, entry count link. 9-col → 3-col mobile → 2-col small phones. Pick a face instead of a chip. |
 | Tug of war | `.tug` `.tug-rope` `.knot` | The tension section ends in a rope pull: position 1 vs position 3 (names + verdict tags from data — no new copy, nothing quantified, the knot stays centered), red knot on an ink rope. Stacks on mobile, prints flat. Emblematic, not metric. |
 | Margin filing slip | `.breath-file` | Wide screens (≥1200px) only: the breath card splits into summary + a cream-2 filing slip (`Nº 07 · tradition · era · read time`). Redundant meta, so hidden below 1200px and reference-marked, not read twice. |
 | NEW stamp | `.topic.latest` `.new-stamp` | The newest shelf (last in `ENTRIES`) carries a rotated red `NEW` stamp, computed in the template — no data flag to rot. Sits on the full-width latest card. |
-| Completion plaque | `.plaque` | When `SOON` empties, COMING SOON becomes SHELVES COMPLETE: an ink plaque with the Æ seal and a live `N OF N SHELVES OPEN` count. The ghost wall retires itself. |
 | Colophon | `.colophon` | Every entry ends with the printer's mark: `SET IN BEBAS NEUE & HELVETICA · PRINTED ON CREAM · ENTRY Nº 07 OF 12`. Dashed rule, muted kicks, centered. |
 | Quote poster | `.quote::after` | Giant pink `“` (190px Bebas) hangs behind the quote — the card reads as a poster, not a paragraph. Screen + print, `aria`-neutral pseudo-element. |
 | Figures | `.fig` `.fig-art` `figcaption` | Bordered diagram + `FIG. N — caption`. Art bg rotates pink/purple/cream-2. Caption ≤12 words. |
@@ -153,14 +153,15 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Read next | `.readnext` `.rel-grid` | Max 3 cards (pink/purple/white rotation). |
 | Prev / Next | `.prevnext` | Two white cards; fallbacks: back-to-explore / start-here. |
 | Cite / Notes | `.extras` `.cite` `.notes` | Tabs APA/MLA/BibTeX + copy; textarea persisted to `localStorage` per slug. |
-| Series viewer | `.series-view` `.sv-track` `.sv-card` `.sv-bar` `.sv-dots` | Ink 5-card snap track, giant faint numerals (`data-n`), ←/→ bar, dots fill with progress. Last → jumps to entry. |
+| Series viewer | `.series-view` `.sv-track` `.sv-stage` `.sv-card` `.sv-art` `.sv-copy` `.sv-bar` `.sv-dots` `.sv-seg` | An unrolled papyrus on an ink stage: cream paper card between two scroll rods, a large illustrated art pane (`seriesCardArt(slug, i)`) and a copy pane (card number, Bebas title, rule, body, footer cue), giant faint `01–05` numeral behind. The bar carries `←` / five roman-numeral segments with a live `CARD 0X / 05 · TITLE` count / `→`; selected segment is purple, current card is ringed, first `←` is disabled. Last `→` becomes `END OF SCROLL` and follows `data-next` to the matching full entry. Mobile: single column (art above copy), rods hidden, bar stays prev / rail / next in one row. |
+| Series hero | `.series-hero` `.series-plate` `.series-art` `.series-stamp` `.series-seals` | 92–120px framed plate with `seriesArt(i)` woodblock, rotated `60″` stamp, kicker `MINI SCROLL Nº 0X · 60″`, title, standfirst, five seal dots (first broken red). |
 | Thinker | `.person` `.face` | 120px medallion (school tint + white inset ring), name/years/school/line, entry links. |
 | Tradition | `.school` `.mark` | Square 120px initial mark (pink/purple/cream-2 by color), short version, orientation how-to, entries. |
 | Stub (soon) | reuses `.hero` `.howto` `.readnext` | `BEING WRITTEN` pill, dashed scroll art (`soonArt()`), 3 locked points, published alternatives. Route `#/soon/:slug`. |
 | 404 | `.nf` `.nf-art` | Broken-column SVG + `LOST PAGE` + 3 doors. Same voice as everything else. |
 | Search | `.search-pop` `.search-field` `.filters` `.sr` `.s-keys` | Cream popover; type badges (pink entry, purple series, dashed soon, white rest); empty state suggests 3 entries; `aria-live` results. Footer kbd-hint strip (`↑↓ MOVE · ↵ OPEN · ESC CLOSE`, `aria-hidden` — screen readers already get roles/live regions). |
 | Glossary | `button.g` `.g-tip` | Dotted-red-underline terms open an ink popover near the term. 8 terms in `GLOSS`. |
-| The Index | `.az` `#azRow` `#azPanel` | A–Z shelf browser: 26 letter tiles (13-col → 7-col mobile), lit pink when shelves exist, dashed hollow when not. Tapping a lit letter expands an ink-bordered panel of that letter's shelves. Pure encyclopedia furniture — no new surface, no search round-trip. |
+| The Index | `.az` `#azRow` `.az-case` `.az-cornice` `.az-books` `.book` `.az-plank` `.az-panel` | A framed two-tier bookcase, still pure encyclopedia furniture. Ink cornice (`THE INDEX` / `A–Z · 26 SPINES · 33 CARDS`) over a cream interior; 26 spine buttons in two 13-spine tiers with seeded heights, tilts and pastel `--spine` colours, headbands, diamond marks and count tickets. Books lean at the ends against ink bookends; a lit spine lifts off the plank, and the open one turns ink with a pink label and red ribbon. Shelf plates read `A–M` / `N–Z` with tier totals; the base plinth carries the library line, `PULL A LIT SPINE →` and `CATALOGUE Nº 06`. Tapping opens the card-catalogue drawer: call-letter chips, title, and right-aligned type · meta (stacked under the title on mobile). Mobile: each tier scrolls horizontally (snap), bookends hide, and the spines keep their physical proportions instead of compressing into 13 columns. No new surface, no search round-trip. |
 | Toast | `.toast` | Ink pill, bottom-center, 2.2s. One message at a time. |
 
 ---
@@ -173,7 +174,7 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
   `aria-hidden`. Informative diagrams get `role="img"` + `aria-label`.
 - Heroes: `heroSVG(slug)` 200×150 per entry. Figures: `figureSVG(slug)`
   430×150 + ≤12-word caption. Experiments: `expArt()` 120×74.
-  Series thumbs: `seriesArt(i)` 92×92. Stubs share `soonArt()`.
+  Series art: `seriesArt(i)` 118×118 woodblock scenes; the viewer uses `seriesCardArt(slug, i)` per card. Atlas sigils: `eraArt(name)`. Thinker portraits: `thinkerPortrait()` 96×96. Tradition crests: `crestArt()` 96×108. Stubs share `soonArt()`.
 - No emojis as iconography. `✎ → ← ∴ ·` glyphs are fine (type, not emoji).
 - Big faint numerals (`sv-card::after`, `.seal`) use `--display` at low
   opacity — never photographic, never stroked text.
@@ -228,7 +229,9 @@ wire `related` both ways, extend `INDEX` (automatic), add atlas dot
 - **<900px:** true composition — stacked scene (360px; top card row hidden,
   lower card strip below the masthead), full-width sheet, 2-col topics/puzzles,
   1-col everything else, horizontal series snap, sticky reader bar, fixed
-  search button. Grow disabled.
+  search button. Atlas folds to a 2×2 star chart; each Index tier scrolls
+  horizontally and the series bar stays prev / rail / next in one row. Grow
+  disabled.
 - **Print:** one clean cream page of the open entry; scenery, tools,
   navigation, ticker, seal hidden; shadows off.
 - **RSS** (`feed.xml`) mirrors entries. **Sitemap** is a build-time route (`src/pages/sitemap.xml.ts`, generated from `library.js` — never drifts) plus `robots.txt` pointing at it. **PWA** is manifest-only for now —

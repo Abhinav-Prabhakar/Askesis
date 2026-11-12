@@ -2,29 +2,72 @@
 import Base from "../../layouts/Base.astro";
 import ToolBar from "../../components/ToolBar.astro";
 import { SERIES } from "../../data/library.js";
+import { seriesArt, seriesCardArt } from "../../lib/svg.js";
 import { u } from "../../lib/url.js";
 
 export function getStaticPaths() {
   return SERIES.map(s => ({ params: { slug: s.slug }, props: { series: s } }));
 }
 const { series: s } = Astro.props;
+const idx = SERIES.findIndex((x: any) => x.slug === s.slug);
+const ROMAN = ["I", "II", "III", "IV", "V"];
+const TINTS = ["cream", "pink", "purple", "cream", "pink"];
+const NEXT_ENTRY: Record<string, string> = { "bad-faith-60": "sartre-bad-faith", "free-will-60": "free-will" };
+const nextSlug = NEXT_ENTRY[s.slug] || "sartre-bad-faith";
+const pad2 = (n: number) => String(n).padStart(2, "0");
 ---
 <Base title={`${s.title} — Askēsis`} description="One idea in 5 cards." view="doc">
   <article class="view is-active" id="view-doc" aria-live="off">
     <ToolBar backTo={u("")} backLabel="EXPLORE" nowTitle={s.title} />
     <nav class="crumbs"><span class="crumb u">MINI SCROLL SERIES</span><span class="crumb">{s.meta}</span></nav>
-    <h1 class="doc-title">{s.title}</h1>
-    <p class="doc-stand rv">Swipe or use ← →. Five cards, about a minute. No account, no autoplay, no noise.</p>
-    <div class="series-view rv">
-      <div class="sv-track" id="svTrack" tabindex="0" aria-label={`${s.title} cards`}>
-        {s.cards.map((c: any, i: number) => (
-          <div class="sv-card" data-n={i + 1}><span class="n">CARD {i + 1} / 5</span><span class="t">{c.t.toUpperCase()}</span><p>{c.p}</p></div>
-        ))}
+    <div class="series-hero rv">
+      <div class="series-plate">
+        <span class="series-art" aria-hidden="true" set:html={seriesArt(idx)}></span>
+        <span class="series-stamp" aria-hidden="true">60″</span>
       </div>
-      <div class="sv-bar"><button type="button" id="svPrev" aria-label="Previous card">←</button>
-        <div class="sv-dots" id="svDots" aria-hidden="true">{s.cards.map((_: any, i: number) => <i class={i === 0 ? "on" : ""}></i>)}</div>
-        <button type="button" id="svNext" aria-label="Next card">→</button></div>
+      <div class="series-hcopy">
+        <span class="series-kicker">MINI SCROLL Nº {pad2(idx + 1)} · 60″</span>
+        <h1 class="doc-title">{s.title}</h1>
+        <p class="doc-stand">Swipe or use ← →. Five cards, about a minute. No account, no autoplay, no noise.</p>
+        <span class="series-seals" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span>
+      </div>
     </div>
-    <div class="prevnext"><a href={u("")}><small>←</small><b>BACK TO EXPLORE</b></a><a href={u("entry/sartre-bad-faith/")}><small>NEXT →</small><b>READ THE FULL ENTRY</b></a></div>
+    <div class="series-view rv">
+      <div class="sv-top">
+        <span class="sv-k">MINI SCROLL · {s.meta}</span>
+        <span class="sv-m">FIVE CARDS · ONE MINUTE</span>
+      </div>
+      <div class="sv-stage">
+        <span class="sv-rod sv-rod--l" aria-hidden="true"></span>
+        <span class="sv-rod sv-rod--r" aria-hidden="true"></span>
+        <div class="sv-track" id="svTrack" tabindex="0" aria-label={`${s.title} cards`}>
+          {s.cards.map((c: any, i: number) => (
+            <article class="sv-card" data-n={pad2(i + 1)} data-title={c.t}>
+              <div class={`sv-art ${TINTS[i] || "cream"}`} aria-hidden="true" set:html={seriesCardArt(s.slug, i)}></div>
+              <div class="sv-copy">
+                <span class="n">CARD {pad2(i + 1)} / 05 · {ROMAN[i]}</span>
+                <span class="t">{c.t.toUpperCase()}</span>
+                <span class="sv-rule" aria-hidden="true"></span>
+                <p>{c.p}</p>
+                <span class="sv-foot"><span>{s.meta}</span><span class="sv-cue">{i === 4 ? "END OF SCROLL" : "UNROLL →"}</span></span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+      <div class="sv-bar">
+        <button type="button" id="svPrev" aria-label="Previous card">←</button>
+        <div class="sv-rail">
+          <span class="sv-count" id="svCount" aria-live="polite">CARD 01 / 05</span>
+          <div class="sv-dots" id="svDots" role="group" aria-label="Cards">
+            {s.cards.map((c: any, i: number) => (
+              <button type="button" class="sv-seg" aria-label={`Card ${i + 1}: ${c.t}`}><span>{ROMAN[i]}</span></button>
+            ))}
+          </div>
+        </div>
+        <button type="button" id="svNext" data-next={u(`entry/${nextSlug}/`)} aria-label="Next card">→</button>
+      </div>
+    </div>
+    <div class="prevnext"><a href={u("")}><small>←</small><b>BACK TO EXPLORE</b></a><a href={u(`entry/${nextSlug}/`)}><small>NEXT →</small><b>READ THE FULL ENTRY</b></a></div>
   </article>
 </Base>

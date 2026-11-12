@@ -25,9 +25,142 @@ export function expArt(e) {
   return `<svg viewBox="0 0 120 74" aria-hidden="true"><path d="M20 8 V58 M100 8 V58" stroke="#0a0505" stroke-width="7"/><rect x="20" y="14" width="80" height="26" fill="#fff8f4" ${B}/><circle cx="60" cy="52" r="7" fill="#0a0505"/></svg>`;
 }
 export function seriesArt(i) {
-  const B = 'stroke="#0a0505" stroke-width="6"';
-  if (i === 0) return `<svg viewBox="0 0 92 92" aria-hidden="true"><rect width="92" height="92" fill="#fadede"/><ellipse cx="34" cy="46" rx="18" ry="24" fill="#fff8f4" ${B}/><ellipse cx="60" cy="46" rx="18" ry="24" fill="#0a0505"/></svg>`;
-  return `<svg viewBox="0 0 92 92" aria-hidden="true"><rect width="92" height="92" fill="#fadede"/><path d="M12 46 H40 M40 46 C58 46 58 22 82 22 M40 46 C58 46 58 70 82 70" fill="none" ${B}/></svg>`;
+  const line = 'stroke="#0a0505" stroke-linecap="round" stroke-linejoin="round"';
+  if (i === 0) {
+    /* Bad Faith — a red valance over two masks, white smiling in front of ink frowning */
+    return `<svg viewBox="0 0 118 118" aria-hidden="true"><rect width="118" height="118" fill="#fbd7d7"/><path d="M0 0 H118 V16 L100 32 L82 16 L64 32 L46 16 L28 32 L10 16 L0 22 Z" fill="#d1393c" ${line} stroke-width="4"/><path d="M6 110 H112" ${line} stroke-width="4"/><ellipse cx="73" cy="64" rx="15" ry="19" fill="#0a0505"/><circle cx="68" cy="61" r="2.4" fill="#fadede"/><circle cx="78" cy="61" r="2.4" fill="#fadede"/><path d="M65 75 Q73 70 81 75" fill="none" ${line} stroke-width="3"/><ellipse cx="47" cy="74" rx="16" ry="20" fill="#fff8f4" ${line} stroke-width="4"/><circle cx="41.5" cy="70" r="2.6" fill="#0a0505"/><circle cx="53" cy="70" r="2.6" fill="#0a0505"/><path d="M40 84 Q47.5 89.5 55 84" fill="none" ${line} stroke-width="3"/></svg>`;
+  }
+  /* Free Will — one road forking toward two doors, the red dot at the fork */
+  return `<svg viewBox="0 0 118 118" aria-hidden="true"><rect width="118" height="118" fill="#fbd7d7"/><rect x="10" y="12" width="30" height="34" fill="#feabe3" ${line} stroke-width="4.5"/><circle cx="34" cy="30" r="1.8" fill="#0a0505"/><rect x="78" y="12" width="30" height="34" fill="#fff8f4" ${line} stroke-width="4.5"/><circle cx="85" cy="30" r="1.8" fill="#0a0505"/><path d="M59 118 V80 C59 66 40 66 25 48" fill="none" ${line} stroke-width="13"/><path d="M59 80 C59 66 78 66 93 48" fill="none" ${line} stroke-width="13"/><path d="M59 118 V80 C59 66 40 66 25 48" fill="none" stroke="#fbd7d7" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 9"/><path d="M59 80 C59 66 78 66 93 48" fill="none" stroke="#fbd7d7" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 9"/><circle cx="59" cy="97" r="6" fill="#d1393c" ${line} stroke-width="4"/></svg>`;
+}
+
+/* ── atlas era sigils — engraved line-work, cream on ink, 200×120 ── */
+export function eraArt(name) {
+  const S = 'fill="none" stroke="#fadede" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"';
+  if (name === "ANCIENT") {
+    /* a temple front — the first shelf */
+    return `<svg viewBox="0 0 200 120" aria-hidden="true"><path d="M26 100 H174 M34 92 H166" ${S}/><path d="M40 92 V54 M64 92 V54 M96 92 V54 M128 92 V54 M152 92 V54" ${S}/><path d="M30 54 H162 L96 24 Z" ${S}/><path d="M42 62 H150" ${S} stroke-dasharray="4 8"/><circle cx="96" cy="39" r="4" fill="#feabe3"/></svg>`;
+  }
+  if (name === "MEDIEVAL") {
+    /* a gothic arch with a rose window — faith seeking understanding */
+    return `<svg viewBox="0 0 200 120" aria-hidden="true"><path d="M38 102 V58 C38 30 66 15 96 8 C126 15 154 30 154 58 V102" ${S}/><path d="M60 102 V62 C60 42 76 30 96 24 C116 30 132 42 132 62 V102" ${S}/><path d="M96 24 V102" ${S} stroke-dasharray="4 8"/><circle cx="96" cy="58" r="14" ${S}/><path d="M96 46 V70 M84 58 H108" ${S}/><path d="M22 102 H178" ${S}/><circle cx="96" cy="10" r="3.5" fill="#d8aafe"/></svg>`;
+  }
+  if (name === "MODERN") {
+    /* an orrery / clockwork — reason putting the world in order */
+    return `<svg viewBox="0 0 200 120" aria-hidden="true"><circle cx="100" cy="62" r="32" ${S}/><ellipse cx="100" cy="62" rx="76" ry="26" ${S} transform="rotate(-16 100 62)"/><ellipse cx="100" cy="62" rx="64" ry="20" ${S} transform="rotate(26 100 62)"/><path d="M100 26 V34 M100 90 V98 M64 62 H72 M128 62 H136" ${S}/><circle cx="100" cy="62" r="7" fill="#feabe3"/><circle cx="165" cy="39" r="4" fill="#fadede"/><circle cx="37" cy="83" r="4" fill="#d8aafe"/><path d="M100 62 L116 50" ${S}/></svg>`;
+  }
+  /* contemporary — an eye inside its orbit, consciousness looking at itself */
+  return `<svg viewBox="0 0 200 120" aria-hidden="true"><ellipse cx="100" cy="62" rx="63" ry="30" ${S}/><ellipse cx="100" cy="62" rx="82" ry="46" ${S} stroke-dasharray="3 8"/><circle cx="100" cy="62" r="16" fill="#feabe3"/><circle cx="100" cy="62" r="6" fill="#0a0505"/><circle cx="172" cy="34" r="4" fill="#fadede"/><circle cx="24" cy="81" r="3" fill="#d8aafe"/><path d="M52 44 L70 54 M148 44 L130 54" ${S}/></svg>`;
+}
+
+/* ── mini-scroll plates — one woodblock illustration per card, 320×230 ── */
+export function seriesCardArt(slug, i) {
+  const K = 'stroke="#0a0505" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"';
+  const k = 'stroke="#0a0505" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"';
+  const F = (fill, w = 5) => `fill="${fill}" stroke="#0a0505" stroke-width="${w}" stroke-linejoin="round"`;
+
+  if (slug === "bad-faith-60") {
+    if (i === 0) {
+      /* the waiter — a role worn like a costume */
+      return `<svg viewBox="0 0 320 230" aria-hidden="true"><path d="M18 198 H302" ${K}/><path d="M92 198 V132 C92 112 108 100 128 100 H154 C174 100 190 112 190 132 V198 Z" fill="#0a0505" ${K}/><circle cx="141" cy="70" r="22" fill="#fbd7d7" ${K}/><path d="M119 64 Q141 42 163 64 Q141 55 119 64 Z" fill="#0a0505"/><path d="M129 100 L141 110 L153 100 L153 114 L141 106 L129 114 Z" fill="#d1393c" ${k}/><path d="M110 132 C88 128 72 118 58 108" fill="none" stroke="#0a0505" stroke-width="9" stroke-linecap="round"/><circle cx="54" cy="106" r="8" fill="#fbd7d7" ${k}/><ellipse cx="44" cy="96" rx="33" ry="9" fill="#fff8f4" ${k}/><rect x="34" y="80" width="14" height="13" fill="#feabe3" ${k}/><path d="M240 44 C268 44 282 64 282 88 C282 116 262 134 240 134 C218 134 198 116 198 88 C198 64 212 44 240 44 Z" fill="#fff8f4" ${K}/><circle cx="226" cy="80" r="5" fill="#0a0505"/><circle cx="254" cy="80" r="5" fill="#0a0505"/><path d="M228 104 Q240 96 252 104" fill="none" ${k}/><path d="M205 30 L215 42 M275 30 L265 42 M240 22 V34" ${k}/></svg>`;
+    }
+    if (i === 1) {
+      /* the date — two readings kept open at once */
+      return `<svg viewBox="0 0 320 230" aria-hidden="true"><path d="M18 196 H302" ${K}/><rect x="74" y="142" width="172" height="11" fill="#fff8f4" ${K}/><path d="M92 153 V196 M228 153 V196" ${K}/><circle cx="108" cy="86" r="22" fill="#fbd7d7" ${K}/><path d="M86 84 Q108 58 130 84 Q108 74 86 84 Z" fill="#0a0505"/><path d="M76 196 V150 C76 134 90 126 108 126 C126 126 140 134 140 150 V196 Z" fill="#0a0505" ${K}/><circle cx="212" cy="86" r="22" fill="#fbd7d7" ${K}/><path d="M190 82 Q194 60 212 60 Q230 60 234 82 Q212 72 190 82 Z" fill="#0a0505"/><path d="M180 196 V150 C180 134 194 126 212 126 C230 126 244 134 244 150 V196 Z" fill="#d8aafe" ${K}/><path d="M236 142 C250 132 262 122 266 108" fill="none" ${K}/><path d="M250 92 C266 92 274 104 274 116 C274 132 262 142 250 142 C238 142 226 132 226 116 C226 104 234 92 250 92 Z" fill="#feabe3" stroke="#0a0505" stroke-width="3"/><circle cx="242" cy="112" r="2.6" fill="#0a0505"/><circle cx="258" cy="112" r="2.6" fill="#0a0505"/><path d="M242 126 Q250 120 258 126" fill="none" ${k}/><rect x="52" y="26" width="92" height="42" fill="#fff8f4" ${K}/><path d="M58 42 H136 M58 52 H120" ${k}/><path d="M70 66 L62 78 L86 67" fill="#fff8f4" ${k}/><rect x="174" y="20" width="76" height="36" fill="#feabe3" ${K}/><text x="212" y="47" text-anchor="middle" font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="28" fill="#0a0505">?</text><path d="M196 54 L190 64 L210 55" fill="#feabe3" ${k}/></svg>`;
+    }
+    if (i === 2) {
+      /* the trick — the truth has to be there to hide */
+      return `<svg viewBox="0 0 320 230" aria-hidden="true"><rect x="26" y="28" width="268" height="176" fill="#fbd7d7" ${K}/><ellipse cx="160" cy="128" rx="62" ry="30" fill="#fff8f4" ${K}/><circle cx="160" cy="128" r="17" fill="#d1393c" ${k}/><circle cx="160" cy="128" r="7" fill="#0a0505"/><rect x="32" y="36" width="256" height="14" fill="#fff8f4" ${k}/><rect x="32" y="58" width="256" height="14" fill="#fff8f4" ${k}/><rect x="32" y="80" width="256" height="14" fill="#fff8f4" ${k}/><rect x="32" y="102" width="256" height="10" fill="#fff8f4" ${k}/><rect x="32" y="148" width="256" height="12" fill="#fff8f4" ${k}/><rect x="32" y="168" width="256" height="12" fill="#fff8f4" ${k}/><rect x="32" y="188" width="256" height="12" fill="#fff8f4" ${k}/><path d="M292 42 V182" ${k}/><circle cx="292" cy="190" r="7" fill="#feabe3" ${k}/><path d="M44 124 H82" ${k}/></svg>`;
+    }
+    if (i === 3) {
+      /* why we do it — a rack of ready-made roles */
+      return `<svg viewBox="0 0 320 230" aria-hidden="true"><path d="M18 200 H302" ${K}/><path d="M166 42 V200 M132 200 H200" ${K}/><path d="M166 42 H108 M166 42 H224" ${K}/><path d="M108 42 V48 M224 42 V48" ${K}/><path d="M84 48 C100 48 108 58 108 72 C108 88 98 98 84 98 C70 98 60 88 60 72 C60 58 68 48 84 48 Z" fill="#fff8f4" ${k}/><circle cx="77" cy="70" r="3" fill="#0a0505"/><circle cx="91" cy="70" r="3" fill="#0a0505"/><path d="M77 84 Q84 79 91 84" fill="none" ${k}/><path d="M200 48 C216 48 224 58 224 72 C224 88 214 98 200 98 C186 98 176 88 176 72 C176 58 184 48 200 48 Z" fill="#feabe3" ${k}/><circle cx="193" cy="70" r="3" fill="#0a0505"/><circle cx="207" cy="70" r="3" fill="#0a0505"/><path d="M193 84 Q200 89 207 84" fill="none" ${k}/><path d="M166 96 V132" ${k}/><path d="M150 132 C162 132 168 140 168 150 C168 162 160 170 150 170 C140 170 132 162 132 150 C132 140 138 132 150 132 Z" fill="#d8aafe" ${k}/><circle cx="145" cy="149" r="2.6" fill="#0a0505"/><circle cx="155" cy="149" r="2.6" fill="#0a0505"/><path d="M146 160 H154" ${k}/><path d="M242 138 C252 124 264 118 274 118" fill="none" ${K}/><path d="M276 128 C258 128 248 138 248 150 C248 164 260 174 276 174 C292 174 304 164 304 150 C304 138 294 128 276 128 Z" fill="#fbd7d7" ${k}/><circle cx="268" cy="149" r="2.6" fill="#0a0505"/><circle cx="284" cy="149" r="2.6" fill="#0a0505"/><path d="M268 162 Q276 168 284 162" fill="none" ${k}/><rect x="62" y="18" width="58" height="17" fill="#0a0505"/><text x="91" y="31" text-anchor="middle" font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="11" fill="#fadede" letter-spacing="1">THE ROLE</text><rect x="200" y="112" width="50" height="15" fill="#0a0505"/><text x="225" y="123" text-anchor="middle" font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="10" fill="#fadede" letter-spacing="1">THE PAST</text><rect x="78" y="168" width="64" height="15" fill="#0a0505"/><text x="110" y="179" text-anchor="middle" font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="10" fill="#fadede" letter-spacing="1">THE EXCUSE</text></svg>`;
+    }
+    /* the way out — the sentence that opens the door */
+    return `<svg viewBox="0 0 320 230" aria-hidden="true"><rect x="34" y="26" width="252" height="178" fill="#fbd7d7" ${K}/><rect x="126" y="54" width="92" height="150" fill="#feabe3" ${K}/><path d="M126 54 L82 72 V204 L126 192 Z" fill="#fff8f4" ${K}/><circle cx="116" cy="132" r="5" fill="#d1393c" ${k}/><circle cx="168" cy="92" r="12" fill="#0a0505"/><path d="M168 106 V150 M168 150 L152 188 M168 150 L188 188 M150 126 L186 120" fill="none" stroke="#0a0505" stroke-width="7"/><path d="M196 54 V204" ${K}/><path d="M216 142 C216 130 224 122 234 122 C244 122 252 130 252 142 V152 H216 Z" fill="#fff8f4" ${k}/><circle cx="234" cy="142" r="3" fill="#0a0505"/><path d="M230 152 V160 H238 V152" fill="#fff8f4" ${k}/><text x="58" y="44" font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="28" fill="#0a0505" letter-spacing="1">I CHOSE</text><path d="M250 178 H286 M268 168 L278 178 L268 188" fill="none" ${K}/></svg>`;
+  }
+
+  /* free-will-60 */
+  if (i === 0) {
+    /* the worry — the chain reaches back to the first spark */
+    return `<svg viewBox="0 0 320 230" aria-hidden="true"><path d="M18 196 H302" ${K}/><path d="M42 96 L52 76 L62 96 L82 86 L72 106 L92 116 L70 120 L78 140 L58 128 L42 146 L40 124 L20 120 L38 106 Z" fill="#d1393c" ${k}/><path d="M98 120 C132 82 160 88 188 118" fill="none" stroke="#0a0505" stroke-width="3" stroke-dasharray="5 7"/><rect x="92" y="76" width="28" height="92" fill="#fff8f4" ${K}/><circle cx="106" cy="94" r="4" fill="#0a0505"/><circle cx="106" cy="112" r="4" fill="#0a0505"/><circle cx="106" cy="130" r="4" fill="#0a0505"/><rect x="134" y="76" width="28" height="92" fill="#feabe3" ${K}/><circle cx="148" cy="94" r="4" fill="#0a0505"/><circle cx="141" cy="112" r="4" fill="#0a0505"/><circle cx="155" cy="112" r="4" fill="#0a0505"/><circle cx="148" cy="130" r="4" fill="#0a0505"/><rect x="176" y="76" width="28" height="92" fill="#d8aafe" ${K}/><circle cx="190" cy="94" r="4" fill="#0a0505"/><circle cx="190" cy="130" r="4" fill="#0a0505"/><rect x="218" y="76" width="28" height="92" fill="#fbd7d7" ${K} transform="rotate(16 232 168)"/><circle cx="232" cy="100" r="4" fill="#0a0505"/><circle cx="232" cy="118" r="4" fill="#0a0505"/><circle cx="278" cy="118" r="17" fill="#fff8f4" ${K}/><circle cx="278" cy="118" r="6" fill="#0a0505"/><path d="M278 101 V88 M278 135 V152 M261 118 H246 M295 118 H310 M266 106 L254 96 M290 106 L302 96 M266 130 L254 144 M290 130 L302 144" fill="none" stroke="#0a0505" stroke-width="4" stroke-linecap="round"/><circle cx="310" cy="118" r="3" fill="#feabe3"/></svg>`;
+  }
+  if (i === 1) {
+    /* no to freedom — the puppet and the cut string */
+    return `<svg viewBox="0 0 320 230" aria-hidden="true"><rect x="74" y="20" width="172" height="11" fill="#0a0505" ${k}/><path d="M96 31 V62 M224 31 V62 M112 31 V52 M208 31 V52" ${k}/><circle cx="160" cy="78" r="20" fill="#fbd7d7" ${K}/><circle cx="153" cy="75" r="2.6" fill="#0a0505"/><circle cx="167" cy="75" r="2.6" fill="#0a0505"/><path d="M153 86 H167" ${k}/><path d="M146 98 H174 L182 150 H138 Z" fill="#0a0505" ${K}/><path d="M142 112 L96 138 M178 112 L224 138 M150 150 L128 192 M170 150 L194 192" fill="none" stroke="#0a0505" stroke-width="7"/><circle cx="96" cy="138" r="6" fill="#feabe3" ${k}/><circle cx="224" cy="138" r="6" fill="#feabe3" ${k}/><circle cx="128" cy="192" r="6" fill="#feabe3" ${k}/><circle cx="194" cy="192" r="6" fill="#feabe3" ${k}/><path d="M224 138 L252 116" ${k} stroke-dasharray="4 5"/><path d="M262 88 L288 118 M288 88 L262 118" ${K}/><circle cx="275" cy="103" r="6" fill="#d1393c" ${k}/><path d="M18 196 H302" ${K}/></svg>`;
+  }
+  if (i === 2) {
+    /* freedom, redefined — the cage stands open, the key is inside */
+    return `<svg viewBox="0 0 320 230" aria-hidden="true"><path d="M18 198 H302" ${K}/><path d="M84 190 V104 C84 70 112 50 152 50 C192 50 220 70 220 104 V190" fill="none" ${K}/><path d="M100 190 V106 M120 190 V92 M140 190 V84 M164 190 V84 M184 190 V92 M204 190 V106" ${k}/><rect x="72" y="188" width="160" height="11" fill="#0a0505" ${k}/><path d="M204 106 L254 118 V188 L204 174 Z" fill="#feabe3" ${K}/><path d="M214 190 V118" ${k}/><path d="M148 106 V142" ${k}/><circle cx="148" cy="154" r="12" fill="none" ${K}/><path d="M148 166 V178 M138 178 H158" ${K}/><path d="M258 78 C276 78 288 90 288 104 C288 116 280 124 270 126 L270 138 H254 L254 126 C244 124 236 116 236 104 C236 90 246 78 258 78 Z" fill="#fff8f4" ${K}/><path d="M264 98 L276 88 L286 98 L276 108 Z" fill="#feabe3" ${k}/><circle cx="264" cy="98" r="4" fill="#0a0505"/><path d="M78 40 L86 28 M56 52 L48 40" ${k}/></svg>`;
+  }
+  if (i === 3) {
+    /* the test — a chip that never needs to fire */
+    return `<svg viewBox="0 0 320 230" aria-hidden="true"><path d="M18 198 H302" ${K}/><path d="M100 190 C78 176 66 150 68 118 C70 84 96 56 132 56 C168 56 192 82 194 116 C195 132 206 138 210 150 C213 159 206 166 194 166 H180 V184 C180 192 174 196 166 196 H142" fill="#fbd7d7" ${K}/><circle cx="128" cy="104" r="8" fill="#d8aafe" ${k}/><circle cx="158" cy="92" r="10" fill="#feabe3" ${k}/><circle cx="166" cy="126" r="7" fill="#d8aafe" ${k}/><path d="M134 101 L151 94 M153 100 L163 119" ${k}/><rect x="102" y="132" width="36" height="28" fill="#d1393c" ${K}/><path d="M108 132 V124 M118 132 V124 M128 132 V124 M108 160 V168 M118 160 V168 M128 160 V168" ${k}/><path d="M96 146 H76 M144 146 H164" ${k} stroke-dasharray="5 5"/><path d="M226 76 C244 76 256 88 256 102 C256 114 248 122 238 124 L238 136 H222 L222 124 C212 122 204 114 204 102 C204 88 214 76 226 76 Z" fill="#fff8f4" ${k}/><text x="230" y="110" text-anchor="middle" font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="24" fill="#0a0505">?</text><path d="M256 76 L292 54" fill="none" ${k} stroke-dasharray="5 6"/></svg>`;
+  }
+  /* the stakes — love on one side, the weight on the other */
+  return `<svg viewBox="0 0 320 230" aria-hidden="true"><path d="M18 198 H302" ${K}/><path d="M160 58 V182 M160 182 L132 198 M160 182 L188 198" ${K}/><path d="M76 106 H244" ${K}/><circle cx="160" cy="70" r="8" fill="#feabe3" ${k}/><path d="M76 106 L48 168 M76 106 L104 168" fill="none" ${k}/><path d="M32 168 H120 L108 192 H44 Z" fill="#fff8f4" ${K}/><path d="M76 146 C60 132 52 124 52 114 C52 104 62 100 70 106 C73 108 76 112 76 112 C76 112 79 108 82 106 C90 100 100 104 100 114 C100 124 92 132 76 146 Z" fill="#d1393c" ${k}/><path d="M244 106 L216 168 M244 106 L272 168" fill="none" ${k}/><path d="M200 168 H288 L276 192 H212 Z" fill="#fff8f4" ${K}/><circle cx="224" cy="144" r="9" fill="none" ${k}/><circle cx="244" cy="144" r="9" fill="none" ${k}/><circle cx="264" cy="144" r="9" fill="none" ${k}/><path d="M56 34 L66 20 L76 34 L66 48 Z" fill="#feabe3" ${k}/><path d="M244 34 L254 20 L264 34 L254 48 Z" fill="#d8aafe" ${k}/></svg>`;
+}
+
+/* ── thinker portraits — flat playbill pictograms, 96×96 ── */
+export function thinkerPortrait(slug) {
+  const S = 'stroke="#0a0505" stroke-linecap="round" stroke-linejoin="round"';
+  const F = 'fill="#fbd7d7" stroke="#0a0505" stroke-width="5"';
+  const shoulders = (fill) => `<path d="M16 96 C16 69 80 69 80 96 Z" fill="${fill}" stroke="#0a0505" stroke-width="4"/>`;
+  const face = `<circle cx="48" cy="46" r="22" ${F}/>`;
+  switch (slug) {
+    case "sartre":
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait of Sartre: round glasses, slicked hair">${shoulders("#feabe3")}${face}<path d="M26 41 Q48 17 70 41 Q48 29 26 41 Z" fill="#0a0505"/><circle cx="39.5" cy="48" r="6.4" fill="none" stroke="#0a0505" stroke-width="3.4"/><circle cx="56.5" cy="48" r="6.4" fill="none" stroke="#0a0505" stroke-width="3.4"/><path d="M45.9 48 H50.1 M33 46 L27 43 M63 46 L69 43" fill="none" stroke="#0a0505" stroke-width="3"/><path d="M41 62.5 Q48 66.5 55 62.5" fill="none" stroke="#0a0505" stroke-width="2.6"/></svg>`;
+    case "rawls":
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait of Rawls: thin glasses, high forehead">${shoulders("#d8aafe")}${face}<path d="M28 40 Q33 20 48 20 Q63 20 68 40 Q48 31 28 40 Z" fill="#0a0505"/><circle cx="40" cy="48" r="5.4" fill="none" stroke="#0a0505" stroke-width="2.6"/><circle cx="56" cy="48" r="5.4" fill="none" stroke="#0a0505" stroke-width="2.6"/><path d="M45.4 48 H50.6" stroke="#0a0505" stroke-width="2.4"/><path d="M42 62 H54" ${S} stroke-width="2.6"/></svg>`;
+    case "nagel":
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait of Nagel beneath a small bat">${shoulders("#fbd7d7")}<path d="M28 14 L36 5 L43 12.5 L48 7 L53 12.5 L60 5 L68 14 L59 16.5 L48 13.5 L37 16.5 Z" fill="#0a0505"/>${face}<path d="M27 42.5 Q48 23 69 42.5 Q48 33 27 42.5 Z" fill="#0a0505"/><circle cx="41" cy="47" r="2.2" fill="#0a0505"/><circle cx="55" cy="47" r="2.2" fill="#0a0505"/><path d="M48 48 V55" fill="none" stroke="#0a0505" stroke-width="2.4"/><path d="M43.5 62.5 Q48 64.5 52.5 62.5" fill="none" stroke="#0a0505" stroke-width="2.2"/></svg>`;
+    case "camus":
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait of Camus: wavy hair, level gaze">${shoulders("#feabe3")}${face}<path d="M27 42 Q32 29 38 40 Q44 26 50 38 Q56 27 62 39 Q67 31 70 42 Q48 32 27 42 Z" fill="#0a0505"/><path d="M36 46 H44 M52 46 H60" ${S} stroke-width="2.6"/><circle cx="40" cy="51" r="2.1" fill="#0a0505"/><circle cx="56" cy="51" r="2.1" fill="#0a0505"/><path d="M41.5 63 H54.5" ${S} stroke-width="2.6"/></svg>`;
+    case "kant":
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait of Kant: powdered wig, stern mouth">${shoulders("#d8aafe")}${face}<ellipse cx="26.5" cy="49" rx="6.6" ry="10" fill="#fff8f4" stroke="#0a0505" stroke-width="3.6"/><ellipse cx="69.5" cy="49" rx="6.6" ry="10" fill="#fff8f4" stroke="#0a0505" stroke-width="3.6"/><ellipse cx="48" cy="23.5" rx="9" ry="5.4" fill="#fff8f4" stroke="#0a0505" stroke-width="3.6"/><circle cx="41" cy="46" r="2.1" fill="#0a0505"/><circle cx="55" cy="46" r="2.1" fill="#0a0505"/><path d="M40.5 61.5 H55.5" ${S} stroke-width="2.8"/></svg>`;
+    case "nietzsche":
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait of Nietzsche: wild hair, great mustache">${shoulders("#fbd7d7")}${face}<path d="M27 34 L31.5 13 L37.5 30 L44 9 L50 27.5 L56.5 10 L62.5 28 L69 15 L70.5 36 Q48 25 27 34 Z" fill="#0a0505"/><circle cx="40.5" cy="45" r="2.2" fill="#0a0505"/><circle cx="55.5" cy="45" r="2.2" fill="#0a0505"/><path d="M35.5 55.5 Q42 50.5 48 55.5 Q54 50.5 60.5 55.5 Q57.5 64.5 48 62 Q38.5 64.5 35.5 55.5 Z" fill="#0a0505"/></svg>`;
+    case "wittgenstein":
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait of Wittgenstein: long face, straight fringe, hard stare">${shoulders("#feabe3")}<ellipse cx="48" cy="48" rx="17" ry="24" ${F}/><path d="M31 32 V23 H65 V32 L58.5 27.5 L53 32 L47.5 27.5 L42 32 L36.5 27.5 Z" fill="#0a0505"/><path d="M36 43 H45 M51 43 H60" ${S} stroke-width="2.8"/><circle cx="40.5" cy="48.5" r="2" fill="#0a0505"/><circle cx="55.5" cy="48.5" r="2" fill="#0a0505"/></svg>`;
+    case "epictetus":
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait of Epictetus: shaved head, full beard, serene eyes">${shoulders("#d8aafe")}${face}<path d="M29 46 Q48 96 67 46 Q48 74 29 46 Z" fill="#0a0505"/><path d="M37 44 Q41.5 46.5 46 44 M50 44 Q54.5 46.5 59 44" fill="none" stroke="#fadede" stroke-width="2.4"/><circle cx="48" cy="49" r="1.6" fill="#fadede"/></svg>`;
+    case "anselm":
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait of Anselm: monk's hood, serene closed eyes">${shoulders("#fbd7d7")}<circle cx="48" cy="46" r="27.5" fill="#d8aafe" stroke="#0a0505" stroke-width="4.5"/><circle cx="48" cy="47" r="19" ${F}/><path d="M37.5 45.5 Q42 48.5 46.5 45.5 M49.5 45.5 Q54 48.5 58.5 45.5" fill="none" stroke="#0a0505" stroke-width="2.3"/><path d="M44 57.5 Q48 59.5 52 57.5" fill="none" stroke="#0a0505" stroke-width="2"/></svg>`;
+    default:
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Portrait">${shoulders("#feabe3")}${face}<circle cx="41" cy="47" r="2.2" fill="#0a0505"/><circle cx="55" cy="47" r="2.2" fill="#0a0505"/><path d="M42 62 H54" ${S} stroke-width="2.6"/></svg>`;
+  }
+}
+
+/* ── tradition crests — heater shields with a flat sigil, 96×108 ── */
+export function crestArt(slug) {
+  const S = 'stroke="#0a0505" stroke-linecap="round" stroke-linejoin="round"';
+  const fills = { existentialism: "#feabe3", stoicism: "#fbd7d7", skepticism: "#fbd7d7", scholasticism: "#fbd7d7", absurdism: "#d8aafe", deontology: "#feabe3" };
+  const fill = fills[slug] || "#fbd7d7";
+  const shield = `<path d="M10 8 H86 V50 C86 76 66 91 48 101 C30 91 10 76 10 50 Z" fill="${fill}" stroke="#0a0505" stroke-width="5" stroke-linejoin="round"/><path d="M17.5 15.5 H78.5 V50.5 C78.5 73 61 87 48 95 C35 87 17.5 73 17.5 50.5 Z" fill="none" stroke="rgba(10,5,5,.32)" stroke-width="2"/>`;
+  let glyph = "";
+  switch (slug) {
+    case "existentialism": /* the door ajar — the way out */
+      glyph = `<rect x="33" y="27" width="30" height="45" fill="#fff8f4" ${S} stroke-width="5"/><path d="M40 34 L57 27 L57 66 L40 60 Z" fill="#0a0505"/><circle cx="52" cy="46" r="2.1" fill="#d1393c"/>`;
+      break;
+    case "stoicism": /* the column — the pile that holds still */
+      glyph = `<rect x="29" y="24" width="38" height="8.5" fill="#0a0505"/><rect x="29" y="70" width="38" height="8.5" fill="#0a0505"/><path d="M38 38 V64 M48 38 V64 M58 38 V64" fill="none" ${S} stroke-width="6.5"/>`;
+      break;
+    case "skepticism": /* the honest question */
+      glyph = `<text x="48" y="68" text-anchor="middle" font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="58" fill="#0a0505">?</text>`;
+      break;
+    case "scholasticism": /* the arch and the star — faith seeking understanding */
+      glyph = `<path d="M31 70 V41 C31 29 38.5 24 48 24 C57.5 24 65 29 65 41 V70 Z" fill="#fff8f4" ${S} stroke-width="5"/><path d="M48 32.5 L51.6 43.5 L63.5 46 L51.6 48.5 L48 59.5 L44.4 48.5 L32.5 46 L44.4 43.5 Z" fill="#d1393c"/>`;
+      break;
+    case "absurdism": /* Sisyphus — boulder, slope, small figure */
+      glyph = `<path d="M20 70 L76 38" fill="none" ${S} stroke-width="6"/><circle cx="50" cy="43.5" r="10.5" fill="#fff8f4" ${S} stroke-width="4.5"/><circle cx="27" cy="60.5" r="4.2" fill="#0a0505"/><path d="M17 79 H79" fill="none" ${S} stroke-width="5"/>`;
+      break;
+    case "deontology": /* the gavel — one rule for everyone */
+      glyph = `<rect x="45" y="20" width="17" height="26" rx="1.5" transform="rotate(45 53.5 33)" fill="#0a0505"/><path d="M45.5 45.5 L23.5 67.5" fill="none" ${S} stroke-width="8"/><path d="M16 79 H48" fill="none" ${S} stroke-width="5.5"/>`;
+      break;
+    default:
+      glyph = `<circle cx="48" cy="47" r="13" fill="#fff8f4" ${S} stroke-width="5"/>`;
+  }
+  return `<svg viewBox="0 0 96 108" role="img" aria-label="Crest of ${slug.replace(/-/g, " ")}">${shield}${glyph}</svg>`;
 }
 
 /* Inline figures: flat shapes, black keylines, palette fills only. */
