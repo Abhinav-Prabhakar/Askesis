@@ -351,8 +351,7 @@ function renderSearch() {
     var b = document.createElement("button");
     b.type = "button"; b.className = "sr" + (i === focused ? " focused" : "");
     b.setAttribute("role", "option");
-    b.innerHTML = '<span class="sr-body"><span class="t">' + r.title.toUpperCase() + '</span><small>' + r.sub + '</small></span>' +
-      '<span class="sr-go" aria-hidden="true">→</span>';
+    b.innerHTML = '<span class="sr-body"><span class="t">' + r.title.toUpperCase() + '</span><small>' + r.sub + '</small></span>';
     b.addEventListener("click", function () { closeSearch(); location.href = r.to; });
     searchResults.appendChild(b);
   });
