@@ -145,6 +145,29 @@ const ENTRIES = [
     related: ["free-will", "qualia", "skeptical-theism"],
     keys: "a-theory b-theory time presentism eternalism growing block passage mctaggart now relativity",
     cite: { apa: "Prior, A. N. (1967). Past, present and future. Oxford: Clarendon.", mla: "Prior, A. N. Past, Present and Future. Clarendon, 1967.", bib: "@book{prior1967past,\n  author = {Prior, A. N.},\n  title = {Past, Present and Future},\n  year = {1967}\n}" }
+  },
+  {
+    slug: "descartes-cogito", num: 7, title: "Descartes' Cogito",
+    tradition: "Mind", era: "Modern", read: 3,
+    hero: { bg: "pink", k: "MODERN PHILOSOPHY · FIRST CERTAINTY", big: "Doubt everything. One thing survives: the doubter.", sub: "The furnace of methodic doubt — and the one sentence that won't burn." },
+    hook: "I think, therefore I am — the one sentence that survives doubt.",
+    breath: "Descartes burns down every belief that can burn: senses deceive, dreams deceive, perhaps a demon deceives. One thing resists the fire — that doubting is happening. From that spark he rebuilds God, the world, and you.",
+    tension: ["Certainty seems impossible — every source of belief can mislead. Yet here is one thing that cannot be false while it is thought. The tension: the cogito is bedrock, but bedrock an inch wide. Everything Descartes builds on it must cross back over the very doubt it escaped."],
+    positions: [
+      { who: "D", name: "Descartes", text: "The cogito is the Archimedean point: indubitable even under the demon's spell, and the foundation for God and science." },
+      { who: "H", name: "Hume", text: "Look inside and you find no self — only a bundle of perceptions succeeding one another. The 'I' is a fiction of memory." },
+      { who: "W", name: "Wittgenstein", text: "'I' does not name an inner object the way 'table' names one. The grammar of the first person misleads metaphysics." }
+    ],
+    argument: {
+      p1: "I can doubt everything I seem to perceive — my hands, the sky, mathematics itself.",
+      p2: "But doubting is thinking, and thinking must be happening for doubt to happen.",
+      c: "Therefore I exist — at least as a thinking thing — whenever I doubt."
+    },
+    objection: "Lichtenberg's thinness objection: the argument proves that thinking is going on, not a lasting I. The cogito gives a momentary subject — a spark, not a soul — and Descartes smuggles in far more than the spark contains.",
+    quote: { text: "I think, therefore I am.", by: "René Descartes · Meditations on First Philosophy, 1641" },
+    related: ["qualia", "sartre-bad-faith", "skeptical-theism"],
+    keys: "descartes cogito meditations doubt evil demon dualism modern i think therefore i am first philosophy certainty self",
+    cite: { apa: "Descartes, R. (1641). Meditations on first philosophy. Paris: Michel Soly.", mla: "Descartes, René. Meditations on First Philosophy. 1641.", bib: "@book{descartes1641meditations,\n  author = {Descartes, Ren{\\'e}},\n  title = {Meditations on First Philosophy},\n  year = {1641}\n}" }
   }
 ];
 
@@ -236,11 +259,6 @@ const SOON = [
     points: ["The Proslogion move: a greatest being must exist, or a greater could be thought.", "Gaunilo's island: the perfect parody — a greatest island must exist too?", "Kant's reply: existence is not a predicate."],
     related: ["skeptical-theism", "a-theory-of-time"],
     keys: "anselm ontological argument god proslogion gaunilo island existence predicate medieval" },
-  { slug: "descartes-cogito", title: "Descartes' Cogito", era: "Modern",
-    hook: "I think, therefore I am — the one sentence that survives doubt.",
-    points: ["Methodic doubt: burn everything that can burn.", "The cogito as Archimedean point — indubitable even to a deceiver.", "From 'I am' to God to the world: does the bridge hold?"],
-    related: ["qualia", "sartre-bad-faith"],
-    keys: "descartes cogito meditations doubt evil demon dualism modern" },
   { slug: "kant-categorical", title: "Kant's Categorical Imperative", era: "Modern",
     hook: "Act only as you would will everyone to act.",
     points: ["Universalizability: the lying-promise test.", "Humanity as an end in itself — never merely a means.", "The price: rigorism, even about white lies."],
@@ -271,6 +289,7 @@ const FIGCAP = {
   "free-will": "Frankfurt's test: the blocked road was never taken — yet the drive was yours.",
   "qualia": "Mary's room: every physical fact, none of the redness.",
   "veil-of-ignorance": "Choose blind: which rules insure every seat at the table?",
+  "descartes-cogito": "The furnace: everything doubtable burns away — one point will not.",
   "skeptical-theism": "The fawn: pointless to us — but how far can we see?",
   "a-theory-of-time": "Flow versus block: the now moves, or only seems to."
 };
@@ -293,7 +312,8 @@ const DAILY = [
   { q: "What rules would you pick blindfolded?", to: "#/entry/veil-of-ignorance" },
   { q: "Does pointless evil disprove God?", to: "#/entry/skeptical-theism" },
   { q: "Is the future already there?", to: "#/entry/a-theory-of-time" },
-  { q: "Would you plug into perfect happiness?", to: "#/experiment/experience-machine" }
+  { q: "Would you plug into perfect happiness?", to: "#/experiment/experience-machine" },
+  { q: "What survives total doubt?", to: "#/entry/descartes-cogito" }
 ];
 
 const FEATURED = [
@@ -349,6 +369,7 @@ function heroSVG(slug) {
   if (slug === "qualia") return `<svg viewBox="0 0 200 150" role="img" aria-label="An eye"><ellipse cx="100" cy="75" rx="72" ry="44" fill="#fff8f4" ${B}/><circle cx="100" cy="75" r="26" fill="#d1393c" ${B}/><circle cx="100" cy="75" r="10" fill="#0a0505"/><path d="M40 40 L60 58 M160 40 L140 58" ${T}/></svg>`;
   if (slug === "veil-of-ignorance") return `<svg viewBox="0 0 200 150" role="img" aria-label="A veil"><rect x="40" y="14" width="120" height="14" fill="#0a0505"/><path d="M48 28 V120 M76 28 V120 M104 28 V120 M132 28 V120 M152 28 V120" stroke="#0a0505" stroke-width="9"/><circle cx="100" cy="128" r="10" fill="#feabe3" ${B}/></svg>`;
   if (slug === "skeptical-theism") return `<svg viewBox="0 0 200 150" role="img" aria-label="Scales"><path d="M100 18 V122" ${B}/><path d="M52 44 H148" ${B}/><path d="M52 44 L30 96 H74 Z" fill="#feabe3" ${B}/><path d="M148 44 L126 96 H170 Z" fill="#d8aafe" ${B}/><rect x="88" y="118" width="24" height="12" fill="#0a0505"/></svg>`;
+  if (slug === "descartes-cogito") return `<svg viewBox="0 0 200 150" role="img" aria-label="One certain self inside a chamber of doubt"><rect x="22" y="14" width="156" height="122" fill="#0a0505"/><circle cx="100" cy="75" r="30" fill="#fff8f4" ${B}/><circle cx="100" cy="75" r="8" fill="#d1393c" ${B}/><path d="M100 26 v12 M100 112 v12 M55 75 h12 M133 75 h12 M68 43 l9 9 M123 102 l9 9 M132 43 l-9 9 M68 102 l-9 9" stroke="#d1393c" stroke-width="6" stroke-linecap="round"/></svg>`;
   return `<svg viewBox="0 0 200 150" role="img" aria-label="A clock"><circle cx="100" cy="78" r="54" fill="#fff8f4" ${B}/><path d="M100 78 V44 M100 78 L126 90" ${B}/><circle cx="100" cy="78" r="7" fill="#d1393c" ${B}/><path d="M100 10 v10 M150 78 h10 M50 78 h-10" ${T}/></svg>`;
 }
 function expArt(e) {
@@ -372,6 +393,7 @@ function figureSVG(slug) {
   if (slug === "free-will") return `<svg viewBox="0 0 430 150" role="img" aria-label="A fork with one road blocked"><path d="M20 75 H150" fill="none" ${B}/><path d="M150 75 C220 75 220 35 320 35" fill="none" ${B}/><path d="M150 75 C220 75 220 115 320 115" fill="none" ${B}/><path d="M245 20 L275 50 M275 20 L245 50" stroke="#d1393c" stroke-width="10" stroke-linecap="round"/><circle cx="320" cy="115" r="14" fill="#d8aafe" ${B}/><text x="262" y="128" text-anchor="middle" ${T}>BLOCKED</text><text x="320" y="80" text-anchor="middle" ${T}>TAKEN</text></svg>`;
   if (slug === "qualia") return `<svg viewBox="0 0 430 150" role="img" aria-label="A black and white room with a red square outside"><rect x="30" y="15" width="200" height="120" fill="#fff8f4" ${B}/><rect x="30" y="15" width="100" height="120" fill="#0a0505"/><rect x="230" y="15" width="14" height="120" fill="#0a0505"/><circle cx="330" cy="75" r="34" fill="#d1393c" ${B}/><path d="M244 75 H282" ${B}/><path d="M272 65 L284 75 L272 85" fill="none" ${B}/><text x="80" y="82" text-anchor="middle" ${T} fill="#fadede">B / W</text><text x="330" y="140" text-anchor="middle" ${T}>RED</text></svg>`;
   if (slug === "veil-of-ignorance") return `<svg viewBox="0 0 430 150" role="img" aria-label="A two by two grid of unknown outcomes"><rect x="90" y="10" width="250" height="130" fill="#fff8f4" ${B}/><path d="M215 10 V140 M90 75 H340" ${B}/><text x="152" y="62" text-anchor="middle" ${T}>RULE A</text><text x="278" y="62" text-anchor="middle" ${T}>RULE B</text><text x="152" y="120" text-anchor="middle" font-size="34" ${T}>?</text><text x="278" y="120" text-anchor="middle" font-size="34" ${T}>?</text><text x="52" y="80" text-anchor="middle" ${T}>YOU?</text></svg>`;
+  if (slug === "descartes-cogito") return `<svg viewBox="0 0 430 150" role="img" aria-label="A funnel of doubt narrowing to one self"><text x="215" y="28" text-anchor="middle" ${T}>EVERYTHING DOUBTABLE</text><path d="M110 40 L195 100 M320 40 L235 100" fill="none" ${B}/><rect x="140" y="48" width="16" height="16" fill="#feabe3" ${B}/><rect x="270" y="60" width="16" height="16" fill="#d8aafe" ${B}/><rect x="205" y="52" width="14" height="14" fill="#fff8f4" ${B}/><path d="M195 100 H235 M208 100 V118 M222 100 V118" ${B}/><circle cx="215" cy="132" r="12" fill="#0a0505"/><text x="262" y="138" ${T}>I AM</text></svg>`;
   if (slug === "skeptical-theism") return `<svg viewBox="0 0 430 150" role="img" aria-label="A flame beside a question mark"><path d="M120 130 C70 100 80 60 110 40 C108 62 122 66 124 50 C150 70 160 100 120 130 Z" fill="#d1393c" ${B}/><ellipse cx="116" cy="105" rx="16" ry="22" fill="#feabe3"/><text x="290" y="115" text-anchor="middle" font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="96" fill="#0a0505">?</text><path d="M210 30 V130" stroke="#0a0505" stroke-width="4" stroke-dasharray="10 8"/></svg>`;
   return `<svg viewBox="0 0 430 150" role="img" aria-label="A timeline with a moving now"><rect x="40" y="30" width="330" height="60" fill="#d8aafe" ${B}/><path d="M40 60 H370" ${B}/><path d="M60 45 V75 M140 45 V75 M220 45 V75 M300 45 V75" stroke="#0a0505" stroke-width="5"/><rect x="196" y="14" width="72" height="34" fill="#d1393c" ${B}/><text x="232" y="39" text-anchor="middle" ${T} fill="#fadede">NOW</text><path d="M232 48 V100" stroke="#0a0505" stroke-width="5"/><text x="232" y="138" text-anchor="middle" ${T}>FLOW, OR ONLY SEEMING?</text></svg>`;
 }
@@ -411,7 +433,7 @@ function renderExplore() {
   const day = Math.floor(Date.now() / 864e5) % DAILY.length;
   const d = DAILY[day];
   $("#dailyQ").textContent = d.q;
-  $("#dailyKicker").textContent = "TODAY'S QUESTION · " + (day + 1) + "/7";
+  $("#dailyKicker").textContent = "TODAY'S QUESTION · " + (day + 1) + "/" + DAILY.length;
   $("#dailyBtn").onclick = () => { location.hash = d.to; };
 
   const week = Math.floor(Date.now() / (7 * 864e5)) % FEATURED.length;
