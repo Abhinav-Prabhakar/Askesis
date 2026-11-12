@@ -215,6 +215,30 @@ export const ENTRIES = [
     related: ["skeptical-theism", "descartes-cogito", "a-theory-of-time"],
     keys: "anselm ontological argument god proslogion gaunilo island existence predicate kant plantinga necessary being medieval scholasticism faith",
     cite: { apa: "Anselm. (1078). Proslogion. Bec.", mla: "Anselm. Proslogion. 1078.", bib: "@book{anselm1078proslogion,\\n  author = {Anselm},\\n  title = {Proslogion},\\n  year = {1078}\\n}" }
+  },
+  {
+    slug: "kant-categorical", num: 10, title: "Kant's Categorical Imperative",
+    tradition: "Deontology", era: "Modern", read: 3,
+    hero: { bg: "pink", k: "MODERN DEONTOLOGY · THE MORAL LAW", big: "Act only as everyone could act.", sub: "Kant's universalizability test — morality without exceptions." },
+    hook: "What if everyone did that?",
+    breath: "Kant says morality is not about outcomes — it is about the shape of your reason. Act only on a rule you could will everyone to follow: no lying, no freeloading, no exceptions for yourself. Hegel called the test empty; modern Kantians say the humanity formula fills it. Three centuries of ethics run through this one question.",
+    tension: ["Duty says never lie — not even to the murderer at the door. Common sense says: surely, this once. The tension: a moral law with exceptions is just advice, but a law without them can sound cruel. Kant bites the bullet; almost everyone else looks for a door."],
+    positions: [
+      { who: "K", name: "Kant", tag: "UNIVERSALIZE OR QUIT", text: "Act only on maxims you can will as universal law. A rule that breaks when everyone follows it — lying promises, free riding — was never moral." },
+      { who: "H", name: "Hegel", tag: "EMPTY FORMALISM", text: "Universalizability is an empty frame: with clever wording, anything universalizes — even tyranny. The test runs on content it pretends not to need." },
+      { who: "K", name: "Korsgaard", tag: "CONSTRUCTED FROM WITHIN", text: "Modern Kantians rebuild the content: as agents we must value our own humanity, and consistency forces us to value everyone's. The law is constructed, not empty." }
+    ],
+    argument: {
+      p1: "A moral rule must bind every rational being equally — otherwise it is special pleading.",
+      p2: "Only maxims that survive universalization without contradiction meet that bar.",
+      c: "Therefore act only on maxims you can at the same time will as universal law."
+    },
+    objection: "Two charges: emptiness — Hegel's worry that consistent wording can launder any content, even evil regimes; and rigorism — Constant's murderer at the door, where never lying looks like fanaticism rather than morality.",
+    reply: "The formulas work as a team: humanity as an end rules out maxims that use people as mere tools — no regime of murder passes that gate. And Kant's own casuistry permits misleading without lying; the rigor is narrower than the legend.",
+    quote: { text: "Act only according to that maxim whereby you can at the same time will that it should become a universal law.", by: "Immanuel Kant · Groundwork, 1785" },
+    related: ["veil-of-ignorance", "free-will", "stoic-dichotomy"],
+    keys: "kant categorical imperative universalizability deontology duty maxims humanity formula groundwork murderer lying rigorism hegel korsgaard constant modern",
+    cite: { apa: "Kant, I. (1785). Groundwork of the metaphysics of morals. Riga: Hartknoch.", mla: "Kant, Immanuel. Groundwork of the Metaphysics of Morals. 1785.", bib: "@book{kant1785groundwork,\\n  author = {Kant, Immanuel},\\n  title = {Groundwork of the Metaphysics of Morals},\\n  year = {1785}\\n}" }
   }
 ];
 
@@ -233,7 +257,7 @@ export const THINKERS = [
     entries: ["sartre-bad-faith", "skeptical-theism"] },
   { slug: "kant", name: "Kant", years: "1724–1804", school: "Deontology",
     line: "Act only on rules you'd will for everyone.",
-    entries: ["veil-of-ignorance", "free-will"] },
+    entries: ["kant-categorical", "veil-of-ignorance", "free-will"] },
   { slug: "nietzsche", name: "Nietzsche", years: "1844–1900", school: "Genealogy",
     line: "Values have a history — and a price.",
     entries: ["sartre-bad-faith", "skeptical-theism"] },
@@ -260,7 +284,10 @@ export const TRADITIONS = [
     entries: ["anselm-ontological", "skeptical-theism", "descartes-cogito"] },
   { slug: "absurdism", name: "Absurdism", color: "u",
     line: "We crave meaning; the world offers none. Live the tension.",
-    entries: ["sartre-bad-faith", "a-theory-of-time"] }
+    entries: ["sartre-bad-faith", "a-theory-of-time"] },
+  { slug: "deontology", name: "Deontology", color: "p",
+    line: "Duty before outcomes. Act only as everyone could act.",
+    entries: ["kant-categorical", "veil-of-ignorance"] }
 ];
 
 export const EXPERIMENTS = [
@@ -305,11 +332,6 @@ export const SERIES = [
 
 /* Shelves being written — full entries, holding pages for now. */
 export const SOON = [
-  { slug: "kant-categorical", title: "Kant's Categorical Imperative", era: "Modern",
-    hook: "Act only as you would will everyone to act.",
-    points: ["Universalizability: the lying-promise test.", "Humanity as an end in itself — never merely a means.", "The price: rigorism, even about white lies."],
-    related: ["veil-of-ignorance", "free-will"],
-    keys: "kant categorical imperative universalizability deontology humanity means ends modern" },
   { slug: "nietzsche-will", title: "Nietzsche's Will to Power", era: "Modern",
     hook: "Not survival — expansion. Life wants more life.",
     points: ["Master versus slave moralities: where values come from.", "Genealogy: every value has a bloodline.", "Amor fati: love it all, or lie about it."],
@@ -337,6 +359,7 @@ export const FIGCAP = {
   "veil-of-ignorance": "Choose blind: which rules insure every seat at the table?",
   "stoic-dichotomy": "The cut: your pile, the world's pile — sort everything.",
   "anselm-ontological": "The move: think the greatest thing — now add existence.",
+  "kant-categorical": "The test: one liar works — a world of liars breaks.",
   "descartes-cogito": "The furnace: everything doubtable burns away — one point will not.",
   "skeptical-theism": "The fawn: pointless to us — but how far can we see?",
   "a-theory-of-time": "Flow versus block: the now moves, or only seems to."
@@ -362,7 +385,8 @@ export const DAILY = [
   { q: "Is the future already there?", to: "#/entry/a-theory-of-time" },
   { q: "Would you plug into perfect happiness?", to: "#/experiment/experience-machine" },
   { q: "What survives total doubt?", to: "#/entry/descartes-cogito" },
-  { q: "Can you define God into existence?", to: "#/entry/anselm-ontological" }
+  { q: "Can you define God into existence?", to: "#/entry/anselm-ontological" },
+  { q: "What if everyone did that?", to: "#/entry/kant-categorical" }
 ];
 
 export const FEATURED = [

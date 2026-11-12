@@ -34,7 +34,9 @@ const entryData = JSON.stringify({ slug: e.slug, cite: e.cite });
       <span class="stamp">{e.read} MIN · EDITED</span>
       <div class="hero-cap"><span class="k">{e.hero.k}</span><span class="big">{e.hero.big}</span><span class="s">{e.hero.sub}</span></div>
     </div>
-    <div class="breath rv"><div class="k">IN ONE BREATH</div><p set:html={glossify(e.breath)}></p></div>
+    <div class="breath rv"><div class="breath-main"><div class="k">IN ONE BREATH</div><p set:html={glossify(e.breath)}></p></div>
+      <aside class="breath-file" aria-label="Filed under"><span class="f-n">Nº {String(e.num).padStart(2, "0")}</span><span>{e.tradition.toUpperCase()}</span><span>{e.era.toUpperCase()}</span><span>{e.read} MIN READ</span></aside>
+    </div>
     <nav class="era-ribbon rv" aria-label="Where this entry sits in history">
       <span class="era-k">WHERE THIS SITS</span>
       {ERAS.map((er: any) => (
@@ -49,7 +51,18 @@ const entryData = JSON.stringify({ slug: e.slug, cite: e.cite });
       <a href="#sec-objection"><b>04</b> OBJECTION VS REPLY</a>
       <a href="#sec-quote"><b>05</b> THE QUOTE</a>
     </nav>
-    <div class="doc-sec rv" id="sec-tension"><h2>The tension</h2>{e.tension.map((p: string) => <p set:html={glossify(p)}></p>)}</div>
+    <div class="doc-sec rv" id="sec-tension"><h2>The tension</h2>{e.tension.map((p: string) => <p set:html={glossify(p)}></p>)}
+      {e.positions.length === 3 && (
+        <div class="tug" role="img" aria-label={`The pull: ${e.positions[0].name} versus ${e.positions[2].name}`}>
+          <span class="tug-k">THE PULL · NEITHER SIDE GIVES</span>
+          <div class="tug-row">
+            <div class="tug-side"><b>{e.positions[0].name.toUpperCase()}</b><small>{e.positions[0].tag}</small></div>
+            <div class="tug-rope" aria-hidden="true"><span class="handle"></span><span class="line"></span><span class="knot"></span><span class="line"></span><span class="handle"></span></div>
+            <div class="tug-side r"><b>{e.positions[2].name.toUpperCase()}</b><small>{e.positions[2].tag}</small></div>
+          </div>
+        </div>
+      )}
+    </div>
     <div class="doc-sec rv" id="sec-positions"><h2>Three positions</h2>
       <div class="tape" role="list" aria-label="Tale of the tape">
         {e.positions.map((p: any) => (

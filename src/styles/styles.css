@@ -350,6 +350,26 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 .breath .k, .sec-k { font: 700 12px/1 var(--ui); letter-spacing: .14em; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
 .breath .k::before, .sec-k::before { content: ""; width: 12px; height: 12px; background: var(--red); border: 2px solid var(--line); display: inline-block; }
 .breath p { margin: 0; font-size: 17px; line-height: 1.55; }
+/* margin filing slip — wide screens only, redundant meta elsewhere */
+.breath-file { display: none; }
+@media (min-width: 1200px) {
+  .breath:has(.breath-file) { display: grid; grid-template-columns: 1fr 180px; gap: 0; padding: 0; overflow: hidden; }
+  .breath-main { padding: 18px 20px; }
+  .breath-file { display: flex; flex-direction: column; justify-content: center; gap: 6px; background: var(--cream-2); border-left: 4px solid var(--line); padding: 18px 16px; font: 700 11px/1.5 var(--ui); letter-spacing: .1em; }
+  .breath-file .f-n { font-family: var(--display); font-size: 30px; letter-spacing: 0; background: var(--ink); color: var(--cream); text-align: center; padding: 4px 0 2px; margin-bottom: 4px; }
+}
+
+/* ── tug of war: the tension as a rope pull, poles from positions 1 & 3 ── */
+.tug { border: 4px solid var(--line); background: var(--cream-2); box-shadow: var(--sh); margin-top: 16px; padding: 14px 16px 16px; }
+.tug-k { display: block; font: 700 11px/1 var(--ui); letter-spacing: .14em; color: var(--mut); text-align: center; margin-bottom: 12px; }
+.tug-row { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; gap: 8px; }
+.tug-side b { display: block; font-family: var(--display); font-size: 22px; line-height: 1; }
+.tug-side small { display: block; font: 700 10px/1.5 var(--ui); letter-spacing: .1em; color: var(--mut); margin-top: 4px; }
+.tug-side.r { text-align: right; }
+.tug-rope { display: flex; align-items: center; gap: 0; }
+.tug-rope .line { flex: 1; height: 6px; background: var(--ink); }
+.tug-rope .handle { width: 12px; height: 22px; background: var(--ink); flex: 0 0 auto; }
+.tug-rope .knot { width: 26px; height: 26px; flex: 0 0 auto; background: var(--red); border: 4px solid var(--line); border-radius: 50%; margin: 0 -2px; }
 #view-doc { counter-reset: chap; }
 .doc-sec { margin: 26px 0; max-width: 72ch; counter-increment: chap; }
 /* auto chapter kickers — the entry reads like a booklet */
@@ -625,6 +645,8 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
   .duo, .series-row, .duo2, .extras { grid-template-columns: 1fr; }
   .exp-row { grid-template-columns: 1fr 1fr; }
   .recent-row, .rel-grid, .positions, .prevnext { grid-template-columns: 1fr; }
+  .tug-row { grid-template-columns: 1fr 1fr; }
+  .tug-rope { grid-column: 1 / -1; order: 3; margin-top: 4px; }
   .cast { grid-template-columns: 1fr 1fr; }
   .era-ribbon { grid-template-columns: 1fr 1fr; }
   .era-k { grid-column: 1 / -1; }
@@ -656,7 +678,7 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
   .explore-panel { position: static; width: auto; height: auto; background: #fff; }
   .sheet-scroll { overflow: visible; height: auto; }
   #view-explore { display: none !important; } #view-doc { display: block !important; }
-  .hero, .breath, .arg, .quote, .tape, .duel-card, .era-ribbon, .cast-card { box-shadow: none; }
+  .hero, .breath, .arg, .quote, .tape, .duel-card, .era-ribbon, .cast-card, .tug { box-shadow: none; }
   .duel { grid-template-columns: 1fr 1fr; gap: 10px; }
   .vs { margin: 0; justify-self: center; align-self: center; }
 }

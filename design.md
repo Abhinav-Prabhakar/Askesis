@@ -142,6 +142,8 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Chapter index | `.toc` | `IN THIS ENTRY · FIVE STOPS`: anchor links (01–05) to tension/positions/argument/duel/quote with dot leaders + ink number chips. Hidden in print; `scroll-margin-top` keeps targets clear of the sticky bar. |
 | Read next | `.readnext` `.rel-grid` `.call` | Max 3 cards (pink/purple/white rotation). Catalogue `CALL Nº 07` ink chips — the shelf mark, not just a link. |
 | The Cast | `.cast` `.cast-card` `.cast-face` | Thinker face gallery on Explore: 4-col medallion cards (initial, name, years · school; pink/cream rotation), 2-col mobile. Picks a face instead of a chip. |
+| Tug of war | `.tug` `.tug-rope` `.knot` | The tension section ends in a rope pull: position 1 vs position 3 (names + verdict tags from data — no new copy, nothing quantified, the knot stays centered), red knot on an ink rope. Stacks on mobile, prints flat. Emblematic, not metric. |
+| Margin filing slip | `.breath-file` | Wide screens (≥1200px) only: the breath card splits into summary + a cream-2 filing slip (`Nº 07 · tradition · era · read time`). Redundant meta, so hidden below 1200px and reference-marked, not read twice. |
 | Quote poster | `.quote::after` | Giant pink `“` (190px Bebas) hangs behind the quote — the card reads as a poster, not a paragraph. Screen + print, `aria`-neutral pseudo-element. |
 | Figures | `.fig` `.fig-art` `figcaption` | Bordered diagram + `FIG. N — caption`. Art bg rotates pink/purple/cream-2. Caption ≤12 words. |
 | Quote | `.quote` | White card, 14px red left bar, Bebas 40px quote, byline, COPY QUOTE / SHARE. |
@@ -177,13 +179,14 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 
 ## 6. IA, routes & content
 
-Hash routes (back-button safe, shareable, `document.title` updated):
+Routes are real static pages (built by Astro; shareable, `document.title`
+set at build):
 
-`#/` explore · `#/entry/:slug` · `#/thinker/:slug` · `#/tradition/:slug` ·
-`#/experiment/:slug` · `#/series/:slug` · `#/soon/:slug` ·
-`#/start-here` · unknown → styled 404.
+`/` explore · `/entry/:slug/` · `/thinker/:slug/` · `/tradition/:slug/` ·
+`/experiment/:slug/` · `/series/:slug/` · `/soon/:slug/` ·
+`/start-here/` · unknown → styled 404.
 
-Schemas (all in `script.js`, zero-build):
+Schemas (all in `src/data/library.js`, one source of truth):
 
 - **Entry:** `slug num title tradition era read hero{k,bg,big,sub}
   hook breath tension[] positions[{who,name,tag,text}] argument{p1,p2,c}
@@ -196,7 +199,7 @@ Schemas (all in `script.js`, zero-build):
 
 Adding an entry: append to `ENTRIES` (+1 num), add hero + figure branches,
 wire `related` both ways, extend `INDEX` (automatic), add atlas dot
-(automatic by `era`), update `feed.xml`.
+(automatic by `era`), update `feed.xml`, rebuild `docs/`.
 
 ---
 
@@ -219,9 +222,10 @@ wire `related` both ways, extend `INDEX` (automatic), add atlas dot
 - **≥900px:** 1600×959 art-board scaled by width (`fitStage()`); sheet
   absolute, grows `top 276→36px` on scroll/route; scene parallaxes,
   masthead yields.
-- **<900px:** true composition — stacked scene (300px), full-width sheet,
-  2-col topics/puzzles, 1-col everything else, horizontal series snap,
-  sticky reader bar, fixed search button. Grow disabled.
+- **<900px:** true composition — stacked scene (360px; top card row hidden,
+  lower card strip below the masthead), full-width sheet, 2-col topics/puzzles,
+  1-col everything else, horizontal series snap, sticky reader bar, fixed
+  search button. Grow disabled.
 - **Print:** one clean cream page of the open entry; scenery, tools,
   navigation, ticker, seal hidden; shadows off.
 - **RSS** (`feed.xml`) mirrors entries. **Sitemap** (`sitemap.xml`: home + start-here + every entry/thinker/school/puzzle/series/stub) regenerated from `library.js` whenever routes change. **PWA** is manifest-only for now —
@@ -243,8 +247,12 @@ argument cards, puzzles, 60-second series — never from engagement chrome.
 
 ## 10. File map
 
-`index.html` — shell, scene, sheet skeleton, explore sections, search pop.
-`styles.css` — tokens → scene → sheet → components → motion → responsive →
-print (this doc mirrors that order). `script.js` — data → art → templates →
-router → tools → search → grow/reveal → boot. `assets/` — fonts, grain,
-favicon, OG. `feed.xml`, `manifest.webmanifest`. This file.
+`src/pages/` — routes (`index`, `entry/[slug]`, `thinker`, `tradition`,
+`experiment`, `series`, `soon`, `start-here`, `404`).
+`src/layouts/Base.astro` — shell, scene, sheet skeleton, search pop.
+`src/styles/styles.css` — tokens → scene → sheet → components → motion →
+responsive → print (this doc mirrors that order).
+`src/data/library.js` — content + search index + A–Z. `src/lib/` — SVG art,
+glossary, base-aware URLs. `public/js/app.js` — search, scroll/grow, reading
+tools, notes/recents. `docs/` — built site committed for GitHub Pages
+(no Actions). `feed.xml`, `sitemap.xml`, `manifest.webmanifest`. This file.
