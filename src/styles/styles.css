@@ -665,6 +665,14 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
   .path a { grid-template-columns: 48px 1fr; } .path .mins { display: none; }
 }
 
+/* narrow phones — stack the daily card instead of squeezing the question */
+@media (max-width: 560px) {
+  .daily { flex-wrap: wrap; row-gap: 4px; }
+  .daily-kicker { order: 1; }
+  .daily-q { order: 2; flex: 1 1 100%; font-size: 16px; }
+  .daily-go { display: none; }
+}
+
 /* motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
@@ -826,4 +834,5 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 
 @media print {
   .ticker, .seal { display: none !important; }
+  .js .rv { opacity: 1 !important; translate: none !important; }
 }
