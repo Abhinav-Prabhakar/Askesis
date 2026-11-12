@@ -16,6 +16,7 @@
 <link rel="preload" href="assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/bebas-neue-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
 <a class="skip" href="#sheetScroll">Skip to reading sheet</a>
@@ -65,6 +66,7 @@
 <!-- ══ CREAM SHEET — the only surface ══ -->
 <section class="explore-panel" id="sheet" aria-label="Reading sheet">
   <div class="progress" id="progress" aria-hidden="true"></div>
+  <button class="grip" id="grip" type="button" aria-label="Grow the sheet" aria-expanded="false"><i aria-hidden="true"></i></button>
 
   <div class="sheet-scroll" id="sheetScroll" tabindex="-1">
 
@@ -85,7 +87,7 @@
         </button>
       </div>
 
-      <button class="daily" id="dailyBtn" type="button">
+      <button class="daily rv" id="dailyBtn" type="button">
         <span class="daily-kicker" id="dailyKicker">TODAY'S QUESTION</span>
         <span class="daily-q" id="dailyQ">Are you lying to yourself right now?</span>
         <span class="daily-go" aria-hidden="true">→</span>
@@ -93,7 +95,7 @@
 
       <nav class="topics" aria-label="Entries" id="topicGrid"></nav>
 
-      <div class="duo">
+      <div class="duo rv">
         <a class="start-card" href="#/start-here">
           <span class="card-kicker">NEW · 5 STEPS</span>
           <span class="card-title">START HERE</span>
@@ -107,15 +109,23 @@
         </button>
       </div>
 
-      <h2 class="series-title">MINI SCROLL SERIES</h2>
-      <p class="section-sub">One idea · 5 cards · 60 seconds.</p>
+      <h2 class="series-title rv">MINI SCROLL SERIES</h2>
+      <p class="section-sub rv">One idea · 5 cards · 60 seconds.</p>
       <div class="series-row" id="seriesRow"></div>
 
-      <h2 class="series-title">THOUGHT EXPERIMENTS</h2>
-      <p class="section-sub">Short standalone puzzles. Run one in your head.</p>
+      <h2 class="series-title rv">THOUGHT EXPERIMENTS</h2>
+      <p class="section-sub rv">Short standalone puzzles. Run one in your head.</p>
       <div class="exp-row" id="expRow"></div>
 
-      <div class="duo2">
+      <h2 class="series-title rv">THE ATLAS</h2>
+      <p class="section-sub rv">Four eras. Dots are doors — pick one.</p>
+      <div class="atlas rv" id="atlasRow"></div>
+
+      <h2 class="series-title rv">COMING SOON</h2>
+      <p class="section-sub rv">Shelves being written. Dashed means dusty.</p>
+      <div class="soon-grid" id="soonGrid"></div>
+
+      <div class="duo2 rv">
         <div class="index-block">
           <h3>THINKERS</h3>
           <div class="chips" id="thinkerChips"></div>
@@ -126,14 +136,17 @@
         </div>
       </div>
 
-      <div class="recent" id="recentWrap" hidden>
+      <div class="recent rv" id="recentWrap" hidden>
         <h3>RECENTLY VIEWED</h3>
         <div class="recent-row" id="recentRow"></div>
       </div>
 
-      <footer class="sheet-foot">
+      <div class="ticker rv" aria-hidden="true"><div class="ticker-in"><span>STOICISM · EXISTENTIALISM · SKEPTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span><span>STOICISM · EXISTENTIALISM · SKEPTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span></div></div>
+
+      <footer class="sheet-foot rv">
         <span>ASKĒSIS · EDITED, NOT ENCYCLOPEDIC</span>
         <span class="foot-links"><a href="#/start-here">Start here</a> · <a href="feed.xml">RSS</a> · <a href="#/entry/sartre-bad-faith">Sample entry</a></span>
+        <span class="seal" aria-hidden="true">Æ</span>
       </footer>
     </div>
 

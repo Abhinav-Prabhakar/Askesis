@@ -125,7 +125,7 @@ const ENTRIES = [
   },
   {
     slug: "a-theory-of-time", num: 6, title: "A-Theory of Time",
-    tradition: "Metaphysics", era: "Classic", read: 2,
+    tradition: "Metaphysics", era: "Contemporary", read: 2,
     hero: { bg: "pink", k: "METAPHYSICS · PAST / NOW / FUTURE", big: "Only now is real. The past is gone; the future isn't yet.", sub: "Against the block universe, where all times sit side by side." },
     hook: "Time flows. Physics says: no, it doesn't. One of them is wrong.",
     breath: "The A-theory says tensed facts are fundamental — now moves, the future is open, the past is fixed. The B-theory says only earlier/later relations are real: all moments exist like pages in a book, and flow is an illusion.",
@@ -224,6 +224,57 @@ const SERIES = [
     ] }
 ];
 
+/* Shelves being written — full entries, holding pages for now. */
+const SOON = [
+  { slug: "stoic-dichotomy", title: "The Stoic Dichotomy", era: "Ancient",
+    hook: "Some things are up to us. Most things aren't. Wisdom is the sorting.",
+    points: ["Epictetus's line: control what is up to you — judgments, impulses, assent.", "The trichotomy problem: what about things partly up to us?", "The practice: morning premeditation, evening review."],
+    related: ["free-will", "skeptical-theism"],
+    keys: "stoic dichotomy epictetus control enchiridion stoicism trichotomy" },
+  { slug: "anselm-ontological", title: "Anselm's Ontological Argument", era: "Medieval",
+    hook: "God as the greatest thing thinkable — therefore real?",
+    points: ["The Proslogion move: a greatest being must exist, or a greater could be thought.", "Gaunilo's island: the perfect parody — a greatest island must exist too?", "Kant's reply: existence is not a predicate."],
+    related: ["skeptical-theism", "a-theory-of-time"],
+    keys: "anselm ontological argument god proslogion gaunilo island existence predicate medieval" },
+  { slug: "descartes-cogito", title: "Descartes' Cogito", era: "Modern",
+    hook: "I think, therefore I am — the one sentence that survives doubt.",
+    points: ["Methodic doubt: burn everything that can burn.", "The cogito as Archimedean point — indubitable even to a deceiver.", "From 'I am' to God to the world: does the bridge hold?"],
+    related: ["qualia", "sartre-bad-faith"],
+    keys: "descartes cogito meditations doubt evil demon dualism modern" },
+  { slug: "kant-categorical", title: "Kant's Categorical Imperative", era: "Modern",
+    hook: "Act only as you would will everyone to act.",
+    points: ["Universalizability: the lying-promise test.", "Humanity as an end in itself — never merely a means.", "The price: rigorism, even about white lies."],
+    related: ["veil-of-ignorance", "free-will"],
+    keys: "kant categorical imperative universalizability deontology humanity means ends modern" },
+  { slug: "nietzsche-will", title: "Nietzsche's Will to Power", era: "Modern",
+    hook: "Not survival — expansion. Life wants more life.",
+    points: ["Master versus slave moralities: where values come from.", "Genealogy: every value has a bloodline.", "Amor fati: love it all, or lie about it."],
+    related: ["sartre-bad-faith", "skeptical-theism"],
+    keys: "nietzsche will to power genealogy morals master slave amor fati ubermensch" },
+  { slug: "wittgenstein-beetle", title: "Wittgenstein's Beetle", era: "Contemporary",
+    hook: "Everyone has a box with 'a beetle' inside. No one can see another's.",
+    points: ["Private language: can words name what cannot be shown?", "The beetle drops out — pain-talk without inner objects.", "Against the inner museum: meaning is use."],
+    related: ["qualia", "free-will"],
+    keys: "wittgenstein beetle private language investigations pain meaning use contemporary" }
+];
+
+const ERAS = [
+  { name: "ANCIENT", span: "c. 700 BC – 500" },
+  { name: "MEDIEVAL", span: "c. 500 – 1400" },
+  { name: "MODERN", span: "c. 1400 – 1900" },
+  { name: "CONTEMPORARY", span: "c. 1900 – NOW" }
+];
+
+/* One inline figure per entry: diagram first, caption second. */
+const FIGCAP = {
+  "sartre-bad-faith": "The loop: deceiver and deceived are one mind.",
+  "free-will": "Frankfurt's test: the blocked road was never taken — yet the drive was yours.",
+  "qualia": "Mary's room: every physical fact, none of the redness.",
+  "veil-of-ignorance": "Choose blind: which rules insure every seat at the table?",
+  "skeptical-theism": "The fawn: pointless to us — but how far can we see?",
+  "a-theory-of-time": "Flow versus block: the now moves, or only seems to."
+};
+
 const GLOSS = {
   "qualia": "The felt quality of experience — what red looks like, what pain feels like, from the inside.",
   "a priori": "Known without looking: true by reason alone, like 2 + 2 = 4.",
@@ -259,7 +310,8 @@ const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
 const stage = $("#stage"), sheet = $("#sheetScroll"), docView = $("#view-doc"),
   exploreView = $("#view-explore"), progress = $("#progress"),
   searchBtn = $("#searchBtn"), searchPop = $("#searchPop"),
-  searchInput = $("#searchInput"), searchResults = $("#searchResults");
+  searchInput = $("#searchInput"), searchResults = $("#searchResults"),
+  panel = $("#sheet"), grip = $("#grip");
 
 const toast = $("#toast"), glossTip = $("#glossTip");
 let toastT = null;
@@ -312,22 +364,42 @@ function seriesArt(i) {
   return `<svg viewBox="0 0 92 92" aria-hidden="true"><rect width="92" height="92" fill="#fadede"/><path d="M12 46 H40 M40 46 C58 46 58 22 82 22 M40 46 C58 46 58 70 82 70" fill="none" ${B}/></svg>`;
 }
 
+/* Inline figures: flat shapes, black keylines, palette fills only. */
+function figureSVG(slug) {
+  const B = 'stroke="#0a0505" stroke-width="6"';
+  const T = 'font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="17" fill="#0a0505" letter-spacing="1"';
+  if (slug === "sartre-bad-faith") return `<svg viewBox="0 0 430 150" role="img" aria-label="A loop from deceiver to deceived"><circle cx="90" cy="75" r="42" fill="#0a0505"/><circle cx="340" cy="75" r="42" fill="#feabe3" ${B}/><path d="M132 60 C200 40 230 40 298 60" fill="none" ${B}/><path d="M298 60 l-14 -2 M298 60 l-4 -13" stroke="#0a0505" stroke-width="6" stroke-linecap="round"/><path d="M298 92 C230 112 200 112 132 92" fill="none" ${B}/><path d="M132 92 l14 2 M132 92 l4 13" stroke="#0a0505" stroke-width="6" stroke-linecap="round"/><text x="90" y="80" text-anchor="middle" ${T} fill="#fadede">ME</text><text x="340" y="80" text-anchor="middle" ${T}>ME</text></svg>`;
+  if (slug === "free-will") return `<svg viewBox="0 0 430 150" role="img" aria-label="A fork with one road blocked"><path d="M20 75 H150" fill="none" ${B}/><path d="M150 75 C220 75 220 35 320 35" fill="none" ${B}/><path d="M150 75 C220 75 220 115 320 115" fill="none" ${B}/><path d="M245 20 L275 50 M275 20 L245 50" stroke="#d1393c" stroke-width="10" stroke-linecap="round"/><circle cx="320" cy="115" r="14" fill="#d8aafe" ${B}/><text x="262" y="128" text-anchor="middle" ${T}>BLOCKED</text><text x="320" y="80" text-anchor="middle" ${T}>TAKEN</text></svg>`;
+  if (slug === "qualia") return `<svg viewBox="0 0 430 150" role="img" aria-label="A black and white room with a red square outside"><rect x="30" y="15" width="200" height="120" fill="#fff8f4" ${B}/><rect x="30" y="15" width="100" height="120" fill="#0a0505"/><rect x="230" y="15" width="14" height="120" fill="#0a0505"/><circle cx="330" cy="75" r="34" fill="#d1393c" ${B}/><path d="M244 75 H282" ${B}/><path d="M272 65 L284 75 L272 85" fill="none" ${B}/><text x="80" y="82" text-anchor="middle" ${T} fill="#fadede">B / W</text><text x="330" y="140" text-anchor="middle" ${T}>RED</text></svg>`;
+  if (slug === "veil-of-ignorance") return `<svg viewBox="0 0 430 150" role="img" aria-label="A two by two grid of unknown outcomes"><rect x="90" y="10" width="250" height="130" fill="#fff8f4" ${B}/><path d="M215 10 V140 M90 75 H340" ${B}/><text x="152" y="62" text-anchor="middle" ${T}>RULE A</text><text x="278" y="62" text-anchor="middle" ${T}>RULE B</text><text x="152" y="120" text-anchor="middle" font-size="34" ${T}>?</text><text x="278" y="120" text-anchor="middle" font-size="34" ${T}>?</text><text x="52" y="80" text-anchor="middle" ${T}>YOU?</text></svg>`;
+  if (slug === "skeptical-theism") return `<svg viewBox="0 0 430 150" role="img" aria-label="A flame beside a question mark"><path d="M120 130 C70 100 80 60 110 40 C108 62 122 66 124 50 C150 70 160 100 120 130 Z" fill="#d1393c" ${B}/><ellipse cx="116" cy="105" rx="16" ry="22" fill="#feabe3"/><text x="290" y="115" text-anchor="middle" font-family="Bebas Neue, Arial Narrow, sans-serif" font-size="96" fill="#0a0505">?</text><path d="M210 30 V130" stroke="#0a0505" stroke-width="4" stroke-dasharray="10 8"/></svg>`;
+  return `<svg viewBox="0 0 430 150" role="img" aria-label="A timeline with a moving now"><rect x="40" y="30" width="330" height="60" fill="#d8aafe" ${B}/><path d="M40 60 H370" ${B}/><path d="M60 45 V75 M140 45 V75 M220 45 V75 M300 45 V75" stroke="#0a0505" stroke-width="5"/><rect x="196" y="14" width="72" height="34" fill="#d1393c" ${B}/><text x="232" y="39" text-anchor="middle" ${T} fill="#fadede">NOW</text><path d="M232 48 V100" stroke="#0a0505" stroke-width="5"/><text x="232" y="138" text-anchor="middle" ${T}>FLOW, OR ONLY SEEMING?</text></svg>`;
+}
+
+function soonArt() {
+  const B = 'stroke="#0a0505" stroke-width="6"';
+  return `<svg viewBox="0 0 200 150" role="img" aria-label="An unfinished scroll"><rect x="60" y="18" width="80" height="114" fill="#fff8f4" ${B} stroke-dasharray="12 7"/><path d="M78 46 H122 M78 64 H122 M78 82 H104" stroke="#0a0505" stroke-width="6" stroke-linecap="round"/><rect x="48" y="12" width="104" height="12" fill="#0a0505"/><rect x="48" y="126" width="104" height="12" fill="#0a0505"/></svg>`;
+}
+
 /* ── explore render ───────────────────────────────────── */
 
 function entryLink(e) { return "#/entry/" + e.slug; }
 
 function renderExplore() {
   $("#topicGrid").innerHTML = ENTRIES.map(e =>
-    `<a class="topic" href="${entryLink(e)}"><span class="num">${e.num}</span><span class="t"><span class="name">${e.title.toUpperCase()}</span><span class="meta">${e.read} MIN · ${e.tradition.toUpperCase()}</span></span></a>`
+    `<a class="topic rv" href="${entryLink(e)}"><span class="num">${e.num}</span><span class="t"><span class="name">${e.title.toUpperCase()}</span><span class="meta">${e.read} MIN · ${e.tradition.toUpperCase()}</span></span></a>`
   ).join("");
 
   $("#seriesRow").innerHTML = SERIES.map((s, i) =>
-    `<a class="series-card" href="#/series/${s.slug}"><span class="series-art">${seriesArt(i)}</span><span><span class="s-t">${s.title.toUpperCase()}</span><span class="s-m">${s.meta}</span><span class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span></span></a>`
+    `<a class="series-card rv" href="#/series/${s.slug}"><span class="series-art">${seriesArt(i)}</span><span><span class="s-t">${s.title.toUpperCase()}</span><span class="s-m">${s.meta}</span><span class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span></span></a>`
   ).join("");
 
   $("#expRow").innerHTML = EXPERIMENTS.map(e =>
-    `<a class="exp-card" href="#/experiment/${e.slug}"><span class="exp-art" style="background:${e.color}">${expArt(e)}</span><span class="e-t">${e.title.toUpperCase()}</span><span class="e-m">${e.by.toUpperCase()} · ${e.read} MIN</span></a>`
+    `<a class="exp-card rv" href="#/experiment/${e.slug}"><span class="exp-art" style="background:${e.color}">${expArt(e)}</span><span class="e-t">${e.title.toUpperCase()}</span><span class="e-m">${e.by.toUpperCase()} · ${e.read} MIN</span></a>`
   ).join("");
+
+  renderAtlas();
+  renderSoon();
 
   $("#thinkerChips").innerHTML = THINKERS.map(t =>
     `<a href="#/thinker/${t.slug}">${t.name.toUpperCase()}</a>`
@@ -349,6 +421,30 @@ function renderExplore() {
   $("#featuredCard").onclick = () => { location.hash = f.to; };
 
   renderRecent();
+}
+
+function renderAtlas() {
+  const row = $("#atlasRow");
+  if (!row) return;
+  row.innerHTML = ERAS.map(er => {
+    const items = [
+      ...ENTRIES.filter(e => e.era.toUpperCase() === er.name),
+      ...SOON.filter(s => s.era.toUpperCase() === er.name)
+    ];
+    const dots = items.map(it => it.num
+      ? `<a class="dot" href="#/entry/${it.slug}" title="${it.title}">${it.num}</a>`
+      : `<a class="dot soon" href="#/soon/${it.slug}" title="${it.title} — being written">✎</a>`
+    ).join("");
+    return `<div class="era"><span class="e-name">${er.name}</span><span class="e-span">${er.span}</span><div class="e-dots">${dots || '<span class="e-span">EMPTY SHELF</span>'}</div></div>`;
+  }).join("");
+}
+
+function renderSoon() {
+  const grid = $("#soonGrid");
+  if (!grid) return;
+  grid.innerHTML = SOON.map(s =>
+    `<a class="ghost rv" href="#/soon/${s.slug}"><span class="tag">BEING WRITTEN</span><b>${s.title.toUpperCase()}</b><small>${s.hook}</small></a>`
+  ).join("");
 }
 
 function getRecent() {
@@ -410,25 +506,26 @@ function entryHTML(e) {
   </nav>
   <h1 class="doc-title">${e.title}</h1>
   <p class="doc-hook">${e.hook}</p>
-  <div class="hero">
+  <div class="hero rv">
     <div class="hero-art ${e.hero.bg}">${heroSVG(e.slug)}</div>
     <div class="hero-cap"><span class="k">${e.hero.k}</span><span class="big">${e.hero.big}</span><span class="s">${e.hero.sub}</span></div>
   </div>
-  <div class="breath"><div class="k">IN ONE BREATH</div><p>${glossify(e.breath)}</p></div>
-  <div class="doc-sec"><h2>The tension</h2>${e.tension.map(p => `<p>${glossify(p)}</p>`).join("")}</div>
-  <div class="doc-sec"><h2>Three positions</h2>
+  <div class="breath rv"><div class="k">IN ONE BREATH</div><p>${glossify(e.breath)}</p></div>
+  <div class="doc-sec rv"><h2>The tension</h2>${e.tension.map(p => `<p>${glossify(p)}</p>`).join("")}</div>
+  <div class="doc-sec rv"><h2>Three positions</h2>
     <div class="positions">${e.positions.map((p, i) =>
       `<div class="position"><div class="avatar" aria-hidden="true">${p.who}</div><div class="p-n">0${i + 1}</div><div class="p-t">${p.name.toUpperCase()}</div><p>${glossify(p.text)}</p></div>`
     ).join("")}</div>
   </div>
-  <div class="arg" id="argCard">
+  <figure class="fig rv"><div class="fig-art ${e.hero.bg === "cream" ? "" : e.hero.bg}">${figureSVG(e.slug)}</div><figcaption><b>FIG. ${e.num} — </b>${FIGCAP[e.slug] || ""}</figcaption></figure>
+  <div class="arg rv" id="argCard">
     <div class="arg-h"><b>THE ARGUMENT, IN THREE LINES</b><button type="button" id="copyArg">COPY</button></div>
     <div class="arg-r"><span class="tag">P1</span><span>${glossify(e.argument.p1)}</span></div>
     <div class="arg-r"><span class="tag">P2</span><span>${glossify(e.argument.p2)}</span></div>
     <div class="arg-r qed"><span class="tag">∴</span><span>${glossify(e.argument.c)}</span></div>
   </div>
-  <div class="doc-sec"><h2>The strongest objection</h2><p>${glossify(e.objection)}</p></div>
-  <div class="quote">
+  <div class="doc-sec rv"><h2>The strongest objection</h2><p>${glossify(e.objection)}</p></div>
+  <div class="quote rv">
     <blockquote>“${e.quote.text.replace(/^“?|”$/g, "")}”</blockquote>
     <cite>${e.quote.by}</cite>
     <div class="q-actions">
@@ -436,14 +533,14 @@ function entryHTML(e) {
       <button class="mini-btn dark" type="button" id="shareQ">SHARE →</button>
     </div>
   </div>
-  <div class="readnext"><h2>Read next</h2>
+  <div class="readnext rv"><h2>Read next</h2>
     <div class="rel-grid">${rel.map(r => `<a href="${entryLink(r)}"><b>${r.title.toUpperCase()}</b><small>${r.read} MIN · ${r.tradition.toUpperCase()}</small></a>`).join("")}</div>
   </div>
-  <div class="prevnext">
+  <div class="prevnext rv">
     ${prev ? `<a href="${entryLink(prev)}"><small>← PREV</small><b>${prev.title.toUpperCase()}</b></a>` : `<a href="#/"><small>←</small><b>BACK TO EXPLORE</b></a>`}
     ${next ? `<a href="${entryLink(next)}"><small>NEXT →</small><b>${next.title.toUpperCase()}</b></a>` : `<a href="#/start-here"><small>NEXT →</small><b>START HERE PATH</b></a>`}
   </div>
-  <div class="extras">
+  <div class="extras rv">
     <div class="cite">
       <h3>Cite this entry</h3>
       <div class="cite-tabs" role="group" aria-label="Citation style">
@@ -470,28 +567,33 @@ function crumbTrad(name) {
   return `<a class="crumb p" href="#/tradition/${s}">${name.toUpperCase()}</a>`;
 }
 
+const FACE = { sartre: "", rawls: "f-white", nagel: "f-purple", camus: "f-cream", kant: "f-white", nietzsche: "f-purple" };
+
 function thinkerHTML(t) {
   return `${toolbar("#/", "EXPLORE")}
   <nav class="crumbs"><span class="crumb p">THINKER</span><span class="crumb">${t.school.toUpperCase()}</span></nav>
-  <div class="person"><div class="face" aria-hidden="true">${t.name[0]}</div>
+  <div class="person rv"><div class="face ${FACE[t.slug] || ""}" aria-hidden="true">${t.name[0]}</div>
     <div><h3>${t.name.toUpperCase()}</h3><p>${t.years} · ${t.school} — ${t.line}</p></div></div>
-  <div class="doc-sec"><h2>Start with</h2>
+  <div class="doc-sec rv"><h2>Start with</h2>
     <div class="rel-grid">${t.entries.map(s => entryBySlug[s]).filter(Boolean).map(e =>
       `<a href="${entryLink(e)}"><b>${e.title.toUpperCase()}</b><small>${e.read} MIN READ →</small></a>`).join("")}</div></div>
-  <div class="prevnext"><a href="#/"><small>←</small><b>BACK TO EXPLORE</b></a><a href="#/start-here"><small>NEXT →</small><b>THE START-HERE PATH</b></a></div>`;
+  <div class="prevnext rv"><a href="#/"><small>←</small><b>BACK TO EXPLORE</b></a><a href="#/start-here"><small>NEXT →</small><b>THE START-HERE PATH</b></a></div>`;
 }
 
 function traditionHTML(t) {
+  const mark = t.color === "u" ? "u" : t.color === "p" ? "" : "c";
   return `${toolbar("#/", "EXPLORE")}
   <nav class="crumbs"><span class="crumb ${t.color || ""}">SCHOOL</span><span class="readtime">${t.entries.length} ENTRIES</span></nav>
   <h1 class="doc-title">${t.name}</h1>
   <p class="doc-hook">${t.line}</p>
-  <div class="doc-sec"><h2>Read the orientation in 30 seconds</h2>
+  <div class="school rv"><div class="mark ${mark}" aria-hidden="true">${t.name[0]}</div>
+    <div><h3>THE SHORT VERSION</h3><p>Every school answers one question first: what should a mind do? Endure, doubt, choose, or revolt? Carry that question into the entries below — notice where you resist. That friction is the lesson.</p></div></div>
+  <div class="doc-sec rv"><h2>Read the orientation in 30 seconds</h2>
   <div class="howto"><ol><li>Ask what the school thinks a good mind does — endure, doubt, choose, or revolt?</li><li>Read one entry below with that question in hand.</li><li>Notice where you resist. That friction is the lesson.</li></ol></div></div>
-  <div class="readnext"><h2>Entries in ${t.name.toLowerCase()}</h2>
+  <div class="readnext rv"><h2>Entries in ${t.name.toLowerCase()}</h2>
     <div class="rel-grid">${t.entries.map(s => entryBySlug[s]).filter(Boolean).map(e =>
       `<a href="${entryLink(e)}"><b>${e.title.toUpperCase()}</b><small>${e.read} MIN READ →</small></a>`).join("")}</div></div>
-  <div class="prevnext"><a href="#/"><small>←</small><b>BACK TO EXPLORE</b></a><a href="#/experiment/ship-of-theseus"><small>NEXT →</small><b>TRY A THOUGHT EXPERIMENT</b></a></div>`;
+  <div class="prevnext rv"><a href="#/"><small>←</small><b>BACK TO EXPLORE</b></a><a href="#/experiment/ship-of-theseus"><small>NEXT →</small><b>TRY A THOUGHT EXPERIMENT</b></a></div>`;
 }
 
 function experimentHTML(x) {
@@ -499,10 +601,10 @@ function experimentHTML(x) {
   <nav class="crumbs"><span class="crumb u">PUZZLE</span><span class="crumb">${x.by.toUpperCase()}</span><span class="readtime">${x.read} MIN</span></nav>
   <h1 class="doc-title">${x.title}</h1>
   <p class="doc-hook">${x.setup}</p>
-  <div class="hero"><div class="hero-art cream">${expArt(x)}</div>
+  <div class="hero rv"><div class="hero-art cream">${expArt(x)}</div>
     <div class="hero-cap"><span class="k">HOW TO RUN IT</span><span class="big">Three steps, in your head.</span><span class="s">No equipment. No wrong answers — only sharper questions.</span></div></div>
-  <div class="howto"><ol>${x.steps.map(s => `<li>${s}</li>`).join("")}</ol></div>
-  <div class="readnext"><h2>Go deeper</h2>
+  <div class="howto rv"><ol>${x.steps.map(s => `<li>${s}</li>`).join("")}</ol></div>
+  <div class="readnext rv"><h2>Go deeper</h2>
     <div class="rel-grid"><a href="${entryLink(entryBySlug[x.link])}"><b>${entryBySlug[x.link].title.toUpperCase()}</b><small>FULL ENTRY →</small></a>
     <a href="#/series/bad-faith-60"><b>60-SECOND SERIES</b><small>SWIPE IT →</small></a>
     <a href="#/"><b>BACK TO EXPLORE</b><small>ALL PUZZLES →</small></a></div></div>`;
@@ -512,10 +614,10 @@ function seriesHTML(s) {
   return `${toolbar("#/", "EXPLORE")}
   <nav class="crumbs"><span class="crumb u">MINI SCROLL SERIES</span><span class="crumb">${s.meta}</span></nav>
   <h1 class="doc-title">${s.title}</h1>
-  <p class="doc-stand">Swipe or use ← →. Five cards, about a minute. No account, no autoplay, no noise.</p>
-  <div class="series-view">
+  <p class="doc-stand rv">Swipe or use ← →. Five cards, about a minute. No account, no autoplay, no noise.</p>
+  <div class="series-view rv">
     <div class="sv-track" id="svTrack" tabindex="0" aria-label="${s.title} cards">${s.cards.map((c, i) =>
-      `<div class="sv-card"><span class="n">CARD ${i + 1} / 5</span><span class="t">${c.t.toUpperCase()}</span><p>${c.p}</p></div>`).join("")}</div>
+      `<div class="sv-card" data-n="${i + 1}"><span class="n">CARD ${i + 1} / 5</span><span class="t">${c.t.toUpperCase()}</span><p>${c.p}</p></div>`).join("")}</div>
     <div class="sv-bar"><button type="button" id="svPrev" aria-label="Previous card">←</button>
       <div class="sv-dots" id="svDots" aria-hidden="true">${s.cards.map((_, i) => `<i class="${i === 0 ? "on" : ""}"></i>`).join("")}</div>
       <button type="button" id="svNext" aria-label="Next card">→</button></div>
@@ -535,13 +637,28 @@ function startHTML() {
   <nav class="crumbs"><span class="crumb p">A PATH</span><span class="readtime">10 MINUTES · 5 STEPS</span></nav>
   <h1 class="doc-title">Start here</h1>
   <p class="doc-hook">Never read philosophy? Read these five in order. Each hands you the question the next one answers.</p>
-  <div class="path">${steps.map((st, i) => { const e = entryBySlug[st.s]; return `<a href="${entryLink(e)}"><span class="step-n">${i + 1}</span><span><b>${e.title.toUpperCase()}</b><small>${st.why}</small></span><span class="mins">${e.read} MIN</span></a>`; }).join("")}</div>
-  <div class="prevnext"><a href="#/"><small>←</small><b>BACK TO EXPLORE</b></a><a href="${entryLink(entryBySlug["sartre-bad-faith"])}"><small>BEGIN →</small><b>STEP 1 · BAD FAITH</b></a></div>`;
+  <div class="path rv">${steps.map((st, i) => { const e = entryBySlug[st.s]; return `<a href="${entryLink(e)}"><span class="step-n">${i + 1}</span><span><b>${e.title.toUpperCase()}</b><small>${st.why}</small></span><span class="mins">${e.read} MIN</span></a>`; }).join("")}</div>
+  <div class="prevnext rv"><a href="#/"><small>←</small><b>BACK TO EXPLORE</b></a><a href="${entryLink(entryBySlug["sartre-bad-faith"])}"><small>BEGIN →</small><b>STEP 1 · BAD FAITH</b></a></div>`;
+}
+
+function soonHTML(s) {
+  return `${toolbar("#/", "EXPLORE")}
+  <nav class="crumbs"><span class="crumb">SHELF</span><span class="crumb">${s.era.toUpperCase()}</span><span class="readtime">BEING WRITTEN</span></nav>
+  <h1 class="doc-title">${s.title}</h1>
+  <p class="doc-hook">${s.hook}</p>
+  <div class="hero rv"><div class="hero-art cream">${soonArt()}</div>
+    <div class="hero-cap"><span class="k">WHAT THIS SHELF WILL HOLD</span><span class="big">Three questions, one shelf.</span><span class="s">The entry is being edited. The shape below is already fixed.</span></div></div>
+  <div class="howto rv"><ol>${s.points.map(p => `<li>${p}</li>`).join("")}</ol></div>
+  <div class="readnext rv"><h2>Read while you wait</h2>
+    <div class="rel-grid">${s.related.map(r => entryBySlug[r]).filter(Boolean).map(e =>
+      `<a href="${entryLink(e)}"><b>${e.title.toUpperCase()}</b><small>${e.read} MIN READ →</small></a>`).join("")}<a href="#/"><b>BACK TO EXPLORE</b><small>ALL SHELVES →</small></a></div></div>`;
 }
 
 function notFoundHTML(path) {
+  const B = 'stroke="#0a0505" stroke-width="6"';
   return `<div class="doc-top"><a class="back" href="#/">← EXPLORE</a></div>
-  <div class="nf"><p class="big">LOST PAGE</p>
+  <div class="nf"><div class="nf-art" aria-hidden="true"><svg viewBox="0 0 140 120"><rect x="30" y="10" width="80" height="16" fill="#0a0505"/><rect x="38" y="32" width="64" height="26" fill="#feabe3" ${B}/><path d="M38 62 L56 72 L46 82 L64 92" fill="none" ${B}/><rect x="38" y="94" width="64" height="12" fill="#d8aafe" ${B}/><rect x="28" y="108" width="84" height="10" fill="#0a0505"/></svg></div>
+  <p class="big">LOST PAGE</p>
   <p class="doc-hook">Nothing at <b>${path}</b> — even the skeptics agree on that much.</p>
   <div class="rel-grid" style="margin-top:18px">
     <a href="#/entry/sartre-bad-faith"><b>READ BAD FAITH</b><small>2 MIN →</small></a>
@@ -563,18 +680,23 @@ function showExplore() {
   exploreView.classList.add("is-active");
   docView.classList.remove("is-active");
   docView.innerHTML = "";
+  docActive = false; forceGrow = false;
   stopSpeak();
   setMeta(TITLES.explore, "A pocket library of philosophy. Short entries, argument cards, thought experiments and 60-second series.");
   sheet.scrollTop = 0;
   updateProgress();
+  updateGrow();
 }
 function showDoc(html) {
   exploreView.classList.remove("is-active");
   docView.classList.add("is-active");
   docView.innerHTML = html;
+  docActive = true;
   sheet.scrollTop = 0;
   updateProgress();
   wireDoc();
+  watchRv(docView);
+  updateGrow();
   const h = docView.querySelector(".doc-title, .nf .big");
   if (h) { h.setAttribute("tabindex", "-1"); }
   sheet.focus({ preventScroll: true });
@@ -607,6 +729,10 @@ function route() {
   if (kind === "series") {
     const s = SERIES.find(s => s.slug === slug);
     if (s) { showDoc(seriesHTML(s)); setMeta(s.title + " — Askēsis", "One idea in 5 cards."); wireSeries(); return; }
+  }
+  if (kind === "soon") {
+    const s = SOON.find(s => s.slug === slug);
+    if (s) { showDoc(soonHTML(s)); setMeta(s.title + " (coming soon) — Askēsis", s.hook); return; }
   }
   if (kind === "start-here" || h === "#/start-here") {
     showDoc(startHTML()); setMeta("Start here — Askēsis", "Five entries for first-time readers."); return;
@@ -736,6 +862,44 @@ function updateProgress() {
 }
 sheet.addEventListener("scroll", updateProgress, { passive: true });
 
+/* ── growing sheet: scroll and the cream rises to meet you ── */
+let forceGrow = false, docActive = false;
+function updateGrow() {
+  const wide = window.innerWidth >= 900;
+  const grown = wide && (docActive || forceGrow || sheet.scrollTop > 24);
+  panel.classList.toggle("is-grown", grown);
+  stage.classList.toggle("grown", grown);
+  if (grown) grip.classList.remove("nag");
+  grip.setAttribute("aria-expanded", String(grown));
+  grip.setAttribute("aria-label", grown ? "Shrink the sheet" : "Grow the sheet");
+}
+let growQueued = false;
+sheet.addEventListener("scroll", () => {
+  if (growQueued) return; growQueued = true;
+  window.requestAnimationFrame(() => { growQueued = false; updateGrow(); });
+}, { passive: true });
+grip.addEventListener("click", () => {
+  grip.classList.remove("nag");
+  if (docActive) { sheet.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  forceGrow = !panel.classList.contains("is-grown");
+  updateGrow();
+});
+window.addEventListener("resize", updateGrow);
+
+/* ── scroll reveal: one observer, stagger by sibling order ── */
+const io = new IntersectionObserver(entries => entries.forEach(en => {
+  if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+}), { threshold: 0.1 });
+function watchRv(root) {
+  const groups = new Map();
+  $$(".rv", root || document).forEach(el => {
+    const p = el.parentElement, n = groups.get(p) || 0;
+    groups.set(p, n + 1);
+    el.style.setProperty("--d", Math.min(n, 8) * 55 + "ms");
+    io.observe(el);
+  });
+}
+
 /* ── surprise ── */
 function surprise() {
   closeSearch();
@@ -750,6 +914,7 @@ let filter = "all", focused = -1, lastResults = [];
 
 const INDEX = [
   ...ENTRIES.map(e => ({ type: "entry", slug: e.slug, title: e.title, sub: e.read + " MIN · " + e.tradition.toUpperCase(), keys: (e.title + " " + e.tradition + " " + e.hook + " " + e.keys).toLowerCase(), to: "#/entry/" + e.slug })),
+  ...SOON.map(s => ({ type: "soon", slug: s.slug, title: s.title, sub: "BEING WRITTEN · " + s.era.toUpperCase(), keys: (s.title + " " + s.hook + " " + s.keys).toLowerCase(), to: "#/soon/" + s.slug })),
   ...THINKERS.map(t => ({ type: "thinker", slug: t.slug, title: t.name, sub: "THINKER · " + t.school.toUpperCase(), keys: (t.name + " " + t.school + " " + t.line).toLowerCase(), to: "#/thinker/" + t.slug })),
   ...EXPERIMENTS.map(x => ({ type: "experiment", slug: x.slug, title: x.title, sub: "PUZZLE · " + x.by.toUpperCase(), keys: (x.title + " " + x.setup).toLowerCase(), to: "#/experiment/" + x.slug })),
   ...TRADITIONS.map(t => ({ type: "tradition", slug: t.slug, title: t.name, sub: "SCHOOL", keys: (t.name + " " + t.line).toLowerCase(), to: "#/tradition/" + t.slug })),
@@ -764,7 +929,7 @@ function norm(q) {
 }
 function search(q) {
   const n = norm(q);
-  let pool = INDEX.filter(r => filter === "all" || r.type === filter);
+  let pool = INDEX.filter(r => filter === "all" || r.type === filter || (filter === "entry" && r.type === "soon"));
   if (!n) return pool.slice(0, 8);
   const words = n.split(/\s+/);
   return pool
@@ -888,6 +1053,9 @@ renderExplore();
 fitStage();
 route();
 updateProgress();
+watchRv(document);
+updateGrow();
+window.setTimeout(() => { if (!panel.classList.contains("is-grown")) grip.classList.add("nag"); }, 1800);
 
 /* privacy-light: no cookies, no trackers. Local notes + recents only. */
 
