@@ -239,6 +239,54 @@ export const ENTRIES = [
     related: ["veil-of-ignorance", "free-will", "stoic-dichotomy"],
     keys: "kant categorical imperative universalizability deontology duty maxims humanity formula groundwork murderer lying rigorism hegel korsgaard constant modern",
     cite: { apa: "Kant, I. (1785). Groundwork of the metaphysics of morals. Riga: Hartknoch.", mla: "Kant, Immanuel. Groundwork of the Metaphysics of Morals. 1785.", bib: "@book{kant1785groundwork,\\n  author = {Kant, Immanuel},\\n  title = {Groundwork of the Metaphysics of Morals},\\n  year = {1785}\\n}" }
+  },
+  {
+    slug: "nietzsche-will", num: 11, title: "Nietzsche's Will to Power",
+    tradition: "Ethics", era: "Modern", read: 3,
+    hero: { bg: "purple", k: "MODERN ETHICS · MASTERS AND SLAVES", big: "Morality has a bloodline.", sub: "Nietzsche's genealogy — where values really come from." },
+    hook: "Not survival — expansion. Life wants more life.",
+    breath: "Nietzsche says our values are not discoveries — they are weapons. Master moralities praise strength; slave moralities rename weakness as virtue and call it good. Genealogy traces each 'thou shalt' to the mouth that spoke it. Then comes the hard part: amor fati — love it all, or lie about it.",
+    tension: ["Morality feels timeless — good and evil just are. Genealogy says every value was invented by someone, for something. The tension: if values have bloodlines instead of foundations, what stops 'good' from meaning whatever the strong prefer? Nietzsche's answer: nothing — except the values you create yourself."],
+    positions: [
+      { who: "N", name: "Nietzsche", tag: "LIFE WANTS MORE LIFE", text: "Not preservation but expansion: the will to power drives every act, and moralities are symptoms of ascending or declining life. The rest is commentary." },
+      { who: "A", name: "Anscombe", tag: "OUGHT NEEDS A LAWGIVER", text: "'Ought' made sense under divine law; modern ethics kept the word and dropped the lawgiver. Nietzsche is right about the bankruptcy — virtue is the way back." },
+      { who: "B", name: "Blackburn", tag: "PROJECT, DON'T DISCOVER", text: "Values are our projections onto a neutral world — quasi-real, true enough to live by. Nietzsche's bloodlines don't kill value; they explain it." }
+    ],
+    argument: {
+      p1: "Moral concepts like 'good' and 'evil' have traceable historical origins in power relations.",
+      p2: "Their authority claims timelessness — independence from any such origin.",
+      c: "Therefore the authority is borrowed: unmask the origin and the spell breaks — unless new values are created."
+    },
+    objection: "The genetic-fallacy charge: origins don't settle truth — astronomy came from astrology, yet the stars are real. And Nietzsche's own values (strength, creation, amor fati) arrive with the same rhetorical force he unmasks in others.",
+    reply: "Genealogy doesn't refute by origin; it shifts the burden — once the pedigree is shown, the believer must produce reasons, not vibes. And Nietzsche owns the charge: his values are confessed creations, not discovered tablets.",
+    quote: { text: "There are no moral phenomena at all, but only a moral interpretation of phenomena.", by: "Friedrich Nietzsche · Beyond Good and Evil, 1886" },
+    related: ["sartre-bad-faith", "veil-of-ignorance", "kant-categorical"],
+    keys: "nietzsche will to power genealogy morals master slave amor fati ubermensch beyond good evil anscombe blackburn quasi-realism modern",
+    cite: { apa: "Nietzsche, F. (1886). Beyond good and evil. Leipzig: Naumann.", mla: "Nietzsche, Friedrich. Beyond Good and Evil. 1886.", bib: "@book{nietzsche1886beyond,\\n  author = {Nietzsche, Friedrich},\\n  title = {Beyond Good and Evil},\\n  year = {1886}\\n}" }
+  },
+  {
+    slug: "wittgenstein-beetle", num: 12, title: "Wittgenstein's Beetle",
+    tradition: "Mind", era: "Contemporary", read: 2,
+    hero: { bg: "cream", k: "CONTEMPORARY MIND · PRIVATE LANGUAGE", big: "Everyone has a box. No one can compare.", sub: "Wittgenstein's beetle — the argument against inner museums." },
+    hook: "A pain only you can see is not a thing you can name.",
+    breath: "Wittgenstein asks you to imagine everyone carrying a box with a 'beetle' inside — but nobody can ever look in another's box. The word still works fine, because its meaning is the shared game, not the hidden object. Now apply that to pain, memory, seeing red: if meaning needs public checkability, the inner museum is empty.",
+    tension: ["Pain feels private — yours and yours alone. Yet you learned the word 'pain' in public, with public criteria. The tension: either sensation-talk names inner objects no one can verify, or 'private' does not mean what we thought it meant."],
+    positions: [
+      { who: "W", name: "Wittgenstein", tag: "MEANING IS USE", text: "A word for something only the speaker can see has no rule for correct use — and without rules, no meaning. The beetle drops out of the game." },
+      { who: "K", name: "Kripke", tag: "NO FACT FIXES THE RULE", text: "Nothing in your past — no mental fact — determines you meant plus rather than quus. Rule-following rests on community practice, not inner rails." },
+      { who: "S", name: "Strawson", tag: "SOME PRIVACY IS REAL", text: "Pains and afterimages have owner-only features no public game captures. Wittgenstein shows the limits of naming, not the absence of the named." }
+    ],
+    argument: {
+      p1: "A meaningful word needs public criteria for correct versus incorrect use.",
+      p2: "Sensations offer no such criteria — only the speaker can 'check' the inner object.",
+      c: "Therefore sensation-words cannot get meaning by naming inner objects; their meaning is the public practice around them."
+    },
+    objection: "The privacy intuition will not die: my pain's hurtfulness seems real whether or not anyone can check it. Verifiability is not meaning — and the felt fact stands exactly where it was.",
+    reply: "The beetle denies no pain — it relocates it. Hurt is real; what drops out is the picture of words as labels on hidden things. Keep the pain, lose the museum.",
+    quote: { text: "The thing in the box has no place in the language-game at all; not even as a something.", by: "Ludwig Wittgenstein · Philosophical Investigations, 1953" },
+    related: ["qualia", "free-will", "descartes-cogito"],
+    keys: "wittgenstein beetle private language investigations pain meaning use rule following kripke strawson contemporary mind",
+    cite: { apa: "Wittgenstein, L. (1953). Philosophical investigations. Oxford: Blackwell.", mla: "Wittgenstein, Ludwig. Philosophical Investigations. 1953.", bib: "@book{wittgenstein1953investigations,\\n  author = {Wittgenstein, Ludwig},\\n  title = {Philosophical Investigations},\\n  year = {1953}\\n}" }
   }
 ];
 
@@ -260,7 +308,10 @@ export const THINKERS = [
     entries: ["kant-categorical", "veil-of-ignorance", "free-will"] },
   { slug: "nietzsche", name: "Nietzsche", years: "1844–1900", school: "Genealogy",
     line: "Values have a history — and a price.",
-    entries: ["sartre-bad-faith", "skeptical-theism"] },
+    entries: ["nietzsche-will", "sartre-bad-faith", "skeptical-theism"] },
+  { slug: "wittgenstein", name: "Wittgenstein", years: "1889–1951", school: "Analytic",
+    line: "Meaning is use — the beetle drops out.",
+    entries: ["wittgenstein-beetle", "descartes-cogito"] },
   { slug: "epictetus", name: "Epictetus", years: "c. 50–135", school: "Stoicism",
     line: "Some things are up to us — the rest is weather.",
     entries: ["stoic-dichotomy"] },
@@ -272,7 +323,7 @@ export const THINKERS = [
 export const TRADITIONS = [
   { slug: "existentialism", name: "Existentialism", color: "p",
     line: "Existence before essence. You arrive without a script — then you must write one.",
-    entries: ["sartre-bad-faith", "free-will"] },
+    entries: ["sartre-bad-faith", "nietzsche-will", "free-will"] },
   { slug: "stoicism", name: "Stoicism", color: "",
     line: "Control what you can: judgments, impulses, assent. Release the rest.",
     entries: ["stoic-dichotomy", "free-will", "skeptical-theism"] },
@@ -332,16 +383,6 @@ export const SERIES = [
 
 /* Shelves being written — full entries, holding pages for now. */
 export const SOON = [
-  { slug: "nietzsche-will", title: "Nietzsche's Will to Power", era: "Modern",
-    hook: "Not survival — expansion. Life wants more life.",
-    points: ["Master versus slave moralities: where values come from.", "Genealogy: every value has a bloodline.", "Amor fati: love it all, or lie about it."],
-    related: ["sartre-bad-faith", "skeptical-theism"],
-    keys: "nietzsche will to power genealogy morals master slave amor fati ubermensch" },
-  { slug: "wittgenstein-beetle", title: "Wittgenstein's Beetle", era: "Contemporary",
-    hook: "Everyone has a box with 'a beetle' inside. No one can see another's.",
-    points: ["Private language: can words name what cannot be shown?", "The beetle drops out — pain-talk without inner objects.", "Against the inner museum: meaning is use."],
-    related: ["qualia", "free-will"],
-    keys: "wittgenstein beetle private language investigations pain meaning use contemporary" }
 ];
 
 export const ERAS = [
@@ -360,6 +401,8 @@ export const FIGCAP = {
   "stoic-dichotomy": "The cut: your pile, the world's pile — sort everything.",
   "anselm-ontological": "The move: think the greatest thing — now add existence.",
   "kant-categorical": "The test: one liar works — a world of liars breaks.",
+  "nietzsche-will": "The bloodline: master tablets, slave tablets — whose values?",
+  "wittgenstein-beetle": "The boxes: same word, different contents — or none.",
   "descartes-cogito": "The furnace: everything doubtable burns away — one point will not.",
   "skeptical-theism": "The fawn: pointless to us — but how far can we see?",
   "a-theory-of-time": "Flow versus block: the now moves, or only seems to."
@@ -386,7 +429,9 @@ export const DAILY = [
   { q: "Would you plug into perfect happiness?", to: "#/experiment/experience-machine" },
   { q: "What survives total doubt?", to: "#/entry/descartes-cogito" },
   { q: "Can you define God into existence?", to: "#/entry/anselm-ontological" },
-  { q: "What if everyone did that?", to: "#/entry/kant-categorical" }
+  { q: "What if everyone did that?", to: "#/entry/kant-categorical" },
+  { q: "Do your values have a bloodline?", to: "#/entry/nietzsche-will" },
+  { q: "Could your beetle differ from mine?", to: "#/entry/wittgenstein-beetle" }
 ];
 
 export const FEATURED = [

@@ -126,6 +126,7 @@ const entryData = JSON.stringify({ slug: e.slug, cite: e.cite });
         <small id="noteMsg">Private. Never leaves this browser.</small>
       </div>
     </div>
+    <footer class="colophon rv" aria-label="Colophon"><span>SET IN BEBAS NEUE &amp; HELVETICA</span><span>PRINTED ON CREAM</span><span>ENTRY Nº {String(e.num).padStart(2, "0")} OF {ORDER.length}</span></footer>
   </article>
   <script type="application/json" id="entryData" is:inline set:html={entryData}></script>
 </Base>

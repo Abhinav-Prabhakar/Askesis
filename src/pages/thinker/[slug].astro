@@ -7,7 +7,7 @@ import { u } from "../../lib/url.js";
 export function getStaticPaths() {
   return THINKERS.map(t => ({ params: { slug: t.slug }, props: { thinker: t } }));
 }
-const FACE: Record<string, string> = { sartre: "", rawls: "f-white", nagel: "f-purple", camus: "f-cream", kant: "f-white", nietzsche: "f-purple", epictetus: "", anselm: "f-cream" };
+const FACE: Record<string, string> = { sartre: "", rawls: "f-white", nagel: "f-purple", camus: "f-cream", kant: "f-white", nietzsche: "f-purple", epictetus: "", anselm: "f-cream", wittgenstein: "f-white" };
 const { thinker: t } = Astro.props;
 const entries = t.entries.map((s: string) => entryBySlug[s]).filter(Boolean);
 ---

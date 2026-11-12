@@ -226,6 +226,7 @@ function wireSeries() {
 var docActive = VIEW === "doc";
 var GROW_PX = 240;
 var lastGp = null;
+var scrollMax = 0;
 
 function applyGrow(v) {
   v = Math.round(v * 1000) / 1000;
@@ -239,15 +240,19 @@ function applyGrow(v) {
   }
 }
 
+function measure() {
+  if (sheet) scrollMax = Math.max(0, sheet.scrollHeight - sheet.clientHeight);
+}
+
 function syncScroll() {
   if (!sheet) return;
-  var max = sheet.scrollHeight - sheet.clientHeight;
-  if (progress) progress.style.width = (max > 0 ? sheet.scrollTop / max * 100 : 0) + "%";
-  if (window.innerWidth < 900) { applyGrow(docActive ? 1 : 0); return; }
-  applyGrow(docActive ? 1 : Math.min(Math.max(sheet.scrollTop / GROW_PX, 0), 1));
+  var gp = window.innerWidth < 900 ? (docActive ? 1 : 0)
+    : (docActive ? 1 : Math.min(Math.max(sheet.scrollTop / GROW_PX, 0), 1));
+  if (gp !== lastGp) { applyGrow(gp); measure(); }
+  if (progress) progress.style.width = (scrollMax > 0 ? Math.min(1, sheet.scrollTop / scrollMax) * 100 : 0) + "%";
 }
 if (sheet) sheet.addEventListener("scroll", syncScroll, { passive: true });
-window.addEventListener("resize", syncScroll);
+window.addEventListener("resize", function () { measure(); syncScroll(); });
 
 /* ── scroll reveal ── */
 var io = new IntersectionObserver(function (entries) {
@@ -330,6 +335,7 @@ function renderSearch() {
 function openSearch() {
   if (!searchPop.hidden) return;
   searchPop.hidden = false;
+  searchPop.classList.add("fresh");
   searchBtn.setAttribute("aria-expanded", "true");
   searchInput.value = "";
   renderSearch();
@@ -341,7 +347,7 @@ function closeSearch() {
   searchBtn.setAttribute("aria-expanded", "false");
 }
 if (searchBtn) searchBtn.addEventListener("click", function (ev) { ev.stopPropagation(); searchPop.hidden ? openSearch() : closeSearch(); });
-if (searchInput) searchInput.addEventListener("input", renderSearch);
+if (searchInput) searchInput.addEventListener("input", function () { searchPop.classList.remove("fresh"); renderSearch(); });
 if (searchInput) searchInput.addEventListener("keydown", function (ev) {
   if (ev.key === "Enter" && lastResults[Math.max(0, focused)]) {
     ev.preventDefault();
@@ -361,7 +367,9 @@ document.addEventListener("click", function () { if (searchPop && !searchPop.hid
 $$(".chips.filters button").forEach(function (b) {
   b.addEventListener("click", function () {
     $$(".chips.filters button").forEach(function (x) { x.classList.remove("on"); });
-    b.classList.add("on"); filter = b.getAttribute("data-f"); renderSearch(); searchInput.focus();
+    b.classList.add("on"); filter = b.getAttribute("data-f");
+    searchPop.classList.remove("fresh");
+    renderSearch(); searchInput.focus();
   });
 });
 function paintFocus() {
@@ -449,6 +457,8 @@ wireSeries();
 fitStage();
 syncScroll();
 watchRv(document);
+window.addEventListener("load", function () { measure(); syncScroll(); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); syncScroll(); });
 
 /* privacy-light: no cookies, no trackers. Local notes + recents only. */
 })();

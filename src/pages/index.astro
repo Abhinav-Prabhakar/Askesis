@@ -8,6 +8,7 @@ const base = import.meta.env.BASE_URL;
 const az = azMap();
 const AZ_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const strip = (s: string) => s.replace(/^#\/+/, "");
+const latestSlug = ENTRIES[ENTRIES.length - 1].slug;
 
 const homeData = {
   daily: DAILY.map(d => ({ q: d.q, to: strip(d.to) })),
@@ -44,7 +45,8 @@ const stats = `<b>${ENTRIES.length + SOON.length} SHELVES</b> · ${ENTRIES.lengt
 
     <nav class="topics" aria-label="Entries" id="topicGrid">
       {ENTRIES.map(e => (
-        <a class="topic rv" href={u(`entry/${e.slug}/`)}>
+        <a class={`topic rv${e.slug === latestSlug ? " latest" : ""}`} href={u(`entry/${e.slug}/`)}>
+          {e.slug === latestSlug && <span class="new-stamp" aria-hidden="true">NEW</span>}
           <span class="t-art" aria-hidden="true" set:html={heroSVG(e.slug).replace("<svg ", '<svg preserveAspectRatio="xMidYMid slice" ')}></span>
           <span class="num">{e.num}</span>
           <span class="t"><span class="name">{e.title.toUpperCase()}</span><span class="meta">{e.read} MIN · {e.tradition.toUpperCase()}</span></span>
@@ -112,13 +114,19 @@ const stats = `<b>${ENTRIES.length + SOON.length} SHELVES</b> · ${ENTRIES.lengt
       })}
     </div>
 
-    <h2 class="series-title rv">COMING SOON</h2>
-    <p class="section-sub rv">Shelves being written. Dashed means dusty.</p>
-    <div class="soon-grid" id="soonGrid">
-      {SOON.map(s => (
-        <a class="ghost rv" href={u(`soon/${s.slug}/`)}><span class="tag">BEING WRITTEN</span><b>{s.title.toUpperCase()}</b><small>{s.hook}</small></a>
-      ))}
-    </div>
+    {SOON.length === 0 ? (
+      <h2 class="series-title rv">SHELVES COMPLETE</h2>
+      <p class="section-sub rv">Every shelf stocked. The wall is full.</p>
+      <div class="plaque rv" role="status"><span class="plaque-seal" aria-hidden="true">Æ</span><div><b>{ENTRIES.length} OF {ENTRIES.length + SOON.length} SHELVES OPEN</b><small>ASKĒSIS · EDITED, NOT ENCYCLOPEDIC · SET IN BEBAS NEUE &amp; HELVETICA</small></div></div>
+    ) : (
+      <h2 class="series-title rv">COMING SOON</h2>
+      <p class="section-sub rv">Shelves being written. Dashed means dusty.</p>
+      <div class="soon-grid" id="soonGrid">
+        {SOON.map(s => (
+          <a class="ghost rv" href={u(`soon/${s.slug}/`)}><span class="tag">BEING WRITTEN</span><b>{s.title.toUpperCase()}</b><small>{s.hook}</small></a>
+        ))}
+      </div>
+    )}
 
     <div class="duo2 rv">
       <div class="index-block">
@@ -163,7 +171,7 @@ const stats = `<b>${ENTRIES.length + SOON.length} SHELVES</b> · ${ENTRIES.lengt
       <div class="recent-row" id="recentRow"></div>
     </div>
 
-    <div class="ticker rv" aria-hidden="true"><div class="ticker-in"><span>STOICISM · EXISTENTIALISM · SKEPTICISM · SCHOLASTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span><span>STOICISM · EXISTENTIALISM · SKEPTICISM · SCHOLASTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span></div></div>
+    <div class="ticker rv" aria-hidden="true"><div class="ticker-in"><span>STOICISM · EXISTENTIALISM · SKEPTICISM · SCHOLASTICISM · DEONTOLOGY · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span><span>STOICISM · EXISTENTIALISM · SKEPTICISM · SCHOLASTICISM · DEONTOLOGY · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span></div></div>
 
     <footer class="sheet-foot rv">
       <span>ASKĒSIS · EDITED, NOT ENCYCLOPEDIC</span>

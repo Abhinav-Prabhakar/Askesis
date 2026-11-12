@@ -144,6 +144,9 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | The Cast | `.cast` `.cast-card` `.cast-face` | Thinker face gallery on Explore: 4-col medallion cards (initial, name, years · school; pink/cream rotation), 2-col mobile. Picks a face instead of a chip. |
 | Tug of war | `.tug` `.tug-rope` `.knot` | The tension section ends in a rope pull: position 1 vs position 3 (names + verdict tags from data — no new copy, nothing quantified, the knot stays centered), red knot on an ink rope. Stacks on mobile, prints flat. Emblematic, not metric. |
 | Margin filing slip | `.breath-file` | Wide screens (≥1200px) only: the breath card splits into summary + a cream-2 filing slip (`Nº 07 · tradition · era · read time`). Redundant meta, so hidden below 1200px and reference-marked, not read twice. |
+| NEW stamp | `.topic.latest` `.new-stamp` | The newest shelf (last in `ENTRIES`) carries a rotated red `NEW` stamp, computed in the template — no data flag to rot. Sits on the full-width latest card. |
+| Completion plaque | `.plaque` | When `SOON` empties, COMING SOON becomes SHELVES COMPLETE: an ink plaque with the Æ seal and a live `N OF N SHELVES OPEN` count. The ghost wall retires itself. |
+| Colophon | `.colophon` | Every entry ends with the printer's mark: `SET IN BEBAS NEUE & HELVETICA · PRINTED ON CREAM · ENTRY Nº 07 OF 12`. Dashed rule, muted kicks, centered. |
 | Quote poster | `.quote::after` | Giant pink `“` (190px Bebas) hangs behind the quote — the card reads as a poster, not a paragraph. Screen + print, `aria`-neutral pseudo-element. |
 | Figures | `.fig` `.fig-art` `figcaption` | Bordered diagram + `FIG. N — caption`. Art bg rotates pink/purple/cream-2. Caption ≤12 words. |
 | Quote | `.quote` | White card, 14px red left bar, Bebas 40px quote, byline, COPY QUOTE / SHARE. |
