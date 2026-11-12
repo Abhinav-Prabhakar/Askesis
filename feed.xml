@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Askēsis — Philosophy, Reframed</title>
+<link>https://askesis.example/</link>
+<description>Short entries, argument cards, thought experiments and 60-second series. Edited, not encyclopedic.</description>
+<language>en</language>
+<item><title>Sartre's Bad Faith</title><link>https://askesis.example/#/entry/sartre-bad-faith</link><description>You always have a choice — bad faith is pretending you don't.</description></item>
+<item><title>On Free Will</title><link>https://askesis.example/#/entry/free-will</link><description>Physics says causes. Morality says blame.</description></item>
+<item><title>Qualia in Consciousness</title><link>https://askesis.example/#/entry/qualia</link><description>Mary knows everything about colour — in a black-and-white room.</description></item>
+<item><title>Rawls' Veil of Ignorance</title><link>https://askesis.example/#/entry/veil-of-ignorance</link><description>Fair rules are the ones you'd pick before knowing your place.</description></item>
+<item><title>Skeptical Theism and Evil</title><link>https://askesis.example/#/entry/skeptical-theism</link><description>Evil is evidence against God — unless our ignorance is the evidence.</description></item>
+<item><title>A-Theory of Time</title><link>https://askesis.example/#/entry/a-theory-of-time</link><description>Only now is real. The past is gone; the future isn't yet.</description></item>
+</channel>
+</rss>
