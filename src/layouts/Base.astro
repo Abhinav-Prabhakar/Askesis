@@ -48,10 +48,10 @@ const searchIndexJson = JSON.stringify(buildSearchIndex());
 
 <div class="scene" aria-hidden="true">
   <div class="topline"></div>
-  <div class="bg-card warm" style="--x:-49px;  --y:52px;  --w:292px; --h:168px"><span>STOICISM</span></div>
-  <div class="bg-card warm" style="--x:264px;  --y:52px;  --w:292px; --h:168px"><span style="--nudge:1px">PLATONISM</span></div>
-  <div class="bg-card" style="--x:1098px; --y:52px;  --w:292px; --h:168px"><span style="--nudge:-1px">ARISTOTLE</span></div>
-  <div class="bg-card" style="--x:1412px; --y:52px;  --w:381px; --h:168px"><span>PLATONISM</span></div>
+  <div class="bg-card warm top-row" style="--x:-49px;  --y:52px;  --w:292px; --h:168px"><span>STOICISM</span></div>
+  <div class="bg-card warm top-row" style="--x:264px;  --y:52px;  --w:292px; --h:168px"><span style="--nudge:1px">PLATONISM</span></div>
+  <div class="bg-card top-row" style="--x:1098px; --y:52px;  --w:292px; --h:168px"><span style="--nudge:-1px">ARISTOTLE</span></div>
+  <div class="bg-card top-row" style="--x:1412px; --y:52px;  --w:381px; --h:168px"><span>PLATONISM</span></div>
   <div class="bg-card" style="--x:-184px; --y:247px; --w:292px; --h:168px"><span style="--nudge:2px">THEISM</span></div>
   <div class="bg-card" style="--x:130px;  --y:247px; --w:292px; --h:168px"><span>EPICURUS</span></div>
   <div class="bg-card" style="--x:444px;  --y:247px; --w:292px; --h:168px"><span>AUGUSTINE</span></div>
@@ -87,7 +87,6 @@ const searchIndexJson = JSON.stringify(buildSearchIndex());
 
 <section class="explore-panel" id="sheet" aria-label="Reading sheet">
   <div class="progress" id="progress" aria-hidden="true"></div>
-  <button class="grip" id="grip" type="button" aria-label="Grow the sheet" aria-expanded="false"><i aria-hidden="true"></i></button>
 
   <div class="sheet-scroll" id="sheetScroll" tabindex="-1">
 
@@ -113,6 +112,7 @@ const searchIndexJson = JSON.stringify(buildSearchIndex());
     <button type="button" data-f="tradition">Schools</button>
   </div>
   <div class="search-results" id="searchResults" role="listbox" aria-live="polite"></div>
+  <div class="s-keys" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> MOVE</span><span><kbd>↵</kbd> OPEN</span><span><kbd>ESC</kbd> CLOSE</span></div>
 </div>
 
 </main>

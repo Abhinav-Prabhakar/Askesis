@@ -137,8 +137,9 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Sections | `.doc-sec` | `h2` gets a 14px red chip marker; sections auto-number as `CHAPTER 01…` kickers via CSS counter on `#view-doc` — every entry reads like a booklet, zero markup. |
 | Breath | `.breath` | White card, red-chip kicker `IN ONE BREATH`, 17px summary. |
 | Sections | `.doc-sec` | `h2` gets a 14px red chip marker (`::before`); paragraphs `--paper-ink`, 16.5px/1.65. |
-| Positions | `.positions` `.position` `.avatar` | 3 cards (cream/white/pink), 44px ink medallion initial, `01–03` numerals. |
+| Positions | `.positions` `.position` `.avatar` `.tape` | 3 cards (cream/white/pink), 44px ink medallion initial, `01–03` numerals. Above them the tale-of-the-tape: an ink strip (`.tape-cell`: medallion initial + name + `tag` verdict) — the whole debate at a glance. Stacks to one column on mobile. |
 | Argument card | `.arg` `.arg-h` `.arg-r` `.tag` `.qed` | Pink header + COPY; rows `P1/P2/∴`; conclusion row is ink-on-cream-inverted. Shareable text format: `P1… P2… ∴… — via Askēsis <url>`. |
+| Objection duel | `.duel` `.duel-card` `.vs` | The objection section is a duel, not a paragraph: white OBJECTION card vs pink REPLY card (both from data: `objection` + `reply`), joined by an ink-ringed red VS medallion. Stacks on mobile, side-by-side in print. |
 | Figures | `.fig` `.fig-art` `figcaption` | Bordered diagram + `FIG. N — caption`. Art bg rotates pink/purple/cream-2. Caption ≤12 words. |
 | Quote | `.quote` | White card, 14px red left bar, Bebas 40px quote, byline, COPY QUOTE / SHARE. |
 | Read next | `.readnext` `.rel-grid` | Max 3 cards (pink/purple/white rotation). |
@@ -149,7 +150,7 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Tradition | `.school` `.mark` | Square 120px initial mark (pink/purple/cream-2 by color), short version, orientation how-to, entries. |
 | Stub (soon) | reuses `.hero` `.howto` `.readnext` | `BEING WRITTEN` pill, dashed scroll art (`soonArt()`), 3 locked points, published alternatives. Route `#/soon/:slug`. |
 | 404 | `.nf` `.nf-art` | Broken-column SVG + `LOST PAGE` + 3 doors. Same voice as everything else. |
-| Search | `.search-pop` `.search-field` `.filters` `.sr` | Cream popover; type badges (pink entry, purple series, dashed soon, white rest); empty state suggests 3 entries; `aria-live` results. |
+| Search | `.search-pop` `.search-field` `.filters` `.sr` `.s-keys` | Cream popover; type badges (pink entry, purple series, dashed soon, white rest); empty state suggests 3 entries; `aria-live` results. Footer kbd-hint strip (`↑↓ MOVE · ↵ OPEN · ESC CLOSE`, `aria-hidden` — screen readers already get roles/live regions). |
 | Glossary | `button.g` `.g-tip` | Dotted-red-underline terms open an ink popover near the term. 8 terms in `GLOSS`. |
 | The Index | `.az` `#azRow` `#azPanel` | A–Z shelf browser: 26 letter tiles (13-col → 7-col mobile), lit pink when shelves exist, dashed hollow when not. Tapping a lit letter expands an ink-bordered panel of that letter's shelves. Pure encyclopedia furniture — no new surface, no search round-trip. |
 | Toast | `.toast` | Ink pill, bottom-center, 2.2s. One message at a time. |
@@ -182,8 +183,8 @@ Hash routes (back-button safe, shareable, `document.title` updated):
 Schemas (all in `script.js`, zero-build):
 
 - **Entry:** `slug num title tradition era read hero{k,bg,big,sub}
-  hook breath tension[] positions[{who,name,text}] argument{p1,p2,c}
-  objection quote{text,by} related[≤3] keys cite{apa,mla,bib}`.
+  hook breath tension[] positions[{who,name,tag,text}] argument{p1,p2,c}
+  objection reply quote{text,by} related[≤3] keys cite{apa,mla,bib}`.
 - **Soon:** `slug title era hook points[3] related[2] keys`.
 - **Thinker:** `slug name years school line entries[]`.
 - **Tradition:** `slug name color('p'|''|'u') line entries[]`.
@@ -220,7 +221,7 @@ wire `related` both ways, extend `INDEX` (automatic), add atlas dot
   sticky reader bar, fixed search button. Grow disabled.
 - **Print:** one clean cream page of the open entry; scenery, tools,
   navigation, ticker, seal hidden; shadows off.
-- **RSS** (`feed.xml`) mirrors entries. **PWA** is manifest-only for now —
+- **RSS** (`feed.xml`) mirrors entries. **Sitemap** (`sitemap.xml`, 31 URLs: home + start-here + every entry/thinker/school/puzzle/series/stub) regenerated from `library.js` whenever routes change. **PWA** is manifest-only for now —
   offline waits for content worth caching. No cookies, no trackers;
   `localStorage` holds recents + notes only.
 

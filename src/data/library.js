@@ -8,9 +8,9 @@ export const ENTRIES = [
     breath: "Sartre says we lie to ourselves to dodge our freedom. The waiter plays at being a waiter; the woman on a date pretends she can't see what's happening. In each case the person knows, and doesn't know, at the same time.",
     tension: ["Freedom is absolute, yet life feels constrained. We have jobs, pasts, other people's expectations. Sartre's tension: you are shaped by all of this, and still the next move is yours. Bad faith is the trick of treating yourself as an object — a role, a victim, a thing with no choice — so the weight lifts for a moment."],
     positions: [
-      { who: "S", name: "Sartre", text: "Consciousness is never identical with itself, so self-deception is always possible — and always your responsibility." },
-      { who: "B", name: "Beauvoir", text: "Bad faith is social too. Oppression trains people to see themselves as objects; freedom must be taken back together." },
-      { who: "C", name: "Critics", text: "Can one mind really deceive itself? The paradox of self-deception pushes some toward unconscious motives instead." }
+      { who: "S", name: "Sartre", tag: "FREEDOM IS TOTAL", text: "Consciousness is never identical with itself, so self-deception is always possible — and always your responsibility." },
+      { who: "B", name: "Beauvoir", tag: "FREEDOM IS SHARED", text: "Bad faith is social too. Oppression trains people to see themselves as objects; freedom must be taken back together." },
+      { who: "C", name: "Critics", tag: "ONE MIND CAN'T HIDE", text: "Can one mind really deceive itself? The paradox of self-deception pushes some toward unconscious motives instead." }
     ],
     argument: {
       p1: "If you are conscious, you stand apart from every role and fact about yourself — you can always imagine otherwise.",
@@ -19,6 +19,7 @@ export const ENTRIES = [
     },
     objection: "The strongest objection is the paradox itself: the deceiver and the deceived are the same person, so someone must know the truth all along. Sartre answers that consciousness is slippery — it can hold the truth and look away at once.",
     quote: { text: "Man is condemned to be free.", by: "Jean-Paul Sartre · Being and Nothingness, 1943" },
+    reply: "Slippery isn't broken — consciousness can hold the truth and look away at once. The paradox describes the mechanism; it doesn't refute it.",
     related: ["free-will", "veil-of-ignorance", "qualia"],
     keys: "sartre bad faith freedom existentialism waiter being and nothingness self deception lying to yourself",
     cite: { apa: "Sartre, J.-P. (1943). Being and nothingness. Paris: Gallimard.", mla: "Sartre, Jean-Paul. Being and Nothingness. Gallimard, 1943.", bib: "@book{sartre1943being,\n  author = {Sartre, Jean-Paul},\n  title = {Being and Nothingness},\n  year = {1943}\n}" }
@@ -31,9 +32,9 @@ export const ENTRIES = [
     breath: "If every event has a cause, your next decision was fixed at the Big Bang. Compatibilists reply that freedom isn't escaping causes — it's acting from your own reasons. Libertarians insist the future is genuinely open; hard determinists say it only feels that way.",
     tension: ["Praise and blame assume you could have done otherwise. Neuroscience and physics suggest a chain of causes with no gaps. The tension is practical: we can't live without holding each other responsible, and we can't think without taking causes seriously."],
     positions: [
-      { who: "H", name: "Hard determinists", text: "Every choice has sufficient prior causes. Freedom is an illusion — but punishment still works as a cause." },
-      { who: "C", name: "Compatibilists", text: "Freedom is acting on your own desires without coercion, even in a determined world. Hume, Frankfurt, Dennett." },
-      { who: "K", name: "Libertarians", text: "Some events — including choices — are genuinely undetermined. Agent-causation starts new chains." }
+      { who: "H", name: "Hard determinists", tag: "IT WAS ALWAYS FIXED", text: "Every choice has sufficient prior causes. Freedom is an illusion — but punishment still works as a cause." },
+      { who: "C", name: "Compatibilists", tag: "YOURS IF UNFORCED", text: "Freedom is acting on your own desires without coercion, even in a determined world. Hume, Frankfurt, Dennett." },
+      { who: "K", name: "Libertarians", tag: "THE FUTURE IS OPEN", text: "Some events — including choices — are genuinely undetermined. Agent-causation starts new chains." }
     ],
     argument: {
       p1: "A free act is one you control — one where you, not a chip, a drug, or a gun, are the source.",
@@ -42,6 +43,7 @@ export const ENTRIES = [
     },
     objection: "The consequence argument: if the past and the laws fix everything, your reasons were fixed too — so 'your' control is borrowed. Compatibilists answer with Frankfurt cases, where no alternative exists yet the act is still yours.",
     quote: { text: "Man can do what he wills but he cannot will what he wills.", by: "Arthur Schopenhauer · On the Freedom of the Will, 1839" },
+    reply: "Frankfurt cases: the chip stands ready but never fires, and the act is still yours. Control doesn't need open alternatives — it needs your reasons doing the work.",
     related: ["sartre-bad-faith", "a-theory-of-time", "skeptical-theism"],
     keys: "free will determinism compatibilism libertarian frankfurt hume moral responsibility could have done otherwise",
     cite: { apa: "Frankfurt, H. G. (1971). Freedom of the will and the concept of a person. Journal of Philosophy.", mla: "Frankfurt, Harry. “Freedom of the Will and the Concept of a Person.” 1971.", bib: "@article{frankfurt1971freedom,\n  author = {Frankfurt, Harry G.},\n  title = {Freedom of the will and the concept of a person},\n  year = {1971}\n}" }
@@ -54,9 +56,9 @@ export const ENTRIES = [
     breath: "Jackson's Mary knows all the physics of colour vision but has never seen red. When she leaves the room, does she learn something new? If yes, then facts about experience — qualia — escape the physical story.",
     tension: ["Brains are objects with mass and charge. Experiences are subjective: there is something it is like to taste coffee. The tension is the explanatory gap — why should any firing of neurons feel like anything at all?"],
     positions: [
-      { who: "J", name: "Jackson / Nagel", text: "Qualia are real and irreducible. No objective description captures what red looks like from the inside." },
-      { who: "D", name: "Dennett", text: "Qualia are a bad intuition. There is no extra 'redness' beyond discriminations and reactions." },
-      { who: "C", name: "Chalmers", text: "Consciousness is the hard problem. Even a complete brain map leaves 'why feeling?' unanswered." }
+      { who: "J", name: "Jackson / Nagel", tag: "RED EXCEEDS PHYSICS", text: "Qualia are real and irreducible. No objective description captures what red looks like from the inside." },
+      { who: "D", name: "Dennett", tag: "NOTHING EXTRA THERE", text: "Qualia are a bad intuition. There is no extra 'redness' beyond discriminations and reactions." },
+      { who: "C", name: "Chalmers", tag: "THE GAP IS REAL", text: "Consciousness is the hard problem. Even a complete brain map leaves 'why feeling?' unanswered." }
     ],
     argument: {
       p1: "Mary knows every physical fact about colour while inside the room.",
@@ -65,6 +67,7 @@ export const ENTRIES = [
     },
     objection: "The ability reply: Mary gains no new facts, only a new ability — to recognise, imagine, remember red. Knowledge-how, not knowledge-that. Jackson himself later accepted a version of this.",
     quote: { text: "What is it like to be a bat?", by: "Thomas Nagel · 1974" },
+    reply: "Abilities come apart from facts: Mary could already track every wavelength, yet seeing red teaches her what it is like — and that was exactly the disputed fact.",
     related: ["free-will", "sartre-bad-faith", "a-theory-of-time"],
     keys: "qualia consciousness mary's room mary jackson nagel bat hard problem what is it like red experience",
     cite: { apa: "Jackson, F. (1982). Epiphenomenal qualia. Philosophical Quarterly.", mla: "Jackson, Frank. “Epiphenomenal Qualia.” 1982.", bib: "@article{jackson1982epiphenomenal,\n  author = {Jackson, Frank},\n  title = {Epiphenomenal qualia},\n  year = {1982}\n}" }
@@ -77,9 +80,9 @@ export const ENTRIES = [
     breath: "Imagine choosing the laws of society without knowing your class, talent, sex, or beliefs. Rawls says whatever you'd accept from behind that veil — especially protections for the worst-off — is justice.",
     tension: ["We want both liberty and equality, merit and need. Behind the veil, self-interest becomes fairness: you insure against being at the bottom because you might be. Critics ask whether real people could ever reason that impartially — or whether they should."],
     positions: [
-      { who: "R", name: "Rawls", text: "Justice as fairness: equal liberties first, inequalities allowed only if they help the least advantaged." },
-      { who: "N", name: "Nozick", text: "The veil ignores history. If holdings were justly acquired, taxation for redistribution is forced labour." },
-      { who: "S", name: "Sen", text: "Don't idealise institutions — compare real lives. Capabilities, not primary goods, are what matter." }
+      { who: "R", name: "Rawls", tag: "INSURE THE WORST-OFF", text: "Justice as fairness: equal liberties first, inequalities allowed only if they help the least advantaged." },
+      { who: "N", name: "Nozick", tag: "HISTORY MATTERS", text: "The veil ignores history. If holdings were justly acquired, taxation for redistribution is forced labour." },
+      { who: "S", name: "Sen", tag: "COMPARE REAL LIVES", text: "Don't idealise institutions — compare real lives. Capabilities, not primary goods, are what matter." }
     ],
     argument: {
       p1: "A fair agreement is one no one could reasonably reject from an impartial position.",
@@ -88,6 +91,7 @@ export const ENTRIES = [
     },
     objection: "Harsanyi's objection: rational agents behind the veil would maximise average welfare, not protect the worst-off — they'd gamble. Rawls replies that justice isn't a gamble when your whole life is the stake.",
     quote: { text: "Justice is the first virtue of social institutions.", by: "John Rawls · A Theory of Justice, 1971" },
+    reply: "The parties aren't gambling with chips but choosing a whole life with no exit. Maximin isn't timidity here — it is refusing to stake your life on odds.",
     related: ["sartre-bad-faith", "skeptical-theism", "free-will"],
     keys: "rawls veil of ignorance justice fairness theory of justice difference principle nozick political philosophy",
     cite: { apa: "Rawls, J. (1971). A theory of justice. Harvard University Press.", mla: "Rawls, John. A Theory of Justice. Harvard UP, 1971.", bib: "@book{rawls1971theory,\n  author = {Rawls, John},\n  title = {A Theory of Justice},\n  year = {1971}\n}" }
@@ -100,9 +104,9 @@ export const ENTRIES = [
     breath: "Rowe points to a fawn burning in a forest fire: pointless suffering, no soul-making in sight. Skeptical theists reply that our grasp of goods is tiny next to God's; absence of a visible reason isn't absence of a reason.",
     tension: ["Suffering feels gratuitous, and a good God would prevent gratuitous suffering. But 'looks gratuitous to us' is a claim about us, not about the universe. The debate turns on how much weight human ignorance should carry."],
     positions: [
-      { who: "R", name: "Rowe", text: "Pointless evil exists — the fawn, the child. A good God would stop it. So no such God exists." },
-      { who: "W", name: "Wykstra", text: "CORNEA: we should expect God's reasons to be beyond our ken, the way a parent's reasons escape a toddler." },
-      { who: "D", name: "Draper", text: "Pain and pleasure look exactly as we'd expect with no God — and surprising with one. Biology, not theodicy." }
+      { who: "R", name: "Rowe", tag: "HORROR NEEDS REASON", text: "Pointless evil exists — the fawn, the child. A good God would stop it. So no such God exists." },
+      { who: "W", name: "Wykstra", tag: "BEYOND OUR KEN", text: "CORNEA: we should expect God's reasons to be beyond our ken, the way a parent's reasons escape a toddler." },
+      { who: "D", name: "Draper", tag: "NATURE EXPECTS THIS", text: "Pain and pleasure look exactly as we'd expect with no God — and surprising with one. Biology, not theodicy." }
     ],
     argument: {
       p1: "If God had a justifying reason for horrific evil, we have no reason to expect we would grasp it.",
@@ -111,6 +115,7 @@ export const ENTRIES = [
     },
     objection: "Skepticism spreads: if our moral vision is that dim, we lose ordinary moral knowledge too — and theism itself. This is the Pandora's box objection, and skeptical theists spend most effort containing it.",
     quote: { text: "My ways are not your ways.", by: "Isaiah 55:8 · often cited in the debate" },
+    reply: "Cornea cuts both ways: if our ken is that small, the nose for gratuitousness is equally uncalibrated. The block stands.",
     related: ["veil-of-ignorance", "a-theory-of-time", "free-will"],
     keys: "skeptical theism evil problem of evil rowe wykstra suffering god religion theodicy",
     cite: { apa: "Wykstra, S. J. (1984). The Humean obstacle to evidential arguments. Philosophy of Religion.", mla: "Wykstra, Stephen. “The Humean Obstacle.” 1984.", bib: "@article{wykstra1984humean,\n  author = {Wykstra, Stephen J.},\n  title = {The Humean obstacle},\n  year = {1984}\n}" }
@@ -123,9 +128,9 @@ export const ENTRIES = [
     breath: "The A-theory says tensed facts are fundamental — now moves, the future is open, the past is fixed. The B-theory says only earlier/later relations are real: all moments exist like pages in a book, and flow is an illusion.",
     tension: ["We feel time passing, dread the future, regret the past. Relativity treats time like a fourth dimension with no privileged now. The fight is between lived time and physics time — and neither side will concede."],
     positions: [
-      { who: "P", name: "Presentists", text: "Only the present exists. The past was, the future will be — 'was' and 'will be' do all the work." },
-      { who: "G", name: "Growing block", text: "Past and present exist; the future doesn't yet. Reality grows as the now advances." },
-      { who: "E", name: "Eternalists", text: "All times are equally real. Passage is perspectival, like 'here' — real to you, not to the world." }
+      { who: "P", name: "Presentists", tag: "ONLY NOW EXISTS", text: "Only the present exists. The past was, the future will be — 'was' and 'will be' do all the work." },
+      { who: "G", name: "Growing block", tag: "REALITY KEEPS GROWING", text: "Past and present exist; the future doesn't yet. Reality grows as the now advances." },
+      { who: "E", name: "Eternalists", tag: "ALL TIMES ARE REAL", text: "All times are equally real. Passage is perspectival, like 'here' — real to you, not to the world." }
     ],
     argument: {
       p1: "We experience genuine passage: events become present, then recede.",
@@ -134,6 +139,7 @@ export const ENTRIES = [
     },
     objection: "Relativity's relativity of simultaneity: there is no single cosmic now. Presentists reply with a privileged foliation, or retreat to a tensed metaphysics without a global present — at a cost.",
     quote: { text: "Time is what keeps everything from happening at once.", by: "Ray Cummings, 1921 · quoted by physicists ever since" },
+    reply: "Relativity kills a cosmic now, not a tensed one. Passage survives without a privileged global slice — physics constrains its shape, not its fact.",
     related: ["free-will", "qualia", "skeptical-theism"],
     keys: "a-theory b-theory time presentism eternalism growing block passage mctaggart now relativity",
     cite: { apa: "Prior, A. N. (1967). Past, present and future. Oxford: Clarendon.", mla: "Prior, A. N. Past, Present and Future. Clarendon, 1967.", bib: "@book{prior1967past,\n  author = {Prior, A. N.},\n  title = {Past, Present and Future},\n  year = {1967}\n}" }
@@ -146,9 +152,9 @@ export const ENTRIES = [
     breath: "Descartes burns down every belief that can burn: senses deceive, dreams deceive, perhaps a demon deceives. One thing resists the fire — that doubting is happening. From that spark he rebuilds God, the world, and you.",
     tension: ["Certainty seems impossible — every source of belief can mislead. Yet here is one thing that cannot be false while it is thought. The tension: the cogito is bedrock, but bedrock an inch wide. Everything Descartes builds on it must cross back over the very doubt it escaped."],
     positions: [
-      { who: "D", name: "Descartes", text: "The cogito is the Archimedean point: indubitable even under the demon's spell, and the foundation for God and science." },
-      { who: "H", name: "Hume", text: "Look inside and you find no self — only a bundle of perceptions succeeding one another. The 'I' is a fiction of memory." },
-      { who: "W", name: "Wittgenstein", text: "'I' does not name an inner object the way 'table' names one. The grammar of the first person misleads metaphysics." }
+      { who: "D", name: "Descartes", tag: "DOUBT PROVES THE I", text: "The cogito is the Archimedean point: indubitable even under the demon's spell, and the foundation for God and science." },
+      { who: "H", name: "Hume", tag: "NO SELF INSIDE", text: "Look inside and you find no self — only a bundle of perceptions succeeding one another. The 'I' is a fiction of memory." },
+      { who: "W", name: "Wittgenstein", tag: "GRAMMAR MISLEADS", text: "'I' does not name an inner object the way 'table' names one. The grammar of the first person misleads metaphysics." }
     ],
     argument: {
       p1: "I can doubt everything I seem to perceive — my hands, the sky, mathematics itself.",
@@ -157,9 +163,34 @@ export const ENTRIES = [
     },
     objection: "Lichtenberg's thinness objection: the argument proves that thinking is going on, not a lasting I. The cogito gives a momentary subject — a spark, not a soul — and Descartes smuggles in far more than the spark contains.",
     quote: { text: "I think, therefore I am.", by: "René Descartes · Meditations on First Philosophy, 1641" },
+    reply: "Thin is enough: the cogito never promised a soul, only a starting point. An inch of bedrock still beats the swamp.",
     related: ["qualia", "sartre-bad-faith", "skeptical-theism"],
     keys: "descartes cogito meditations doubt evil demon dualism modern i think therefore i am first philosophy certainty self",
     cite: { apa: "Descartes, R. (1641). Meditations on first philosophy. Paris: Michel Soly.", mla: "Descartes, René. Meditations on First Philosophy. 1641.", bib: "@book{descartes1641meditations,\n  author = {Descartes, Ren{\\'e}},\n  title = {Meditations on First Philosophy},\n  year = {1641}\n}" }
+  },
+  {
+    slug: "stoic-dichotomy", num: 8, title: "The Stoic Dichotomy",
+    tradition: "Stoicism", era: "Ancient", read: 2,
+    hero: { bg: "purple", k: "ANCIENT STOICISM · THE HANDBOOK", big: "Some things are up to us. Everything else isn't.", sub: "Epictetus's sorting task — the whole school in one cut." },
+    hook: "Control what you can. Release the rest.",
+    breath: "Epictetus opens the Handbook with a line: some things are up to us — opinion, impulse, desire — and everything else is not. The Dichotomy is a sorting task for a whole life: put each trouble in the right pile, then act only where your hands reach.",
+    tension: ["The cut looks clean until you test it: health, reputation, other people — all partly up to us. The trichotomy critics say the world is mostly half-measures. The tension: a philosophy of total sorting must survive a world of partial control."],
+    positions: [
+      { who: "E", name: "Epictetus", tag: "SORT, THEN RELEASE", text: "Up to us: opinion, impulse, desire, aversion. Not up to us: body, property, reputation, office. Want only your own pile to change, and nothing can block you." },
+      { who: "T", name: "The trichotomy", tag: "CONTROL IS A DIAL", text: "Most things are partly up to us — health, skill, friendship. Control is a dial, not a switch, and the Handbook's two piles need a middle shelf." },
+      { who: "M", name: "Modern Stoics", tag: "USE BEATS PROOF", text: "Irvine, Holiday, the therapists: the Dichotomy works as practice — circle of control, premeditation, evening review. The use matters more than the metaphysics." }
+    ],
+    argument: {
+      p1: "Distress comes from demanding that externals obey our will.",
+      p2: "Externals are not up to us; only our judgments are.",
+      c: "Therefore freedom from distress is sorting correctly — and willing only the pile that is yours."
+    },
+    objection: "The pile problem: grief, illness and injustice arrive uninvited and unassorted. Telling the bereaved 'that is not up to you' sounds less like wisdom than coldness — and sorting itself needs judgment, exactly what crisis impairs.",
+    reply: "The Stoics never said don't grieve — they said grieve without the extra demand that the world obey. Sorting is triage, not anesthesia; even a shaky hand can sort one thing at a time.",
+    quote: { text: "It's not things that upset us, but our judgments about them.", by: "Epictetus · Handbook, §5" },
+    related: ["free-will", "sartre-bad-faith", "skeptical-theism"],
+    keys: "stoic dichotomy epictetus control enchiridion handbook trichotomy stoicism ancient up to us",
+    cite: { apa: "Epictetus. (c. 125). The handbook (Enchiridion). Nicopolis.", mla: "Epictetus. The Handbook. c. 125.", bib: "@book{epictetus125handbook,\\n  author = {Epictetus},\\n  title = {The Handbook (Enchiridion)},\\n  year = {c. 125}\\n}" }
   }
 ];
 
@@ -181,7 +212,10 @@ export const THINKERS = [
     entries: ["veil-of-ignorance", "free-will"] },
   { slug: "nietzsche", name: "Nietzsche", years: "1844–1900", school: "Genealogy",
     line: "Values have a history — and a price.",
-    entries: ["sartre-bad-faith", "skeptical-theism"] }
+    entries: ["sartre-bad-faith", "skeptical-theism"] },
+  { slug: "epictetus", name: "Epictetus", years: "c. 50–135", school: "Stoicism",
+    line: "Some things are up to us — the rest is weather.",
+    entries: ["stoic-dichotomy"] }
 ];
 
 export const TRADITIONS = [
@@ -190,7 +224,7 @@ export const TRADITIONS = [
     entries: ["sartre-bad-faith", "free-will"] },
   { slug: "stoicism", name: "Stoicism", color: "",
     line: "Control what you can: judgments, impulses, assent. Release the rest.",
-    entries: ["free-will", "skeptical-theism"] },
+    entries: ["stoic-dichotomy", "free-will", "skeptical-theism"] },
   { slug: "skepticism", name: "Skepticism", color: "",
     line: "Suspend judgment. Ask what our limits hide before claiming what is.",
     entries: ["skeptical-theism", "qualia"] },
@@ -241,11 +275,6 @@ export const SERIES = [
 
 /* Shelves being written — full entries, holding pages for now. */
 export const SOON = [
-  { slug: "stoic-dichotomy", title: "The Stoic Dichotomy", era: "Ancient",
-    hook: "Some things are up to us. Most things aren't. Wisdom is the sorting.",
-    points: ["Epictetus's line: control what is up to you — judgments, impulses, assent.", "The trichotomy problem: what about things partly up to us?", "The practice: morning premeditation, evening review."],
-    related: ["free-will", "skeptical-theism"],
-    keys: "stoic dichotomy epictetus control enchiridion stoicism trichotomy" },
   { slug: "anselm-ontological", title: "Anselm's Ontological Argument", era: "Medieval",
     hook: "God as the greatest thing thinkable — therefore real?",
     points: ["The Proslogion move: a greatest being must exist, or a greater could be thought.", "Gaunilo's island: the perfect parody — a greatest island must exist too?", "Kant's reply: existence is not a predicate."],
@@ -281,6 +310,7 @@ export const FIGCAP = {
   "free-will": "Frankfurt's test: the blocked road was never taken — yet the drive was yours.",
   "qualia": "Mary's room: every physical fact, none of the redness.",
   "veil-of-ignorance": "Choose blind: which rules insure every seat at the table?",
+  "stoic-dichotomy": "The cut: your pile, the world's pile — sort everything.",
   "descartes-cogito": "The furnace: everything doubtable burns away — one point will not.",
   "skeptical-theism": "The fawn: pointless to us — but how far can we see?",
   "a-theory-of-time": "Flow versus block: the now moves, or only seems to."

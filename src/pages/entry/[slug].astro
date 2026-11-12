@@ -37,6 +37,11 @@ const entryData = JSON.stringify({ slug: e.slug, cite: e.cite });
     <div class="breath rv"><div class="k">IN ONE BREATH</div><p set:html={glossify(e.breath)}></p></div>
     <div class="doc-sec rv"><h2>The tension</h2>{e.tension.map((p: string) => <p set:html={glossify(p)}></p>)}</div>
     <div class="doc-sec rv"><h2>Three positions</h2>
+      <div class="tape" role="list" aria-label="Tale of the tape">
+        {e.positions.map((p: any) => (
+          <div class="tape-cell" role="listitem"><span class="t-avatar" aria-hidden="true">{p.who}</span><span class="t-name">{p.name.toUpperCase()}</span><span class="t-tag">{p.tag}</span></div>
+        ))}
+      </div>
       <div class="positions">{e.positions.map((p: any, i: number) => (
         <div class="position"><div class="avatar" aria-hidden="true">{p.who}</div><div class="p-n">0{i + 1}</div><div class="p-t">{p.name.toUpperCase()}</div><p set:html={glossify(p.text)}></p></div>
       ))}</div>
@@ -51,7 +56,13 @@ const entryData = JSON.stringify({ slug: e.slug, cite: e.cite });
       <div class="arg-r"><span class="tag">P2</span><span set:html={glossify(e.argument.p2)}></span></div>
       <div class="arg-r qed"><span class="tag">∴</span><span set:html={glossify(e.argument.c)}></span></div>
     </div>
-    <div class="doc-sec rv"><h2>The strongest objection</h2><p set:html={glossify(e.objection)}></p></div>
+    <div class="doc-sec rv"><h2>The strongest objection</h2>
+      <div class="duel">
+        <div class="duel-card ob"><span class="duel-k">OBJECTION</span><p set:html={glossify(e.objection)}></p></div>
+        <span class="vs" aria-hidden="true">VS</span>
+        <div class="duel-card re"><span class="duel-k">REPLY</span><p set:html={glossify(e.reply)}></p></div>
+      </div>
+    </div>
     <div class="quote rv">
       <blockquote>“{e.quote.text.replace(/^“?|”$/g, "")}”</blockquote>
       <cite>{e.quote.by}</cite>
