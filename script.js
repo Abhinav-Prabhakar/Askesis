@@ -420,6 +420,12 @@ function renderExplore() {
   $("#featuredSub").textContent = f.sub;
   $("#featuredCard").onclick = () => { location.hash = f.to; };
 
+  const stats = $("#statsRow");
+  if (stats) {
+    const open = ENTRIES.length, soon = SOON.length;
+    stats.innerHTML = `<b>${open + soon} SHELVES</b> · ${open} OPEN · ${THINKERS.length} THINKERS · ${TRADITIONS.length} SCHOOLS · ${EXPERIMENTS.length} PUZZLES · ${SERIES.length} SERIES`;
+  }
+
   renderRecent();
 }
 
@@ -685,18 +691,16 @@ function showExplore() {
   setMeta(TITLES.explore, "A pocket library of philosophy. Short entries, argument cards, thought experiments and 60-second series.");
   sheet.scrollTop = 0;
   updateProgress();
-  updateGrow();
 }
 function showDoc(html) {
   exploreView.classList.remove("is-active");
   docView.classList.add("is-active");
   docView.innerHTML = html;
-  docActive = true;
+  docActive = true; forceGrow = false;
   sheet.scrollTop = 0;
   updateProgress();
   wireDoc();
   watchRv(docView);
-  updateGrow();
   const h = docView.querySelector(".doc-title, .nf .big");
   if (h) { h.setAttribute("tabindex", "-1"); }
   sheet.focus({ preventScroll: true });
@@ -862,29 +866,42 @@ function updateProgress() {
 }
 sheet.addEventListener("scroll", updateProgress, { passive: true });
 
-/* ── growing sheet: scroll and the cream rises to meet you ── */
-let forceGrow = false, docActive = false;
-function updateGrow() {
-  const wide = window.innerWidth >= 900;
-  const grown = wide && (docActive || forceGrow || sheet.scrollTop > 24);
-  panel.classList.toggle("is-grown", grown);
-  stage.classList.toggle("grown", grown);
-  if (grown) grip.classList.remove("nag");
-  grip.setAttribute("aria-expanded", String(grown));
-  grip.setAttribute("aria-label", grown ? "Shrink the sheet" : "Grow the sheet");
+/* ── growing sheet: scrubbed to scroll, in sync, every frame ──
+   --gp (0→1) drives sheet top/height, scene parallax and masthead
+   fade directly from scroll position. No transition lag: the sheet
+   IS the scroll level. Lerp keeps it buttery; reduced-motion snaps. */
+let forceGrow = false, docActive = false, growCur = -1, growApplied = -2;
+const RM = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function growTarget() {
+  if (window.innerWidth < 900) return 0;
+  if (docActive || forceGrow) return 1;
+  return Math.min(Math.max(sheet.scrollTop / 240, 0), 1);
 }
-let growQueued = false;
-sheet.addEventListener("scroll", () => {
-  if (growQueued) return; growQueued = true;
-  window.requestAnimationFrame(() => { growQueued = false; updateGrow(); });
-}, { passive: true });
+function applyGrow(v) {
+  growApplied = v;
+  stage.style.setProperty("--gp", v.toFixed(4));
+  const grown = v > 0.5;
+  if (panel.classList.contains("is-grown") !== grown) {
+    panel.classList.toggle("is-grown", grown);
+    stage.classList.toggle("grown", grown);
+    grip.setAttribute("aria-expanded", String(grown));
+    grip.setAttribute("aria-label", grown ? "Shrink the sheet" : "Grow the sheet");
+  }
+  if (grown) grip.classList.remove("nag");
+}
+function growLoop() {
+  const t = growTarget();
+  if (growCur < 0) growCur = t;
+  const next = RM ? t : growCur + (t - growCur) * 0.16;
+  growCur = Math.abs(t - next) < 0.0005 ? t : next;
+  if (Math.abs(growCur - growApplied) > 0.0004) applyGrow(growCur);
+  window.requestAnimationFrame(growLoop);
+}
 grip.addEventListener("click", () => {
   grip.classList.remove("nag");
   if (docActive) { sheet.scrollTo({ top: 0, behavior: "smooth" }); return; }
   forceGrow = !panel.classList.contains("is-grown");
-  updateGrow();
 });
-window.addEventListener("resize", updateGrow);
 
 /* ── scroll reveal: one observer, stagger by sibling order ── */
 const io = new IntersectionObserver(entries => entries.forEach(en => {
@@ -1000,13 +1017,42 @@ searchInput.addEventListener("keydown", ev => {
   }
 });
 
-/* ── global keyboard: / ⌘K · J/K · Enter · R ── */
+/* ── whole-page scroll frame: wheel + keys anywhere drive the sheet ── */
+stage.addEventListener("wheel", (ev) => {
+  if (window.innerWidth < 900) return;
+  if (ev.ctrlKey) return;
+  const t = ev.target;
+  if (t.closest && (t.closest("#sheetScroll") || t.closest("#searchPop"))) return;
+  const d = ev.deltaMode === 1 ? ev.deltaY * 16 : ev.deltaY;
+  if (!d) return;
+  ev.preventDefault();
+  sheet.scrollTop += d;
+}, { passive: false });
+
+const PAGE_KEYS = new Set(["ArrowDown", "ArrowUp", " ", "PageDown", "PageUp", "Home", "End"]);
+
+/* ── global keyboard: / ⌘K · J/K · Enter · R · paging ── */
 document.addEventListener("keydown", ev => {
   const t = ev.target;
   const typing = t instanceof HTMLElement && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
   if (ev.key === "Escape") {
     if (!searchPop.hidden) { ev.preventDefault(); closeSearch(); searchBtn.focus(); return; }
     if (!glossTip.hidden) { glossTip.hidden = true; return; }
+  }
+  if (!typing && searchPop.hidden && !ev.defaultPrevented && PAGE_KEYS.has(ev.key)) {
+    const inter = target instanceof HTMLElement && target.closest &&
+      target.closest("button, a, input, textarea, select, #svTrack");
+    if (!inter) {
+      ev.preventDefault();
+      const H = sheet.clientHeight * 0.9;
+      if (ev.key === "ArrowDown") sheet.scrollTop += 72;
+      else if (ev.key === "ArrowUp") sheet.scrollTop -= 72;
+      else if (ev.key === " " || ev.key === "PageDown") sheet.scrollTop += H;
+      else if (ev.key === "PageUp") sheet.scrollTop -= H;
+      else if (ev.key === "Home") sheet.scrollTop = 0;
+      else if (ev.key === "End") sheet.scrollTop = sheet.scrollHeight;
+      return;
+    }
   }
   if ((ev.key === "/" || (ev.key.toLowerCase() === "k" && (ev.metaKey || ev.ctrlKey))) && !typing) {
     ev.preventDefault(); openSearch(); return;
@@ -1054,7 +1100,9 @@ fitStage();
 route();
 updateProgress();
 watchRv(document);
-updateGrow();
+growCur = growTarget();
+applyGrow(growCur < 0 ? 0 : growCur);
+window.requestAnimationFrame(growLoop);
 window.setTimeout(() => { if (!panel.classList.contains("is-grown")) grip.classList.add("nag"); }, 1800);
 
 /* privacy-light: no cookies, no trackers. Local notes + recents only. */

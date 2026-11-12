@@ -73,7 +73,7 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 }
 
 /* ── background scene ── */
-.scene { position: absolute; inset: 0; overflow: hidden; z-index: 1; transition: transform .6s cubic-bezier(.22,1,.36,1); }
+.scene { position: absolute; inset: 0; overflow: hidden; z-index: 1; transform: translateY(calc(-30px * var(--gp, 0))); }
 .topline { position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #1f1c1c; z-index: 2; }
 .bg-card.warm { background: #a31313; }
 .bg-card {
@@ -85,13 +85,10 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 }
 .bg-card span { display: block; transform: translateX(var(--nudge, 0px)); }
 .masthead {
-  position: absolute; left: 827px; top: 78px; transform: translateX(-50%);
+  position: absolute; left: 827px; top: 78px; transform: translateX(-50%) translateY(calc(-18px * var(--gp, 0))) scale(calc(1 - 0.07 * var(--gp, 0)));
   width: max-content; margin: 0; text-align: center; color: var(--white);
-  pointer-events: none; z-index: 3;
-  transition: opacity .45s ease, transform .55s cubic-bezier(.22,1,.36,1);
+  pointer-events: none; z-index: 3; opacity: calc(1 - var(--gp, 0));
 }
-.stage.grown .scene { transform: translateY(-30px); }
-.stage.grown .masthead { opacity: 0; transform: translateX(-50%) translateY(-18px) scale(.93); }
 .masthead h1, .masthead p { margin: 0; font-family: var(--display); font-weight: 400; line-height: 1; white-space: nowrap; }
 .masthead h1 { font-size: 59.5px; letter-spacing: -.3px; text-shadow: 3px 4px 0 rgba(92,10,10,.36); }
 .masthead p { margin-top: 10.5px; font-size: 60px; letter-spacing: -.45px; text-shadow: 3px 4px 0 rgba(92,10,10,.34); }
@@ -111,13 +108,15 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 .search-btn:hover { transform: scale(1.06); }
 .search-btn:active { transform: scale(.94); }
 
-/* ── cream sheet ── */
+/* ── cream sheet — geometry is scrubbed to scroll via --gp (see script.js growLoop) ── */
 .explore-panel {
-  position: absolute; left: 169px; top: 276px; width: 1261px; height: calc(100% - 276px);
-  background: var(--cream); border-radius: 6px 6px 0 0; z-index: 10;
-  transition: top .6s cubic-bezier(.22,1,.36,1), height .6s cubic-bezier(.22,1,.36,1), border-radius .6s ease;
+  position: absolute; left: 169px; top: calc(276px - 240px * var(--gp, 0));
+  width: 1261px; height: calc(100% - 276px + 240px * var(--gp, 0));
+  background: var(--cream);
+  border-radius: calc(6px + 4px * var(--gp, 0)) calc(6px + 4px * var(--gp, 0)) 0 0;
+  z-index: 10;
 }
-.explore-panel.is-grown { top: 36px; height: calc(100% - 36px); border-radius: 10px 10px 0 0; }
+/* .is-grown is a state hook for chrome only (sticky bar, grip chevron) */
 
 /* grip — the sheet's only handle */
 .grip {
@@ -133,11 +132,12 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 .explore-panel.is-grown .grip i::after { transform: translate(-50%, -30%) rotate(225deg); }
 .grip.nag i { animation: grip-pulse 1.6s ease 3; }
 .progress { position: absolute; top: 0; left: 0; height: 5px; width: 0%; background: var(--red); z-index: 30; border-radius: 6px 0 0 0; }
-.sheet-scroll { height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: 0 48px 40px; scrollbar-width: thin; }
+.sheet-scroll { height: 100%; overflow-y: auto; overflow-x: clip; overscroll-behavior: contain; padding: 0 48px 64px; scrollbar-width: thin; scroll-behavior: smooth; scroll-padding-top: 110px; }
 .sheet-scroll.lg { font-size: 19px; } .sheet-scroll.xl { font-size: 21px; }
 
-.view { display: none; padding-bottom: 8px; }
+.view { display: none; padding-bottom: 24px; }
 .view.is-active { display: block; }
+#view-explore { counter-reset: shelf; }
 
 /* explore header */
 .panel-top { display: flex; align-items: flex-end; justify-content: space-between; padding: 54px 2px 0; gap: 16px; }
@@ -167,6 +167,7 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 
 /* topics */
 .topics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 0; }
+.topics > :last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
 .topic {
   display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 12px 14px 12px 18px;
   border: 4px solid var(--line); background: var(--pink); box-shadow: var(--sh);
@@ -206,8 +207,17 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 
 /* section titles */
 .series-title { margin: 40px 0 0; font-family: var(--display); font-size: 54px; line-height: .9; letter-spacing: -.4px; }
+.series-title::before {
+  counter-increment: shelf; content: "SHELF " counter(shelf, decimal-leading-zero);
+  display: block; font-family: var(--ui); font-size: 11px; font-weight: 700;
+  letter-spacing: .16em; color: var(--mut); margin-bottom: 4px;
+}
 .series-title.sm { font-size: 40px; }
 .section-sub { margin: 4px 0 16px; font-size: 14px; color: var(--mut); }
+
+/* library stats — one line, auto-counted */
+.stats { margin: 0 0 18px; font: 700 11px/1.8 var(--ui); letter-spacing: .12em; color: var(--mut); }
+.stats b { color: var(--ink); }
 
 /* series + experiments */
 .series-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -506,6 +516,7 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
   .explore-title { font-size: 46px; }
   .surprise { font-size: 17px; padding: 0 18px; }
   .topics { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .topics > :last-child:nth-child(2n + 1) { grid-column: 1 / -1; }
   .topic { font-size: 20px; min-height: 76px; padding: 10px 10px 10px 12px; border-width: 3px; }
   .topic .meta { display: none; }
   .duo, .series-row, .duo2, .extras { grid-template-columns: 1fr; }
