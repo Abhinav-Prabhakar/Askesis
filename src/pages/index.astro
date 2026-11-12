@@ -23,6 +23,8 @@ const stats = `<b>${ENTRIES.length} SHELVES</b> · ${THINKERS.length} THINKERS �
 /* seeded spine heights + colours so the open shelf looks uneven like a real one */
 const BOOK_JITTER = [10, 0, 16, 6, 2, 14, 8, 12, 4, 16, 8, 2, 13, 6, 10, 0, 16, 8, 12, 3, 14, 6, 10, 2, 16, 8];
 const BOOK_TILT = [0, 0, -2, 0, 0, 2, 0, 0, -2, 0, 0, 2, 0, 0, 0, -2, 0, 0, 2, 0, 0, -2, 0, 0, 2, 0];
+/* playbills pinned slightly askew, like a working stage call board */
+const CAST_TILT = [-1.4, 0.9, -0.6, 1.2, -1.1, 0.7, -0.8, 1.4, -0.5];
 const SPINES = ["#feabe3", "#d8aafe", "#fff8f4", "#fbd7d7", "#d8aafe", "#feabe3", "#fbd7d7", "#feabe3", "#d8aafe", "#fbd7d7", "#fff8f4", "#d8aafe", "#feabe3", "#feabe3", "#d8aafe", "#fbd7d7", "#feabe3", "#fff8f4", "#d8aafe", "#feabe3", "#fbd7d7", "#feabe3", "#d8aafe", "#fff8f4", "#feabe3", "#fbd7d7"];
 /* atlas constellations: four fields, each with its own star pattern */
 const CONST_POS: number[][][] = [
@@ -189,10 +191,17 @@ const pad2 = (n: number) => String(n).padStart(2, "0");
     <p class="section-sub rv">Nine minds, one stage. Every portrait opens an entry.</p>
     <div class="cast-stage rv">
       <svg class="pelmet" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 H1200 V14 L1140 32 L1080 14 L1020 32 L960 14 L900 32 L840 14 L780 32 L720 14 L660 32 L600 14 L540 32 L480 14 L420 32 L360 14 L300 32 L240 14 L180 32 L120 14 L60 32 L0 14 Z" fill="#d1393c" stroke="#060204" stroke-width="4"/></svg>
+      <div class="cast-marquee" aria-hidden="true">
+        <span class="cm-k">REPERTORY COMPANY</span>
+        <span class="cm-dots">{Array.from({ length: 5 }).map(() => <i></i>)}</span>
+        <span class="cm-n">Nº 05 · {THINKERS.length} MINDS</span>
+      </div>
+      <span class="cast-drape l" aria-hidden="true">{Array.from({ length: 5 }).map(() => <i></i>)}</span>
+      <span class="cast-drape r" aria-hidden="true">{Array.from({ length: 5 }).map(() => <i></i>)}</span>
       <div class="cast">
         {THINKERS.map((t, i) => (
-          <a class="cast-card" href={u(`thinker/${t.slug}/`)}>
-            <span class="cast-no">Nº {pad2(i + 1)}</span>
+          <a class="cast-card" style={`--ct:${CAST_TILT[i]}deg`} href={u(`thinker/${t.slug}/`)}>
+            <span class="cast-no" aria-hidden="true">Nº {pad2(i + 1)}</span>
             <span class="cast-face" aria-hidden="true" set:html={thinkerPortrait(t.slug)}></span>
             <b>{t.name.toUpperCase()}</b>
             <small>{t.years}<br />{t.school.toUpperCase()}</small>
@@ -200,7 +209,12 @@ const pad2 = (n: number) => String(n).padStart(2, "0");
           </a>
         ))}
       </div>
-      <span class="footlights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <div class="cast-floor" aria-hidden="true">
+        <svg class="cast-boards" viewBox="0 0 1200 26" preserveAspectRatio="none">
+          {Array.from({ length: 14 }).map((_, i) => <path d={`M${i * 92} 0 L${i * 92 - 18} 26`} stroke="rgba(10,5,5,.26)" stroke-width="2" />)}
+        </svg>
+        <span class="footlights">{Array.from({ length: 9 }).map(() => <i></i>)}</span>
+      </div>
     </div>
 
     <h2 class="series-title rv">THE INDEX</h2>

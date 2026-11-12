@@ -332,7 +332,7 @@ function renderSearch() {
   if (!res.length) {
     var d = document.createElement("div");
     d.className = "empty";
-    d.innerHTML = "<b>NOTHING FOUND</b>Try “freedom”, “red”, or “fairness” — or jump straight in:";
+    d.innerHTML = "<b>NOTHING IN THIS DRAWER</b>Try “freedom”, “red”, or “fairness” — or pull one of these cards:";
     var sg = document.createElement("div");
     sg.className = "sugg";
     ["sartre-bad-faith", "qualia", "veil-of-ignorance"].forEach(function (s) {
@@ -347,11 +347,18 @@ function renderSearch() {
     searchResults.appendChild(d);
     return;
   }
+  var CODE = { entry: "E", thinker: "T", tradition: "S", experiment: "P", series: "M", soon: "W" };
+  var LABEL = { entry: "ENTRY", thinker: "THINKER", tradition: "SCHOOL", experiment: "PUZZLE", series: "SERIES", soon: "SOON" };
   res.forEach(function (r, i) {
     var b = document.createElement("button");
     b.type = "button"; b.className = "sr" + (i === focused ? " focused" : "");
     b.setAttribute("role", "option");
-    b.innerHTML = '<span class="k ' + r.type + '">' + r.type.toUpperCase().slice(0, 6) + '</span><span><span class="t">' + r.title.toUpperCase() + "</span><small>" + r.sub + "</small></span>";
+    var code = CODE[r.type] || "X";
+    var label = LABEL[r.type] || r.type.toUpperCase().slice(0, 6);
+    b.innerHTML = '<span class="sr-call"><b>' + code + '</b><i>' + String(i + 1).padStart(2, "0") + '</i></span>' +
+      '<span class="sr-body"><span class="k ' + r.type + '">' + label + '</span>' +
+      '<span class="t">' + r.title.toUpperCase() + '</span><small>' + r.sub + '</small></span>' +
+      '<span class="sr-go" aria-hidden="true">→</span>';
     b.addEventListener("click", function () { closeSearch(); location.href = r.to; });
     searchResults.appendChild(b);
   });
@@ -390,8 +397,12 @@ if (searchPop) searchPop.addEventListener("click", function (ev) { ev.stopPropag
 document.addEventListener("click", function () { if (searchPop && !searchPop.hidden) closeSearch(); });
 $$(".chips.filters button").forEach(function (b) {
   b.addEventListener("click", function () {
-    $$(".chips.filters button").forEach(function (x) { x.classList.remove("on"); });
-    b.classList.add("on"); filter = b.getAttribute("data-f");
+    $$(".chips.filters button").forEach(function (x) {
+      x.classList.remove("on");
+      x.setAttribute("aria-pressed", "false");
+    });
+    b.classList.add("on"); b.setAttribute("aria-pressed", "true");
+    filter = b.getAttribute("data-f");
     searchPop.classList.remove("fresh");
     renderSearch(); searchInput.focus();
   });
