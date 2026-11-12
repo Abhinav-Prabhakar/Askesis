@@ -45,12 +45,12 @@ function fitStage() {
     return;
   }
   var w = window.innerWidth, h = window.innerHeight;
-  // Fit the whole art-board: never let the sheet run past the bottom of
-  // the window, and centre the board when the window is very wide.
-  var s = Math.min(w / 1600, h / 959);
-  var x = (w - 1600 * s) / 2;
-  stage.style.transform = "translateX(" + x + "px) scale(" + s + ")";
-  stage.style.height = Math.max(959, h / s) + "px";
+  // Fill the full width of the window, then let the board's height follow
+  // the available viewport. On very wide screens the board is shorter than
+  // 959px in design units, and the sheet adapts to the remaining height.
+  var s = w / 1600;
+  stage.style.transform = "scale(" + s + ")";
+  stage.style.height = (h / s) + "px";
 }
 window.addEventListener("resize", fitStage);
 
@@ -332,7 +332,7 @@ function renderSearch() {
   if (!res.length) {
     var d = document.createElement("div");
     d.className = "empty";
-    d.innerHTML = "<b>NOTHING IN THIS DRAWER</b>Try “freedom”, “red”, or “fairness” — or pull one of these cards:";
+    d.innerHTML = "<b>NOTHING FOUND</b>Try “freedom”, “red”, or “fairness” — or start with:";
     var sg = document.createElement("div");
     sg.className = "sugg";
     ["sartre-bad-faith", "qualia", "veil-of-ignorance"].forEach(function (s) {
@@ -347,17 +347,11 @@ function renderSearch() {
     searchResults.appendChild(d);
     return;
   }
-  var CODE = { entry: "E", thinker: "T", tradition: "S", experiment: "P", series: "M", soon: "W" };
-  var LABEL = { entry: "ENTRY", thinker: "THINKER", tradition: "SCHOOL", experiment: "PUZZLE", series: "SERIES", soon: "SOON" };
   res.forEach(function (r, i) {
     var b = document.createElement("button");
     b.type = "button"; b.className = "sr" + (i === focused ? " focused" : "");
     b.setAttribute("role", "option");
-    var code = CODE[r.type] || "X";
-    var label = LABEL[r.type] || r.type.toUpperCase().slice(0, 6);
-    b.innerHTML = '<span class="sr-call"><b>' + code + '</b><i>' + String(i + 1).padStart(2, "0") + '</i></span>' +
-      '<span class="sr-body"><span class="k ' + r.type + '">' + label + '</span>' +
-      '<span class="t">' + r.title.toUpperCase() + '</span><small>' + r.sub + '</small></span>' +
+    b.innerHTML = '<span class="sr-body"><span class="t">' + r.title.toUpperCase() + '</span><small>' + r.sub + '</small></span>' +
       '<span class="sr-go" aria-hidden="true">→</span>';
     b.addEventListener("click", function () { closeSearch(); location.href = r.to; });
     searchResults.appendChild(b);

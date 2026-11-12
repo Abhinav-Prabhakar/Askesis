@@ -79,11 +79,10 @@ const searchIndexJson = JSON.stringify(buildSearchIndex());
 </div>
 
 <button class="search-btn" id="searchBtn" type="button" aria-label="Search (press /)" aria-expanded="false" aria-controls="searchPop">
-  <svg width="19" height="19" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+  <svg width="21" height="21" viewBox="0 0 22 22" fill="none" aria-hidden="true">
     <circle cx="9.4" cy="9.4" r="6.1" stroke="currentColor" stroke-width="2.4"/>
     <path d="M14.1 14.1L19 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
   </svg>
-  <span class="sb-k" aria-hidden="true">SEARCH</span>
 </button>
 
 <section class="explore-panel" id="sheet" aria-label="Reading sheet">
@@ -96,13 +95,9 @@ const searchIndexJson = JSON.stringify(buildSearchIndex());
   </div>
 </section>
 
-<div class="search-pop" id="searchPop" hidden role="dialog" aria-label="Search the catalogue">
-  <div class="cat-head" aria-hidden="true">
-    <span class="cat-plate">ASKĒSIS · CARD CATALOGUE</span>
-    <span class="cat-drawer">DRAWER 01</span>
-  </div>
+<div class="search-pop" id="searchPop" hidden role="dialog" aria-label="Search">
+  <span class="cat-kicker" aria-hidden="true">ASKĒSIS · CARD CATALOGUE</span>
   <div class="search-field">
-    <span class="cat-tab" aria-hidden="true">SUBJECT</span>
     <svg width="18" height="18" viewBox="0 0 22 22" fill="none" aria-hidden="true">
       <circle cx="9.4" cy="9.4" r="6.1" stroke="currentColor" stroke-width="2.4"/>
       <path d="M14.1 14.1L19 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
@@ -119,7 +114,6 @@ const searchIndexJson = JSON.stringify(buildSearchIndex());
   </div>
   <div class="search-results" id="searchResults" role="listbox" aria-live="polite"></div>
   <div class="s-keys" aria-hidden="true"><span><kbd>↑</kbd><kbd>↓</kbd> MOVE</span><span><kbd>↵</kbd> OPEN</span><span><kbd>ESC</kbd> CLOSE</span></div>
-  <span class="cat-pull" aria-hidden="true"><i></i></span>
 </div>
 
 </main>
