@@ -191,6 +191,30 @@ export const ENTRIES = [
     related: ["free-will", "sartre-bad-faith", "skeptical-theism"],
     keys: "stoic dichotomy epictetus control enchiridion handbook trichotomy stoicism ancient up to us",
     cite: { apa: "Epictetus. (c. 125). The handbook (Enchiridion). Nicopolis.", mla: "Epictetus. The Handbook. c. 125.", bib: "@book{epictetus125handbook,\\n  author = {Epictetus},\\n  title = {The Handbook (Enchiridion)},\\n  year = {c. 125}\\n}" }
+  },
+  {
+    slug: "anselm-ontological", num: 9, title: "Anselm's Ontological Argument",
+    tradition: "Scholasticism", era: "Medieval", read: 2,
+    hero: { bg: "cream", k: "MEDIEVAL SCHOLASTICISM · FAITH SEEKING UNDERSTANDING", big: "Define the greatest thing. Watch it exist.", sub: "Anselm's armchair proof — and the island that sank it." },
+    hook: "Can you define God into existence?",
+    breath: "Anselm tries to prove God without leaving the armchair: define God as the greatest thing thinkable, notice that a real greatest thing beats a merely imagined one, and conclude God must be real. Gaunilo mocked it with a perfect island; Kant said existence is not a property. Nine centuries on, nobody agrees where the trick is.",
+    tension: ["Reason alone seems too thin to summon a being — yet the proof looks valid, and the flaw refuses to sit still. The tension: if defining can create, thought is magic; if the proof fails, the failure should be obvious. It isn't."],
+    positions: [
+      { who: "A", name: "Anselm", tag: "EXISTENCE INCLUDED", text: "God is that than which nothing greater can be conceived. A greatest thing existing only in thought is less great than one existing in reality too — so God exists in reality." },
+      { who: "G", name: "Gaunilo", tag: "THE ISLAND STRIKES BACK", text: "Run the same proof on the greatest island and it 'exists' too. A form that proves everything proves nothing — the argument proves too much." },
+      { who: "K", name: "Kant", tag: "EXISTENCE ISN'T A FEATURE", text: "'Exists' adds no concept to a thing: a hundred real thalers contain no more coins than a hundred imagined ones. Existence is not a predicate." }
+    ],
+    argument: {
+      p1: "God is, by definition, that than which nothing greater can be conceived.",
+      p2: "A greatest conceivable being existing only in thought is less great than one existing in reality as well.",
+      c: "Therefore God exists in reality — denying it contradicts the very definition."
+    },
+    objection: "Gaunilo's island plus Kant's predicate point: the proof smuggles existence into a definition, then 'discovers' it inside. Concepts don't come with reality attached — and if they did, every superlative would exist.",
+    reply: "Anselm's heirs narrow the claim from islands to necessary being. Plantinga's modal version: if maximal greatness is even possible, it holds in every possible world — including this one.",
+    quote: { text: "God is that than which nothing greater can be thought.", by: "Anselm · Proslogion, 1078" },
+    related: ["skeptical-theism", "descartes-cogito", "a-theory-of-time"],
+    keys: "anselm ontological argument god proslogion gaunilo island existence predicate kant plantinga necessary being medieval scholasticism faith",
+    cite: { apa: "Anselm. (1078). Proslogion. Bec.", mla: "Anselm. Proslogion. 1078.", bib: "@book{anselm1078proslogion,\\n  author = {Anselm},\\n  title = {Proslogion},\\n  year = {1078}\\n}" }
   }
 ];
 
@@ -215,7 +239,10 @@ export const THINKERS = [
     entries: ["sartre-bad-faith", "skeptical-theism"] },
   { slug: "epictetus", name: "Epictetus", years: "c. 50–135", school: "Stoicism",
     line: "Some things are up to us — the rest is weather.",
-    entries: ["stoic-dichotomy"] }
+    entries: ["stoic-dichotomy"] },
+  { slug: "anselm", name: "Anselm", years: "1033–1109", school: "Scholasticism",
+    line: "Faith seeking understanding — even for God's existence.",
+    entries: ["anselm-ontological"] }
 ];
 
 export const TRADITIONS = [
@@ -228,6 +255,9 @@ export const TRADITIONS = [
   { slug: "skepticism", name: "Skepticism", color: "",
     line: "Suspend judgment. Ask what our limits hide before claiming what is.",
     entries: ["skeptical-theism", "qualia"] },
+  { slug: "scholasticism", name: "Scholasticism", color: "",
+    line: "Faith seeking understanding. Define carefully, then see what follows.",
+    entries: ["anselm-ontological", "skeptical-theism", "descartes-cogito"] },
   { slug: "absurdism", name: "Absurdism", color: "u",
     line: "We crave meaning; the world offers none. Live the tension.",
     entries: ["sartre-bad-faith", "a-theory-of-time"] }
@@ -275,11 +305,6 @@ export const SERIES = [
 
 /* Shelves being written — full entries, holding pages for now. */
 export const SOON = [
-  { slug: "anselm-ontological", title: "Anselm's Ontological Argument", era: "Medieval",
-    hook: "God as the greatest thing thinkable — therefore real?",
-    points: ["The Proslogion move: a greatest being must exist, or a greater could be thought.", "Gaunilo's island: the perfect parody — a greatest island must exist too?", "Kant's reply: existence is not a predicate."],
-    related: ["skeptical-theism", "a-theory-of-time"],
-    keys: "anselm ontological argument god proslogion gaunilo island existence predicate medieval" },
   { slug: "kant-categorical", title: "Kant's Categorical Imperative", era: "Modern",
     hook: "Act only as you would will everyone to act.",
     points: ["Universalizability: the lying-promise test.", "Humanity as an end in itself — never merely a means.", "The price: rigorism, even about white lies."],
@@ -311,6 +336,7 @@ export const FIGCAP = {
   "qualia": "Mary's room: every physical fact, none of the redness.",
   "veil-of-ignorance": "Choose blind: which rules insure every seat at the table?",
   "stoic-dichotomy": "The cut: your pile, the world's pile — sort everything.",
+  "anselm-ontological": "The move: think the greatest thing — now add existence.",
   "descartes-cogito": "The furnace: everything doubtable burns away — one point will not.",
   "skeptical-theism": "The fawn: pointless to us — but how far can we see?",
   "a-theory-of-time": "Flow versus block: the now moves, or only seems to."
@@ -335,7 +361,8 @@ export const DAILY = [
   { q: "Does pointless evil disprove God?", to: "#/entry/skeptical-theism" },
   { q: "Is the future already there?", to: "#/entry/a-theory-of-time" },
   { q: "Would you plug into perfect happiness?", to: "#/experiment/experience-machine" },
-  { q: "What survives total doubt?", to: "#/entry/descartes-cogito" }
+  { q: "What survives total doubt?", to: "#/entry/descartes-cogito" },
+  { q: "Can you define God into existence?", to: "#/entry/anselm-ontological" }
 ];
 
 export const FEATURED = [

@@ -1,7 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import ToolBar from "../../components/ToolBar.astro";
-import { ENTRIES, ORDER, entryBySlug, tradSlug, FIGCAP } from "../../data/library.js";
+import { ENTRIES, ORDER, entryBySlug, tradSlug, FIGCAP, ERAS } from "../../data/library.js";
 import { heroSVG, figureSVG } from "../../lib/svg.js";
 import { glossify } from "../../lib/glossify.js";
 import { u } from "../../lib/url.js";
@@ -35,8 +35,22 @@ const entryData = JSON.stringify({ slug: e.slug, cite: e.cite });
       <div class="hero-cap"><span class="k">{e.hero.k}</span><span class="big">{e.hero.big}</span><span class="s">{e.hero.sub}</span></div>
     </div>
     <div class="breath rv"><div class="k">IN ONE BREATH</div><p set:html={glossify(e.breath)}></p></div>
-    <div class="doc-sec rv"><h2>The tension</h2>{e.tension.map((p: string) => <p set:html={glossify(p)}></p>)}</div>
-    <div class="doc-sec rv"><h2>Three positions</h2>
+    <nav class="era-ribbon rv" aria-label="Where this entry sits in history">
+      <span class="era-k">WHERE THIS SITS</span>
+      {ERAS.map((er: any) => (
+        <span class={er.name === e.era.toUpperCase() ? "era now" : "era"}><b>{er.name}</b><small>{er.span}</small>{er.name === e.era.toUpperCase() && <i>◉ THIS ENTRY</i>}</span>
+      ))}
+    </nav>
+    <nav class="toc rv" aria-label="In this entry">
+      <span class="toc-k">IN THIS ENTRY · FIVE STOPS</span>
+      <a href="#sec-tension"><b>01</b> THE TENSION</a>
+      <a href="#sec-positions"><b>02</b> THREE POSITIONS</a>
+      <a href="#sec-argument"><b>03</b> THE ARGUMENT</a>
+      <a href="#sec-objection"><b>04</b> OBJECTION VS REPLY</a>
+      <a href="#sec-quote"><b>05</b> THE QUOTE</a>
+    </nav>
+    <div class="doc-sec rv" id="sec-tension"><h2>The tension</h2>{e.tension.map((p: string) => <p set:html={glossify(p)}></p>)}</div>
+    <div class="doc-sec rv" id="sec-positions"><h2>Three positions</h2>
       <div class="tape" role="list" aria-label="Tale of the tape">
         {e.positions.map((p: any) => (
           <div class="tape-cell" role="listitem"><span class="t-avatar" aria-hidden="true">{p.who}</span><span class="t-name">{p.name.toUpperCase()}</span><span class="t-tag">{p.tag}</span></div>
@@ -50,20 +64,20 @@ const entryData = JSON.stringify({ slug: e.slug, cite: e.cite });
       <div class={`fig-art ${e.hero.bg === "cream" ? "" : e.hero.bg}`} set:html={figureSVG(e.slug)}></div>
       <figcaption><b>FIG. {e.num} — </b>{FIGCAP[e.slug] || ""}</figcaption>
     </figure>
-    <div class="arg rv" id="argCard">
+    <div class="arg rv" id="sec-argument">
       <div class="arg-h"><b>THE ARGUMENT, IN THREE LINES</b><button type="button" id="copyArg">COPY</button></div>
       <div class="arg-r"><span class="tag">P1</span><span set:html={glossify(e.argument.p1)}></span></div>
       <div class="arg-r"><span class="tag">P2</span><span set:html={glossify(e.argument.p2)}></span></div>
       <div class="arg-r qed"><span class="tag">∴</span><span set:html={glossify(e.argument.c)}></span></div>
     </div>
-    <div class="doc-sec rv"><h2>The strongest objection</h2>
+    <div class="doc-sec rv" id="sec-objection"><h2>The strongest objection</h2>
       <div class="duel">
         <div class="duel-card ob"><span class="duel-k">OBJECTION</span><p set:html={glossify(e.objection)}></p></div>
         <span class="vs" aria-hidden="true">VS</span>
         <div class="duel-card re"><span class="duel-k">REPLY</span><p set:html={glossify(e.reply)}></p></div>
       </div>
     </div>
-    <div class="quote rv">
+    <div class="quote rv" id="sec-quote">
       <blockquote>“{e.quote.text.replace(/^“?|”$/g, "")}”</blockquote>
       <cite>{e.quote.by}</cite>
       <div class="q-actions">
@@ -73,7 +87,7 @@ const entryData = JSON.stringify({ slug: e.slug, cite: e.cite });
     </div>
     <div class="readnext rv"><h2>Read next</h2>
       <div class="rel-grid">{rel.map((r: any) => (
-        <a href={u(`entry/${r.slug}/`)}><b>{r.title.toUpperCase()}</b><small>{r.read} MIN · {r.tradition.toUpperCase()}</small></a>
+        <a href={u(`entry/${r.slug}/`)}><span class="call">CALL Nº {String(r.num).padStart(2, "0")}</span><b>{r.title.toUpperCase()}</b><small>{r.read} MIN · {r.tradition.toUpperCase()}</small></a>
       ))}</div>
     </div>
     <div class="prevnext rv">

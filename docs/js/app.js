@@ -16,7 +16,7 @@ var SLUG = document.body.getAttribute("data-slug") || "";
 var stage = $("#stage"), sheet = $("#sheetScroll"), progress = $("#progress"),
     searchBtn = $("#searchBtn"), searchPop = $("#searchPop"),
     searchInput = $("#searchInput"), searchResults = $("#searchResults"),
-    panel = $("#sheet"), grip = $("#grip");
+    panel = $("#sheet");
 
 var toast = $("#toast"), glossTip = $("#glossTip");
 var toastT = null;
@@ -222,62 +222,45 @@ function wireSeries() {
   };
 }
 
-/* ── progress hairline ── */
-function updateProgress() {
-  if (!sheet) return;
-  var max = sheet.scrollHeight - sheet.clientHeight;
-  var p = max > 0 ? (sheet.scrollTop / max) * 100 : 0;
-  if (progress) progress.style.width = p + "%";
-}
-if (sheet) sheet.addEventListener("scroll", updateProgress, { passive: true });
-
-/* ── growing sheet (scrubbed to scroll) ── */
-var forceGrow = false, growCur = -1, growApplied = -2;
-var RM = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* ── progress hairline + growing sheet (scrubbed to scroll) ── */
 var docActive = VIEW === "doc";
-function growTarget() {
-  if (window.innerWidth < 900) return 0;
-  if (docActive || forceGrow) return 1;
-  return Math.min(Math.max(sheet.scrollTop / 240, 0), 1);
-}
+var GROW_PX = 240;
+var lastGp = null;
+
 function applyGrow(v) {
-  growApplied = v;
-  stage.style.setProperty("--gp", v.toFixed(4));
+  v = Math.round(v * 1000) / 1000;
+  if (v === lastGp) return;
+  lastGp = v;
+  stage.style.setProperty("--gp", v.toFixed(3));
   var grown = v > 0.5;
   if (panel.classList.contains("is-grown") !== grown) {
     panel.classList.toggle("is-grown", grown);
     stage.classList.toggle("grown", grown);
-    grip.setAttribute("aria-expanded", String(grown));
-    grip.setAttribute("aria-label", grown ? "Shrink the sheet" : "Grow the sheet");
   }
-  if (grown) grip.classList.remove("nag");
 }
-function growLoop() {
-  var t = growTarget();
-  if (growCur < 0) growCur = t;
-  var next = RM ? t : growCur + (t - growCur) * 0.16;
-  growCur = Math.abs(t - next) < 0.0005 ? t : next;
-  if (Math.abs(growCur - growApplied) > 0.0004) applyGrow(growCur);
-  window.requestAnimationFrame(growLoop);
+
+function syncScroll() {
+  if (!sheet) return;
+  var max = sheet.scrollHeight - sheet.clientHeight;
+  if (progress) progress.style.width = (max > 0 ? sheet.scrollTop / max * 100 : 0) + "%";
+  if (window.innerWidth < 900) { applyGrow(docActive ? 1 : 0); return; }
+  applyGrow(docActive ? 1 : Math.min(Math.max(sheet.scrollTop / GROW_PX, 0), 1));
 }
-if (grip) grip.addEventListener("click", function () {
-  grip.classList.remove("nag");
-  if (docActive) { sheet.scrollTo({ top: 0, behavior: "smooth" }); return; }
-  forceGrow = !panel.classList.contains("is-grown");
-});
+if (sheet) sheet.addEventListener("scroll", syncScroll, { passive: true });
+window.addEventListener("resize", syncScroll);
 
 /* ── scroll reveal ── */
 var io = new IntersectionObserver(function (entries) {
   entries.forEach(function (en) {
     if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.01, rootMargin: "0px 0px -6% 0px" });
 function watchRv(root) {
   var groups = new Map();
   $$(".rv", root || document).forEach(function (el) {
     var p = el.parentElement, n = groups.get(p) || 0;
     groups.set(p, n + 1);
-    el.style.setProperty("--d", Math.min(n, 8) * 55 + "ms");
+    el.style.setProperty("--d", Math.min(n, 5) * 35 + "ms");
     io.observe(el);
   });
 }
@@ -389,14 +372,14 @@ function paintFocus() {
 
 /* ── whole-page scroll frame: wheel + keys anywhere drive the sheet ── */
 if (stage) stage.addEventListener("wheel", function (ev) {
-  if (window.innerWidth < 900) return;
-  if (ev.ctrlKey) return;
+  if (window.innerWidth < 900 || ev.ctrlKey) return;
   var t = ev.target;
   if (t && t.closest && (t.closest("#sheetScroll") || t.closest("#searchPop"))) return;
-  var d = ev.deltaMode === 1 ? ev.deltaY * 16 : ev.deltaY;
+  var d = ev.deltaY * (ev.deltaMode === 1 ? 16 : ev.deltaMode === 2 ? sheet.clientHeight : 1);
   if (!d) return;
-  ev.preventDefault();
-  sheet.scrollTop += d;
+  var before = sheet.scrollTop;
+  sheet.scrollTop = before + d;
+  if (sheet.scrollTop !== before) ev.preventDefault();
 }, { passive: false });
 
 var PAGE_KEYS = new Set(["ArrowDown", "ArrowUp", " ", "PageDown", "PageUp", "Home", "End"]);
@@ -407,10 +390,9 @@ document.addEventListener("keydown", function (ev) {
     if (searchPop && !searchPop.hidden) { ev.preventDefault(); closeSearch(); searchBtn.focus(); return; }
     if (glossTip && !glossTip.hidden) { glossTip.hidden = true; return; }
   }
-  if (!typing && searchPop && searchPop.hidden && !ev.defaultPrevented && PAGE_KEYS.has(ev.key)) {
-    var inter = t instanceof HTMLElement && t.closest &&
-      t.closest("button, a, input, textarea, select, #svTrack");
-    if (!inter) {
+  if (!typing && window.innerWidth >= 900 && searchPop && searchPop.hidden && !ev.defaultPrevented && PAGE_KEYS.has(ev.key)) {
+    var inter = t instanceof HTMLElement && t.closest && t.closest("button, a, #svTrack");
+    if (!(inter && ev.key === " ")) {
       ev.preventDefault();
       var H = sheet.clientHeight * 0.9;
       if (ev.key === "ArrowDown") sheet.scrollTop += 72;
@@ -465,12 +447,8 @@ initExplore();
 wireDoc();
 wireSeries();
 fitStage();
-updateProgress();
+syncScroll();
 watchRv(document);
-growCur = growTarget();
-applyGrow(growCur < 0 ? 0 : growCur);
-window.requestAnimationFrame(growLoop);
-window.setTimeout(function () { if (panel && !panel.classList.contains("is-grown") && grip) grip.classList.add("nag"); }, 1800);
 
 /* privacy-light: no cookies, no trackers. Local notes + recents only. */
 })();

@@ -11,7 +11,7 @@
 
 1. **One surface.** The cream sheet is the only reading surface. No new
    pages, sidebars, drawers, or persistent nav. New affordances (reader
-   toolbar, sticky bar, grip) appear contextually and disappear with context.
+   toolbar, sticky bar) appear contextually and disappear with context.
 2. **Poster first, library second.** Desktop keeps the fixed-art-board poster
    composition. Every addition must survive at poster scale and at phone width.
 3. **Edited, not encyclopedic-looking.** Short hooks, diagrams before
@@ -73,28 +73,27 @@ Scale (desktop): sheet title 84px · section titles 42–60px · card titles
 ### Z-index map
 
 `scene 1 · masthead 3 · grain 4 · rails 5 · panel 10 · doc-top(sticky) 20/25 ·
-progress 30 · grip 31 · search-pop 90 · search-btn 60 (120 mobile) ·
-skip 200 · gloss-tip 300 · toast 400`.
+progress 30 · search-pop 90 · search-btn 60 (120 mobile) · skip 200 ·
+gloss-tip 300 · toast 400`.
 
 ---
 
 ## 3. Motion system
 
 Easing: `cubic-bezier(.22,1,.36,1)` (rise/grow), `ease` for fades.
-Durations: micro 110–120ms · entrances 300–600ms · sheet-grow 600ms ·
-ticker 32s linear.
+Durations: press 90ms · hover 170ms · reveals 340–460ms ·
+entrances 240–300ms · ticker 32s linear.
 
 | Behavior | Trigger | Implementation |
 |---|---|---|
-| **Sheet-grow (scrubbed)** | any scroll; doc view opens; grip tap | `--gp` (0→1) is written every frame by `growLoop()` from `scrollTop/240` (forced 1 in doc view / by grip). Sheet geometry, scene parallax, and masthead fade are pure `calc()` off `--gp` — no transition lag. Lerp `0.16` keeps it buttery; reduced motion snaps. `.is-grown` (>0.5) is a chrome-only hook. Disabled <900px. |
-| **Scroll reveal** | element enters viewport | `.rv` → `.in` via one `IntersectionObserver` (`watchRv()`); stagger `--d` = sibling index × 55ms, capped 8. Uses the `translate` property so hover transforms keep working. |
-| **Whole-page scroll frame** | wheel or paging keys anywhere on stage | Wheel over red scenery forwards to the sheet (`ctrl` = pinch-zoom untouched). `Arrows/Space/PgUp/PgDn/Home/End` page the sheet when focus is on no control. `scroll-behavior: smooth` + `scroll-padding-top: 110px`; sticky bar never covers anchors. |
+| **Sheet-grow (scrubbed)** | any scroll; doc view opens | `--gp` (0→1) is written from `scrollTop/240` on the sheet's scroll event (forced 1 in doc view) — no lerp, no transition lag. Sheet geometry, scene parallax, and masthead fade are pure `calc()` off `--gp`. `.is-grown` (>0.5) is a chrome-only hook. Disabled <900px. |
+| **Scroll reveal** | element enters viewport | `.rv` → `.in` via one `IntersectionObserver` (`watchRv()`); stagger `--d` = sibling index × 35ms, capped 5. Uses the `translate` property so hover transforms keep working. |
+| **Whole-page scroll frame** | wheel or paging keys anywhere on stage | Wheel over red scenery forwards to the sheet (`ctrl` = pinch-zoom untouched). `Arrows/Space/PgUp/PgDn/Home/End` page the sheet when focus is on no control. No CSS smooth-scroll: the sheet tracks the gesture exactly. `scroll-padding-top: 110px` keeps anchors clear of the sticky bar. |
 | **Search entrance** | popover opens | `pop` keyframe on popover; `rise` stagger on results (`nth-child` delays). |
 | **Dice** | hover/active on Surprise | `dice-roll` (180°). |
 | **Hero micro-motion** | always, per-motif | Each hero motif lives a little: masks drift, fork endpoints pulse, the eye looks around, the veil sways, scales tip, NOW bobs, the cogito heartbeat. Translate/opacity keyframes only, scoped to `.hero-art` (still in `.t-art` cells), silenced under reduced motion. |
 | **Arrows** | hover on daily / featured | `nudge-x` loop. |
 | **Ticker** | always (pauses on hover) | `tick` marquee, duplicated content. |
-| **Grip hint** | 1.8s after load, 3 pulses | `grip-pulse`; removed on first grow. |
 | **Toast / glossary** | shown | `pop` + opacity/transform transitions. |
 
 Reduced motion (`prefers-reduced-motion`): reveals render instantly, ticker
@@ -113,7 +112,6 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Component | Classes | Rules |
 |---|---|---|
 | Sheet | `.explore-panel` `#sheet` `.sheet-scroll` | Only surface. Internal scroll on desktop; page scroll on mobile. Never add a second panel. |
-| Grip | `.grip` `#grip` | 72×9px ink pill, chevron flips with state. Hidden on mobile/print. Only handle. |
 | Progress | `.progress` | 5px red hairline, width = scroll %. |
 | Explore header | `.panel-top` `.explore-title` `.surprise` | Bebas 60px + ink pill button with dice SVG. |
 | Daily question | `.daily` | White card, ink kicker pill, 17px semibold question, nudging arrow. One line, links to an entry. |
@@ -140,6 +138,11 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 | Positions | `.positions` `.position` `.avatar` `.tape` | 3 cards (cream/white/pink), 44px ink medallion initial, `01–03` numerals. Above them the tale-of-the-tape: an ink strip (`.tape-cell`: medallion initial + name + `tag` verdict) — the whole debate at a glance. Stacks to one column on mobile. |
 | Argument card | `.arg` `.arg-h` `.arg-r` `.tag` `.qed` | Pink header + COPY; rows `P1/P2/∴`; conclusion row is ink-on-cream-inverted. Shareable text format: `P1… P2… ∴… — via Askēsis <url>`. |
 | Objection duel | `.duel` `.duel-card` `.vs` | The objection section is a duel, not a paragraph: white OBJECTION card vs pink REPLY card (both from data: `objection` + `reply`), joined by an ink-ringed red VS medallion. Stacks on mobile, side-by-side in print. |
+| Era ribbon | `.era-ribbon` `.era.now` | `WHERE THIS SITS`: all four eras with date spans from `ERAS`; the entry's era is an ink cell with a pink `◉ THIS ENTRY` marker. 4-col → 2×2 mobile. |
+| Chapter index | `.toc` | `IN THIS ENTRY · FIVE STOPS`: anchor links (01–05) to tension/positions/argument/duel/quote with dot leaders + ink number chips. Hidden in print; `scroll-margin-top` keeps targets clear of the sticky bar. |
+| Read next | `.readnext` `.rel-grid` `.call` | Max 3 cards (pink/purple/white rotation). Catalogue `CALL Nº 07` ink chips — the shelf mark, not just a link. |
+| The Cast | `.cast` `.cast-card` `.cast-face` | Thinker face gallery on Explore: 4-col medallion cards (initial, name, years · school; pink/cream rotation), 2-col mobile. Picks a face instead of a chip. |
+| Quote poster | `.quote::after` | Giant pink `“` (190px Bebas) hangs behind the quote — the card reads as a poster, not a paragraph. Screen + print, `aria`-neutral pseudo-element. |
 | Figures | `.fig` `.fig-art` `figcaption` | Bordered diagram + `FIG. N — caption`. Art bg rotates pink/purple/cream-2. Caption ≤12 words. |
 | Quote | `.quote` | White card, 14px red left bar, Bebas 40px quote, byline, COPY QUOTE / SHARE. |
 | Read next | `.readnext` `.rel-grid` | Max 3 cards (pink/purple/white rotation). |
@@ -221,7 +224,7 @@ wire `related` both ways, extend `INDEX` (automatic), add atlas dot
   sticky reader bar, fixed search button. Grow disabled.
 - **Print:** one clean cream page of the open entry; scenery, tools,
   navigation, ticker, seal hidden; shadows off.
-- **RSS** (`feed.xml`) mirrors entries. **Sitemap** (`sitemap.xml`, 31 URLs: home + start-here + every entry/thinker/school/puzzle/series/stub) regenerated from `library.js` whenever routes change. **PWA** is manifest-only for now —
+- **RSS** (`feed.xml`) mirrors entries. **Sitemap** (`sitemap.xml`: home + start-here + every entry/thinker/school/puzzle/series/stub) regenerated from `library.js` whenever routes change. **PWA** is manifest-only for now —
   offline waits for content worth caching. No cookies, no trackers;
   `localStorage` holds recents + notes only.
 

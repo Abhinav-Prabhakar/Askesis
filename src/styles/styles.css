@@ -400,7 +400,34 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 .arg-r.qed { background: var(--ink); color: var(--cream); }
 .arg-r.qed .tag { background: var(--purple); color: var(--ink); }
 
+/* ── era ribbon: where this entry sits in history ── */
+.era-ribbon { display: grid; grid-template-columns: auto repeat(4, 1fr); border: 4px solid var(--line); background: var(--white); box-shadow: var(--sh); margin: 22px 0; }
+.era-k { display: flex; align-items: center; background: var(--ink); color: var(--cream); font: 700 11px/1.5 var(--ui); letter-spacing: .14em; padding: 12px 14px; }
+.era { padding: 10px 12px; }
+.era + .era { border-left: 2px dashed rgba(10,5,5,.25); }
+.era b { display: block; font-family: var(--display); font-size: 19px; letter-spacing: 0; }
+.era small { display: block; font: 700 10px/1.6 var(--ui); letter-spacing: .08em; color: var(--mut); }
+.era.now { background: var(--ink); color: var(--cream); }
+.era.now small { color: var(--cream); opacity: .7; }
+.era.now i { display: block; font: 700 10px/1.6 var(--ui); font-style: normal; letter-spacing: .1em; color: var(--pink); }
+
+/* ── chapter index: five stops, dot leaders ── */
+.toc { border: 4px solid var(--line); background: var(--cream-2); box-shadow: var(--sh); padding: 14px 16px; margin: 22px 0; }
+.toc-k { display: block; font: 700 11px/1 var(--ui); letter-spacing: .14em; color: var(--mut); margin-bottom: 10px; }
+.toc a { display: flex; align-items: baseline; gap: 10px; text-decoration: none; padding: 7px 0; border-bottom: 2px dotted rgba(10,5,5,.25); font-family: var(--display); font-size: 21px; letter-spacing: -.2px; }
+.toc a:last-child { border-bottom: 0; }
+.toc a b { font-size: 15px; background: var(--ink); color: var(--cream); padding: 3px 7px; }
+.toc a:hover { background: var(--pink); margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+[id^="sec-"] { scroll-margin-top: 120px; }
+
 /* quote */
+.quote { position: relative; overflow: hidden; }
+.quote::after {
+  content: "\201C"; position: absolute; top: -34px; right: 2px; z-index: 0;
+  font-family: var(--display); font-size: 190px; line-height: 1; color: var(--pink);
+  pointer-events: none;
+}
+.quote blockquote, .quote cite, .quote .q-actions { position: relative; z-index: 1; }
 .quote { border: 4px solid var(--line); border-left: 14px solid var(--red); background: var(--white); box-shadow: var(--sh); padding: 20px 20px 16px; margin: 22px 0; }
 .quote blockquote { margin: 0; font-family: var(--display); font-size: 40px; line-height: .95; letter-spacing: -.4px; }
 .quote cite { display: block; margin-top: 10px; font: 700 13px/1.5 var(--ui); letter-spacing: .04em; font-style: normal; color: var(--mut); }
@@ -436,6 +463,19 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 .rel-grid a:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--line); }
 .rel-grid b { font-family: var(--display); font-size: 24px; line-height: .92; display: block; font-weight: 400; }
 .rel-grid small { font: 700 11px/1 var(--ui); letter-spacing: .1em; opacity: .7; }
+/* card-catalogue call numbers */
+.rel-grid .call { display: inline-block; font: 700 10px/1 var(--ui); letter-spacing: .12em; background: var(--ink); color: var(--cream); padding: 6px 8px; margin-bottom: 8px; box-shadow: 2px 2px 0 rgba(10,5,5,.35); }
+
+/* ── the cast: thinker face gallery ── */
+.cast { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.cast-card { border: 4px solid var(--line); background: var(--white); box-shadow: var(--sh); padding: 14px 12px; text-align: center; text-decoration: none; transition: transform var(--t-hover) var(--ease), box-shadow var(--t-hover) var(--ease); }
+.cast-card:nth-child(4n+2) { background: var(--pink); }
+.cast-card:nth-child(4n+3) { background: var(--cream-2); }
+.cast-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--line); }
+.cast-card:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--line); }
+.cast-face { width: 56px; height: 56px; margin: 0 auto 8px; border: 3px solid var(--line); border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-size: 26px; background: var(--ink); color: var(--cream); }
+.cast-card b { display: block; font-family: var(--display); font-size: 22px; font-weight: 400; line-height: .95; }
+.cast-card small { display: block; font: 700 10px/1.6 var(--ui); letter-spacing: .08em; color: var(--mut); margin-top: 4px; }
 
 .prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
 .prevnext a { border: 3px solid var(--line); background: var(--white); box-shadow: 3px 3px 0 var(--line); padding: 14px 16px; text-decoration: none; transition: transform var(--t-hover) var(--ease), box-shadow var(--t-hover) var(--ease); }
@@ -585,6 +625,11 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
   .duo, .series-row, .duo2, .extras { grid-template-columns: 1fr; }
   .exp-row { grid-template-columns: 1fr 1fr; }
   .recent-row, .rel-grid, .positions, .prevnext { grid-template-columns: 1fr; }
+  .cast { grid-template-columns: 1fr 1fr; }
+  .era-ribbon { grid-template-columns: 1fr 1fr; }
+  .era-k { grid-column: 1 / -1; }
+  .era + .era { border-left: 0; }
+  .era:nth-child(even) { border-left: 2px dashed rgba(10,5,5,.25); }
   .tape { grid-template-columns: 1fr; }
   .tape-cell + .tape-cell { border-left: 0; border-top: 2px dashed rgba(250,222,222,.4); }
   .duel { grid-template-columns: 1fr; }
@@ -606,12 +651,12 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
 /* ── print: one clean cream page ── */
 @media print {
   html, body { overflow: visible; height: auto; background: #fff; }
-  .scene, .search-btn, .search-pop, .doc-tools, .prevnext, .extras, .readnext, .toast, .g-tip, .skip, .progress, .sheet-foot { display: none !important; }
+  .scene, .search-btn, .search-pop, .doc-tools, .prevnext, .extras, .readnext, .toast, .g-tip, .skip, .progress, .sheet-foot, .toc { display: none !important; }
   .viewport, .stage { position: static; width: auto; height: auto; transform: none !important; background: #fff; }
   .explore-panel { position: static; width: auto; height: auto; background: #fff; }
   .sheet-scroll { overflow: visible; height: auto; }
   #view-explore { display: none !important; } #view-doc { display: block !important; }
-  .hero, .breath, .arg, .quote, .tape, .duel-card { box-shadow: none; }
+  .hero, .breath, .arg, .quote, .tape, .duel-card, .era-ribbon, .cast-card { box-shadow: none; }
   .duel { grid-template-columns: 1fr 1fr; gap: 10px; }
   .vs { margin: 0; justify-self: center; align-self: center; }
 }

@@ -135,6 +135,17 @@ const stats = `<b>${ENTRIES.length + SOON.length} SHELVES</b> · ${ENTRIES.lengt
       </div>
     </div>
 
+    <h2 class="series-title rv">THE CAST</h2>
+    <p class="section-sub rv">The minds behind the shelves. Pick a face.</p>
+    <div class="cast rv">
+      {THINKERS.map((t, i) => (
+        <a class="cast-card" href={u(`thinker/${t.slug}/`)}>
+          <span class="cast-face" aria-hidden="true">{t.name[0]}</span>
+          <b>{t.name.toUpperCase()}</b><small>{t.years} · {t.school.toUpperCase()}</small>
+        </a>
+      ))}
+    </div>
+
     <h2 class="series-title rv">THE INDEX</h2>
     <p class="section-sub rv">Every shelf, A to Z. Pick a lit letter.</p>
     <div class="az rv" id="azRow">
@@ -152,7 +163,7 @@ const stats = `<b>${ENTRIES.length + SOON.length} SHELVES</b> · ${ENTRIES.lengt
       <div class="recent-row" id="recentRow"></div>
     </div>
 
-    <div class="ticker rv" aria-hidden="true"><div class="ticker-in"><span>STOICISM · EXISTENTIALISM · SKEPTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span><span>STOICISM · EXISTENTIALISM · SKEPTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span></div></div>
+    <div class="ticker rv" aria-hidden="true"><div class="ticker-in"><span>STOICISM · EXISTENTIALISM · SKEPTICISM · SCHOLASTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span><span>STOICISM · EXISTENTIALISM · SKEPTICISM · SCHOLASTICISM · ABSURDITY · METAPHYSICS · MIND · ETHICS · TIME · FAITH · REASON · FREEDOM · JUSTICE ·&nbsp;</span></div></div>
 
     <footer class="sheet-foot rv">
       <span>ASKĒSIS · EDITED, NOT ENCYCLOPEDIC</span>
