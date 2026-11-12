@@ -1,0 +1,545 @@
+/* ------------------------------------------------------------------
+   Askēsis — philosophy, reframed
+   Recreated 1:1 from reference.png.webp (1600 × 959 design space)
+-------------------------------------------------------------------*/
+
+@font-face {
+  font-family: "Bebas Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("assets/fonts/bebas-neue-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+                 U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+                 U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Bebas Neue";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("assets/fonts/bebas-neue-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --red: #d1393c;
+  --card: #a50000;
+  --cream: #fadede;
+  --pink: #feabe3;
+  --purple: #d8aafe;
+  --ink: #0a0505;
+  --card-text: #ffd8d6;
+  --white: #fff8f4;
+  --display: "Bebas Neue", "Anton", "Arial Narrow", Impact, sans-serif;
+  --ui: "Helvetica Neue", "HelveticaNeue", Helvetica, "Inter", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--red);
+}
+
+body {
+  font-family: var(--ui);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--red);
+}
+
+.stage {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 1600px;
+  height: 959px;
+  background: var(--red);
+  transform-origin: top left;
+  overflow: hidden;
+}
+
+/* ----------------------------- background scene ----------------------------- */
+
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.topline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #1f1c1c;
+  z-index: 2;
+}
+
+.bg-card.warm {
+  background: #a31313;
+}
+
+.bg-card {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+  background: var(--card);
+  border: 4px solid #050505;
+  box-shadow: 5px 5px 0 #050505;
+  color: var(--card-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: var(--display);
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.55px;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.bg-card span {
+  position: relative;
+  top: 0;
+  display: block;
+  transform: translateX(var(--nudge, 0px));
+}
+
+/* masthead */
+
+.masthead {
+  position: absolute;
+  left: 827px;
+  top: 78px;
+  transform: translateX(-50%);
+  width: max-content;
+  margin: 0;
+  text-align: center;
+  color: var(--white);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.masthead h1,
+.masthead p {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.masthead h1 {
+  font-size: 59.5px;
+  letter-spacing: -0.3px;
+  text-shadow: 3px 4px 2px rgba(92, 10, 10, 0.36),
+               1px 1px 0 rgba(92, 10, 10, 0.12);
+}
+
+.masthead p {
+  margin-top: 10.5px;
+  font-size: 60px;
+  letter-spacing: -0.45px;
+  text-shadow: 3px 4px 2px rgba(92, 10, 10, 0.34),
+               1px 1px 0 rgba(92, 10, 10, 0.12);
+}
+
+/* thin dark edge rails (left/right of the art-board) */
+
+.rails {
+  position: absolute;
+  inset: 0;
+  border-left: 2px solid rgba(20, 5, 5, 0.65);
+  border-right: 2px solid #241b1b;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* grain over scene (never over the cream sheet) */
+
+.grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("assets/grain.png");
+  background-repeat: repeat;
+  background-size: 1024px 1024px;
+  opacity: 0.88;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* search button */
+
+.search-btn {
+  position: absolute;
+  top: 20px;
+  right: 18px;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #050505;
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 6;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.search-btn:hover {
+  transform: scale(1.06);
+}
+
+.search-btn:active {
+  transform: scale(0.96);
+}
+
+.search-btn svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+  transform: translate(-0.5px, -0.5px);
+}
+
+/* ----------------------------- cream sheet ----------------------------- */
+
+.explore-panel {
+  position: absolute;
+  left: 169px;
+  top: 276px;
+  width: 1261px;
+  height: calc(100% - 276px);
+  background: var(--cream);
+  border-radius: 6px 6px 0 0;
+  z-index: 10;
+}
+
+.panel-top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 110px;
+}
+
+.explore-title {
+  position: absolute;
+  left: 49px;
+  top: 56px;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -0.53px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.surprise {
+  position: absolute;
+  left: 1011px;
+  top: 56px;
+  width: 214px;
+  height: 50px;
+  padding: 0 0 0 24px;
+  border: 0;
+  border-radius: 25px;
+  background: #050505;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  font-family: var(--ui);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.55px;
+  line-height: 1;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.surprise:hover {
+  background: #171313;
+  transform: translateY(-1px);
+}
+
+.surprise:active {
+  transform: translateY(1px);
+}
+
+.surprise .dice {
+  flex: 0 0 auto;
+  color: var(--white);
+}
+
+/* topics */
+
+.topics {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.topic {
+  position: absolute;
+  left: calc(49px + (var(--col) - 1) * 379px);
+  top: calc(127px + (var(--row) - 1) * 92px);
+  width: 354px;
+  height: 76px;
+  margin: 0;
+  padding: 0 0 0 26px;
+  border: 4px solid #060204;
+  border-radius: 0;
+  background: var(--pink);
+  box-shadow: 4px 4px 0 #060204;
+  color: #0b0407;
+  display: flex;
+  align-items: center;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 34.3px;
+  line-height: 1;
+  letter-spacing: -0.45px;
+  white-space: nowrap;
+  text-align: left;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 110ms ease, box-shadow 110ms ease;
+}
+
+.topic:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #060204;
+}
+
+.topic:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #060204;
+}
+
+.topic .num {
+  flex: 0 0 29px;
+  font-size: 31.5px;
+  letter-spacing: 0;
+}
+
+.topic .name {
+  display: block;
+}
+
+.topic.is-picked {
+  animation: pick 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes pick {
+  0%, 100% {
+    background: var(--pink);
+    color: #0b0407;
+  }
+  12%, 58% {
+    background: #0b0407;
+    color: var(--pink);
+  }
+}
+
+/* mini scroll series */
+
+.series-title {
+  position: absolute;
+  left: 49px;
+  top: 384px;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 1;
+  letter-spacing: -0.385px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.featured {
+  position: absolute;
+  left: 45px;
+  top: 460px;
+  width: 421px;
+  height: 156px;
+  margin: 0;
+  padding: 0 0 16px 31px;
+  border: 4px solid #060204;
+  border-radius: 0;
+  background: var(--purple);
+  box-shadow: 5px 5px 0 #060204;
+  color: #0b0407;
+  display: flex;
+  align-items: flex-end;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 33.5px;
+  line-height: 1;
+  letter-spacing: -0.25px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 110ms ease, box-shadow 110ms ease;
+}
+
+.featured:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 #060204;
+}
+
+.featured:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #060204;
+}
+
+/* ----------------------------- search popover ----------------------------- */
+
+.search-pop {
+  position: absolute;
+  top: 88px;
+  right: 36px;
+  width: 470px;
+  padding: 18px 18px 14px;
+  background: var(--cream);
+  border: 4px solid #060204;
+  box-shadow: 6px 6px 0 #060204;
+  z-index: 40;
+}
+
+.search-pop[hidden] {
+  display: none;
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(10, 5, 5, 0.16);
+  color: var(--ink);
+}
+
+.search-field input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--ui);
+  font-size: 20px;
+  color: var(--ink);
+  outline: none;
+}
+
+.search-field input::placeholder {
+  color: rgba(10, 5, 5, 0.42);
+}
+
+.esc {
+  flex: 0 0 auto;
+  font-family: var(--ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 3px 5px;
+  border: 1.5px solid rgba(10, 5, 5, 0.5);
+  border-radius: 3px;
+}
+
+.search-results {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  max-height: 264px;
+  overflow: auto;
+}
+
+.search-results button {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 26px;
+  letter-spacing: -0.35px;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.search-results button:hover,
+.search-results button:focus-visible {
+  background: rgba(10, 5, 5, 0.07);
+}
+
+.search-results .r-num {
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+}
+
+.search-results .empty {
+  padding: 8px;
+  font-family: var(--ui);
+  font-size: 13px;
+  opacity: 0.55;
+}
+
+/* motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

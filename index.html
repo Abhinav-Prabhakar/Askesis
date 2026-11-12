@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Askēsis — Philosophy, Reframed</title>
+<link rel="preload" href="assets/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/bebas-neue-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="viewport">
+  <main class="stage" id="stage" aria-label="Askēsis philosophy library">
+
+    <div class="scene" aria-hidden="true">
+      <div class="topline"></div>
+
+      <!-- Row 1 -->
+      <div class="bg-card warm" style="--x:-49px;  --y:52px;  --w:292px; --h:168px"><span>STOICISM</span></div>
+      <div class="bg-card warm" style="--x:264px;  --y:52px;  --w:292px; --h:168px"><span style="--nudge:1px">PLATONISM</span></div>
+      <div class="bg-card" style="--x:1098px; --y:52px;  --w:292px; --h:168px"><span style="--nudge:-1px">ARISTOTLE</span></div>
+      <div class="bg-card" style="--x:1412px; --y:52px;  --w:381px; --h:168px"><span>PLATONISM</span></div>
+
+      <!-- Row 2 -->
+      <div class="bg-card" style="--x:-184px; --y:247px; --w:292px; --h:168px"><span style="--nudge:2px">THEISM</span></div>
+      <div class="bg-card" style="--x:130px;  --y:247px; --w:292px; --h:168px"><span>EPICURUS</span></div>
+      <div class="bg-card" style="--x:444px;  --y:247px; --w:292px; --h:168px"><span>AUGUSTINE</span></div>
+      <div class="bg-card" style="--x:759px;  --y:247px; --w:292px; --h:168px"><span>HOBBES</span></div>
+      <div class="bg-card" style="--x:1073px; --y:247px; --w:292px; --h:168px"><span>KANT</span></div>
+      <div class="bg-card" style="--x:1388px; --y:247px; --w:280px; --h:168px"><span style="--nudge:-2px">DESCARTES</span></div>
+
+      <!-- Row 3 -->
+      <div class="bg-card" style="--x:12px;   --y:441px; --w:261px; --h:168px"><span style="--nudge:-2px">SKEPTICISM</span></div>
+      <div class="bg-card" style="--x:1230px; --y:441px; --w:328px; --h:168px"><span style="--nudge:11px">AGENT</span></div>
+      <div class="bg-card" style="--x:1584px; --y:441px; --w:230px; --h:168px"><span>PLOTINUS</span></div>
+
+      <!-- Row 4 -->
+      <div class="bg-card" style="--x:-107px; --y:636px; --w:300px; --h:168px"><span style="--nudge:1px">ABSURDISM</span></div>
+      <div class="bg-card" style="--x:1220px; --y:636px; --w:225px; --h:168px"><span>CAMUS</span></div>
+      <div class="bg-card" style="--x:1467px; --y:636px; --w:256px; --h:168px"><span style="--nudge:-1px">NIETZSCHE</span></div>
+
+      <!-- Row 5 -->
+      <div class="bg-card" style="--x:-100px; --y:830px; --w:148px; --h:168px"><span></span></div>
+      <div class="bg-card" style="--x:70px;   --y:830px; --w:234px; --h:168px"><span style="--nudge:-2px">NIHILISM</span></div>
+      <div class="bg-card" style="--x:1323px; --y:830px; --w:292px; --h:168px"><span style="--nudge:5px">SPINOZA</span></div>
+
+      <!-- Row 6 (visible on taller screens) -->
+      <div class="bg-card" style="--x:-60px;  --y:1025px; --w:320px; --h:168px"><span>HERACLITUS</span></div>
+      <div class="bg-card" style="--x:330px;  --y:1025px; --w:292px; --h:168px"><span>LOCKE</span></div>
+      <div class="bg-card" style="--x:1300px; --y:1025px; --w:300px; --h:168px"><span>WITTGENSTEIN</span></div>
+
+      <header class="masthead">
+        <h1>ASKĒSIS</h1>
+        <p>PHILOSOPHY, REFRAMED</p>
+      </header>
+
+      <div class="grain"></div>
+      <div class="rails"></div>
+
+      <button class="search-btn" id="searchBtn" type="button" aria-label="Search" aria-expanded="false" aria-controls="searchPop">
+        <svg width="21" height="21" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <circle cx="9.4" cy="9.4" r="6.1" stroke="currentColor" stroke-width="2.4"/>
+          <path d="M14.1 14.1L19 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <section class="explore-panel" aria-labelledby="exploreTitle">
+      <div class="panel-top">
+        <h2 class="explore-title" id="exploreTitle">EXPLORE</h2>
+        <button class="surprise" id="surpriseBtn" type="button">
+          <svg class="dice" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="1.4" y="1.4" width="21.2" height="21.2" rx="5.2" stroke="currentColor" stroke-width="2.1"/>
+            <circle cx="7.2" cy="7.2" r="1.85" fill="currentColor"/>
+            <circle cx="16.8" cy="7.2" r="1.85" fill="currentColor"/>
+            <circle cx="12" cy="12" r="1.85" fill="currentColor"/>
+            <circle cx="7.2" cy="16.8" r="1.85" fill="currentColor"/>
+            <circle cx="16.8" cy="16.8" r="1.85" fill="currentColor"/>
+          </svg>
+          <span>Surprise me</span>
+        </button>
+      </div>
+
+      <div class="topics">
+        <button class="topic" type="button" data-title="Sartre’s Bad Faith" style="--col:1; --row:1">
+          <span class="num">1</span><span class="name">SARTRE’S BAD FAITH</span>
+        </button>
+        <button class="topic" type="button" data-title="On Free Will" style="--col:2; --row:1">
+          <span class="num">2</span><span class="name">ON FREE WILL</span>
+        </button>
+        <button class="topic" type="button" data-title="Qualia in Consciousness" style="--col:3; --row:1">
+          <span class="num">3</span><span class="name">QUALIA IN CONSCIOUSNESS</span>
+        </button>
+        <button class="topic" type="button" data-title="Rawls’ Veil of Ignorance" style="--col:1; --row:2">
+          <span class="num">4</span><span class="name">RAWLS’ VEIL OF IGNORANCE</span>
+        </button>
+        <button class="topic" type="button" data-title="Skeptical Theism and Evil" style="--col:2; --row:2">
+          <span class="num">5</span><span class="name">SKEPTICAL THEISM AND EVIL</span>
+        </button>
+        <button class="topic" type="button" data-title="A-Theory of Time" style="--col:3; --row:2">
+          <span class="num">6</span><span class="name">A-THEORY OF TIME</span>
+        </button>
+      </div>
+
+      <h2 class="series-title">MINI SCROLL SERIES</h2>
+
+      <button class="featured" type="button" id="featuredCard">
+        <span>FEATURED WISDOM</span>
+      </button>
+    </section>
+
+    <div class="search-pop" id="searchPop" hidden>
+      <div class="search-field">
+        <svg width="18" height="18" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <circle cx="9.4" cy="9.4" r="6.1" stroke="currentColor" stroke-width="2.4"/>
+          <path d="M14.1 14.1L19 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+        <input id="searchInput" type="search" placeholder="Search topics" autocomplete="off" spellcheck="false">
+        <span class="esc">ESC</span>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
