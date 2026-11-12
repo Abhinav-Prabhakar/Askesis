@@ -48,28 +48,28 @@ const searchIndexJson = JSON.stringify(buildSearchIndex());
 
 <div class="scene" aria-hidden="true">
   <div class="topline"></div>
-  <div class="bg-card warm top-row" style="--x:-49px;  --y:52px;  --w:292px; --h:168px"><span>STOICISM</span></div>
-  <div class="bg-card warm top-row" style="--x:264px;  --y:52px;  --w:292px; --h:168px"><span style="--nudge:1px">PLATONISM</span></div>
-  <div class="bg-card top-row" style="--x:1098px; --y:52px;  --w:292px; --h:168px"><span style="--nudge:-1px">ARISTOTLE</span></div>
-  <div class="bg-card top-row" style="--x:1412px; --y:52px;  --w:381px; --h:168px"><span>PLATONISM</span></div>
-  <div class="bg-card" style="--x:-184px; --y:247px; --w:292px; --h:168px"><span style="--nudge:2px">THEISM</span></div>
-  <div class="bg-card" style="--x:130px;  --y:247px; --w:292px; --h:168px"><span>EPICURUS</span></div>
-  <div class="bg-card" style="--x:444px;  --y:247px; --w:292px; --h:168px"><span>AUGUSTINE</span></div>
-  <div class="bg-card" style="--x:759px;  --y:247px; --w:292px; --h:168px"><span>HOBBES</span></div>
-  <div class="bg-card" style="--x:1073px; --y:247px; --w:292px; --h:168px"><span>KANT</span></div>
-  <div class="bg-card" style="--x:1388px; --y:247px; --w:280px; --h:168px"><span style="--nudge:-2px">DESCARTES</span></div>
-  <div class="bg-card" style="--x:12px;   --y:441px; --w:261px; --h:168px"><span style="--nudge:-2px">SKEPTICISM</span></div>
-  <div class="bg-card" style="--x:1230px; --y:441px; --w:328px; --h:168px"><span style="--nudge:11px">AGENT</span></div>
-  <div class="bg-card" style="--x:1584px; --y:441px; --w:230px; --h:168px"><span>PLOTINUS</span></div>
-  <div class="bg-card" style="--x:-107px; --y:636px; --w:300px; --h:168px"><span style="--nudge:1px">ABSURDISM</span></div>
-  <div class="bg-card" style="--x:1220px; --y:636px; --w:225px; --h:168px"><span>CAMUS</span></div>
-  <div class="bg-card" style="--x:1467px; --y:636px; --w:256px; --h:168px"><span style="--nudge:-1px">NIETZSCHE</span></div>
-  <div class="bg-card" style="--x:-100px; --y:830px; --w:148px; --h:168px"><span></span></div>
-  <div class="bg-card" style="--x:70px;   --y:830px; --w:234px; --h:168px"><span style="--nudge:-2px">NIHILISM</span></div>
-  <div class="bg-card" style="--x:1323px; --y:830px; --w:292px; --h:168px"><span style="--nudge:5px">SPINOZA</span></div>
-  <div class="bg-card" style="--x:-60px;  --y:1025px; --w:320px; --h:168px"><span>HERACLITUS</span></div>
-  <div class="bg-card" style="--x:330px;  --y:1025px; --w:292px; --h:168px"><span>LOCKE</span></div>
-  <div class="bg-card" style="--x:1300px; --y:1025px; --w:300px; --h:168px"><span>WITTGENSTEIN</span></div>
+  <a class="bg-card warm top-row" tabindex="-1" href={u("tradition/stoicism/")} style="--x:-49px;  --y:52px;  --w:292px; --h:168px"><span>STOICISM</span></a>
+  <a class="bg-card warm top-row" tabindex="-1" href={u("tradition/existentialism/")} style="--x:264px;  --y:52px;  --w:292px; --h:168px; --fs:48px"><span style="--nudge:1px">EXISTENTIALISM</span></a>
+  <a class="bg-card top-row" tabindex="-1" href={u("thinker/anselm/")} style="--x:1098px; --y:52px;  --w:292px; --h:168px"><span style="--nudge:-1px">ANSELM</span></a>
+  <a class="bg-card top-row" tabindex="-1" href={u("tradition/scholasticism/")} style="--x:1412px; --y:52px;  --w:381px; --h:168px"><span>SCHOLASTICISM</span></a>
+  <a class="bg-card" tabindex="-1" href={u("entry/skeptical-theism/")} style="--x:-184px; --y:247px; --w:292px; --h:168px"><span style="--nudge:2px">THEISM</span></a>
+  <a class="bg-card" tabindex="-1" href={u("thinker/epictetus/")} style="--x:130px;  --y:247px; --w:292px; --h:168px"><span>EPICTETUS</span></a>
+  <a class="bg-card" tabindex="-1" href={u("thinker/sartre/")} style="--x:444px;  --y:247px; --w:292px; --h:168px"><span>SARTRE</span></a>
+  <a class="bg-card" tabindex="-1" href={u("thinker/rawls/")} style="--x:759px;  --y:247px; --w:292px; --h:168px"><span>RAWLS</span></a>
+  <a class="bg-card" tabindex="-1" href={u("thinker/kant/")} style="--x:1073px; --y:247px; --w:292px; --h:168px"><span>KANT</span></a>
+  <a class="bg-card" tabindex="-1" href={u("entry/descartes-cogito/")} style="--x:1388px; --y:247px; --w:280px; --h:168px"><span style="--nudge:-2px">DESCARTES</span></a>
+  <a class="bg-card" tabindex="-1" href={u("entry/qualia/")} style="--x:12px;   --y:441px; --w:261px; --h:168px"><span style="--nudge:-2px">QUALIA</span></a>
+  <a class="bg-card" tabindex="-1" href={u("entry/free-will/")} style="--x:1230px; --y:441px; --w:328px; --h:168px"><span style="--nudge:11px">FREE WILL</span></a>
+  <a class="bg-card" tabindex="-1" href={u("thinker/nagel/")} style="--x:1584px; --y:441px; --w:230px; --h:168px"><span>NAGEL</span></a>
+  <a class="bg-card" tabindex="-1" href={u("tradition/absurdism/")} style="--x:-107px; --y:636px; --w:300px; --h:168px"><span style="--nudge:1px">ABSURDISM</span></a>
+  <a class="bg-card" tabindex="-1" href={u("thinker/camus/")} style="--x:1220px; --y:636px; --w:225px; --h:168px"><span>CAMUS</span></a>
+  <a class="bg-card" tabindex="-1" href={u("thinker/nietzsche/")} style="--x:1467px; --y:636px; --w:256px; --h:168px"><span style="--nudge:-1px">NIETZSCHE</span></a>
+  <span class="bg-card" style="--x:-100px; --y:830px; --w:148px; --h:168px"><span></span></span>
+  <a class="bg-card" tabindex="-1" href={u("entry/sartre-bad-faith/")} style="--x:70px;   --y:830px; --w:234px; --h:168px"><span style="--nudge:-2px">BAD FAITH</span></a>
+  <a class="bg-card" tabindex="-1" href={u("entry/nietzsche-will/")} style="--x:1323px; --y:830px; --w:292px; --h:168px"><span style="--nudge:5px">NIHILISM</span></a>
+  <a class="bg-card" tabindex="-1" href={u("tradition/deontology/")} style="--x:-60px;  --y:1025px; --w:320px; --h:168px"><span>DEONTOLOGY</span></a>
+  <a class="bg-card" tabindex="-1" href={u("entry/a-theory-of-time/")} style="--x:330px;  --y:1025px; --w:292px; --h:168px"><span>A-THEORY</span></a>
+  <a class="bg-card" tabindex="-1" href={u("thinker/wittgenstein/")} style="--x:1300px; --y:1025px; --w:300px; --h:168px"><span>WITTGENSTEIN</span></a>
   <header class="masthead">
     <h1>ASKĒSIS</h1>
     <p>PHILOSOPHY, REFRAMED</p>

@@ -30,7 +30,7 @@ cream reading sheet.
 ## A LIBRARY, NOT A FEED
 
 No chronology, no infinite scroll, no up-next. Just six rooms you can walk
-through in an afternoon.
+through in an afternoon. Even the red cards behind the sheet are doors.
 
 <a href="https://abhinav-prabhakar.github.io/Askesis/">
   <img src="assets/readme/atlas.jpg" alt="The Atlas: four era plates — Ancient, Medieval, Modern, Contemporary — drawn as star charts, with each entry plotted on a constellation." width="100%">

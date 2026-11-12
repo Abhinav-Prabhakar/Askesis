@@ -171,7 +171,11 @@ Interactive cards are `<a>`/`<button>` with ≥44px targets, visible
 - Inline SVG only, `viewBox` art, no raster except `grain.png` (scene only).
 - Fills: palette solids only. Keylines `--line`, 5–7px at hero scale.
 - Context backdrops (`bg-card`, grain, rails, ticker, sv track) are
-  `aria-hidden`. Informative diagrams get `role="img"` + `aria-label`.
+  `aria-hidden`. The red `bg-card` tiles are mouse shortcuts to real pages —
+  every label is a thinker, school, or entry that exists in the library —
+  and sit at `tabindex="-1"` so keyboard users meet no duplicate stops; all
+  destinations remain reachable through the sheet and catalogue. Informative
+  diagrams get `role="img"` + `aria-label`.
 - Heroes: `heroSVG(slug)` 200×150 per entry. Figures: `figureSVG(slug)`
   430×150 + ≤12-word caption. Experiments: `expArt()` 120×74.
   Series art: `seriesArt(i)` 118×118 woodblock scenes; the viewer uses `seriesCardArt(slug, i)` per card. Atlas sigils: `eraArt(name)`. Thinker portraits: `thinkerPortrait()` 96×96. Tradition crests: `crestArt()` 96×108. Stubs share `soonArt()`.

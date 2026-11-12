@@ -86,9 +86,16 @@ button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-vis
   position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h);
   background: var(--card); border: 4px solid #050505; box-shadow: 5px 5px 0 #050505;
   color: var(--card-text); display: flex; align-items: center; justify-content: center;
-  overflow: hidden; font-family: var(--display); font-size: 60px; line-height: 1;
-  letter-spacing: -.55px; white-space: nowrap; z-index: 1;
+  overflow: hidden; font-family: var(--display); font-size: var(--fs, 60px); line-height: 1;
+  letter-spacing: -.55px; white-space: nowrap; z-index: 1; text-decoration: none;
 }
+a.bg-card {
+  cursor: pointer;
+  transition: transform var(--t-hover) var(--ease), background var(--t-hover) var(--ease), box-shadow var(--t-hover) var(--ease);
+}
+a.bg-card:hover { background: #c41414; transform: translate(-2px,-2px); box-shadow: 8px 8px 0 #050505; }
+a.bg-card.warm:hover { background: #b81717; }
+a.bg-card:active { transform: translate(1px,1px); box-shadow: 3px 3px 0 #050505; }
 .bg-card span { display: block; transform: translateX(var(--nudge, 0px)); }
 .masthead {
   position: absolute; left: 827px; top: 78px; transform: translateX(-50%) translateY(calc(-18px * var(--gp, 0))) scale(calc(1 - 0.07 * var(--gp, 0)));
