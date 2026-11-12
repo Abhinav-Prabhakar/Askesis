@@ -231,7 +231,7 @@ wire `related` both ways, extend `INDEX` (automatic), add atlas dot
   search button. Grow disabled.
 - **Print:** one clean cream page of the open entry; scenery, tools,
   navigation, ticker, seal hidden; shadows off.
-- **RSS** (`feed.xml`) mirrors entries. **Sitemap** (`sitemap.xml`: home + start-here + every entry/thinker/school/puzzle/series/stub) regenerated from `library.js` whenever routes change. **PWA** is manifest-only for now —
+- **RSS** (`feed.xml`) mirrors entries. **Sitemap** is a build-time route (`src/pages/sitemap.xml.ts`, generated from `library.js` — never drifts) plus `robots.txt` pointing at it. **PWA** is manifest-only for now —
   offline waits for content worth caching. No cookies, no trackers;
   `localStorage` holds recents + notes only.
 
